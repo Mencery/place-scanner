@@ -1,0 +1,37 @@
+package com.eleks.placescanner.place.config;
+
+import com.eleks.placescanner.place.service.precisely.PreciselyClient;
+import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.web.client.RestTemplate;
+
+
+@Configuration
+public class ScannerConfig {
+
+    @Bean
+    @Primary
+    public RestTemplate restTemplate(
+    ) {
+        return new RestTemplateBuilder().build();
+    }
+
+    @Bean
+    @Primary
+    public PreciselyClient preciselyClient(
+            @Value("${precisely.api.demographic-by-location.url}") String demographicByLocationURI,
+            @Value("${precisely.api.demographic-by-location.url}") String demographicAdvanceURI,
+            @Value("${precisely.api.oauth.token.url}") String oauthTokenURI,
+            @Value("#{systemEnvironment['PRECISELY_API_KEY']}") String preciselyApiKey,
+            @Value("#{systemEnvironment['PRECISELY_API_SECRET']}") String preciselyApiSecret,
+            RestTemplate restTemplate
+
+    ) {
+        return new PreciselyClient(demographicByLocationURI, demographicAdvanceURI, oauthTokenURI, preciselyApiKey, preciselyApiSecret, restTemplate);
+    }
+
+}
