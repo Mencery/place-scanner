@@ -1,4 +1,4 @@
-package com.eleks.placescanner.place.domain;
+package com.eleks.placescanner.place.domain.demographic.precisaly;
 
 public record DemographicRequest(
         double longitude,

@@ -1,8 +1,9 @@
 package com.eleks.placescanner.place.service.precisely;
 
-import com.eleks.placescanner.place.domain.DemographicRequest;
-import com.eleks.placescanner.place.domain.DemographicResponse;
-import com.eleks.placescanner.place.domain.PreciselyToken;
+import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicAdvancedRequest;
+import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicRequest;
+import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.place.domain.demographic.precisaly.PreciselyToken;
 import com.eleks.placescanner.place.service.KafkaProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +51,21 @@ public class PreciselyClient {
                     + "variableLevel=" + request.variableLevel() + "&"
             ).build().toUri();
             var requestEntity = buildGetRequest(uri, securityToken);
+            var type = new ParameterizedTypeReference<DemographicResponse>() {
+            };
+            return restTemplate.exchange(requestEntity, type).getBody();
+
+        } catch (HttpServerErrorException e) {
+            LOGGER.error("callDemographicByLocation exception " + e);
+            throw e;
+        }
+    }
+
+    public DemographicResponse callDemographicAdvance(DemographicAdvancedRequest request) {
+        try {
+            var securityToken = getSecurityToken();
+            var uri = UriComponentsBuilder.fromUriString(demographicAdvanceURI).build().toUri();
+            var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<DemographicResponse>() {
             };
             return restTemplate.exchange(requestEntity, type).getBody();

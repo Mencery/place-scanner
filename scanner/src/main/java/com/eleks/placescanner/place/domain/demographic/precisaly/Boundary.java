@@ -1,4 +1,4 @@
-package com.eleks.placescanner.place.domain.demographic;
+package com.eleks.placescanner.place.domain.demographic.precisaly;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

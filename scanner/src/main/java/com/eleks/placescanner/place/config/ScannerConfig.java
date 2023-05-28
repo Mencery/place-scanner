@@ -1,7 +1,7 @@
 package com.eleks.placescanner.place.config;
 
+import com.eleks.placescanner.place.service.nominatim.NominatimClient;
 import com.eleks.placescanner.place.service.precisely.PreciselyClient;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,7 @@ public class ScannerConfig {
     @Primary
     public PreciselyClient preciselyClient(
             @Value("${precisely.api.demographic-by-location.url}") String demographicByLocationURI,
-            @Value("${precisely.api.demographic-by-location.url}") String demographicAdvanceURI,
+            @Value("${precisely.api.demographic-advance.url}") String demographicAdvanceURI,
             @Value("${precisely.api.oauth.token.url}") String oauthTokenURI,
             @Value("#{systemEnvironment['PRECISELY_API_KEY']}") String preciselyApiKey,
             @Value("#{systemEnvironment['PRECISELY_API_SECRET']}") String preciselyApiSecret,
@@ -32,6 +32,15 @@ public class ScannerConfig {
 
     ) {
         return new PreciselyClient(demographicByLocationURI, demographicAdvanceURI, oauthTokenURI, preciselyApiKey, preciselyApiSecret, restTemplate);
+    }
+
+    @Bean
+    @Primary
+    public NominatimClient nominatimClient(
+            @Value("${nominatim.api.place-polygon.url}") String placePolygonURI,
+            RestTemplate restTemplate
+    ) {
+        return new NominatimClient(placePolygonURI, restTemplate);
     }
 
 }

@@ -1,7 +1,8 @@
 package com.eleks.placescanner.place.controller;
 
 
-import com.eleks.placescanner.place.domain.DemographicResponse;
+import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.place.service.DemographicService;
 import com.eleks.placescanner.place.service.KafkaProducer;
 import com.eleks.placescanner.place.service.precisely.PreciselyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class TestController {
 
     @Autowired
     private PreciselyService preciselyService;
+    @Autowired
+    private DemographicService demographicService;
     @Value("${test.topic}")
     private String topic;
     @GetMapping("/test/kafka")
@@ -29,5 +32,11 @@ public class TestController {
     public DemographicResponse preciselyDemographicTest(@RequestParam(value = "longitude") Double longitude,
                             @RequestParam(value = "latitude") Double latitude) {
         return preciselyService.getDemographic(longitude, latitude);
+    }
+
+    @GetMapping("/test/demographic/advance")
+    public DemographicResponse preciselyDemographicAdvanceTest(@RequestParam(value = "placeName") String placeName,
+                                                        @RequestParam(value = "state") String state) {
+        return demographicService.getPopulationForPlace(placeName,state);
     }
 }

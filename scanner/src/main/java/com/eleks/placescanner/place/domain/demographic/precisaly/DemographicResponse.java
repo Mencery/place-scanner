@@ -1,7 +1,5 @@
-package com.eleks.placescanner.place.domain;
+package com.eleks.placescanner.place.domain.demographic.precisaly;
 
-import com.eleks.placescanner.place.domain.demographic.Boundaries;
-import com.eleks.placescanner.place.domain.demographic.Themes;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
