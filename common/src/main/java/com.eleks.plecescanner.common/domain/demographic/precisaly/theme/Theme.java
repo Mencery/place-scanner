@@ -6,9 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record PopulationTheme(
-        ArrayList<IndividualValueVariable> individualValueVariable,
-
-        ArrayList<RangeVariable> rangeVariable
-) {
+public record Theme(
+         ArrayList<IndividualValueVariable> individualValueVariable,
+         ArrayList<RangeVariable> rangeVariable
+){
 }

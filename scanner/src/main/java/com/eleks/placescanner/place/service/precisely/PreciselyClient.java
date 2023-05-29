@@ -68,7 +68,8 @@ public class PreciselyClient {
             var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<DemographicResponse>() {
             };
-            return restTemplate.exchange(requestEntity, type).getBody();
+            return restTemplate.
+                    exchange(requestEntity, type).getBody();
 
         } catch (HttpServerErrorException e) {
             LOGGER.error("callDemographicByLocation exception " + e);
@@ -109,6 +110,4 @@ public class PreciselyClient {
                 .header(HttpHeaders.AUTHORIZATION, securityToken)
                 .body(request);
     }
-
-
 }

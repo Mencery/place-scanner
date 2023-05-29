@@ -8,6 +8,5 @@ import java.util.List;
 public record GeoJson(
         String type,
         List<Object> coordinates
-        //List<List<List<Double>>> coordinates
 ) {
 }

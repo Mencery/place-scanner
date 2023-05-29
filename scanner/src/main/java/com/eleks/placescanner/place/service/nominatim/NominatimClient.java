@@ -21,8 +21,6 @@ public class NominatimClient {
     private final RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
-    private static final String URL_COMMA_SPACE = "%2C%20";
-
 
     public NominatimClient(String placePolygonURI, RestTemplate restTemplate) {
         this.placePolygonURI = placePolygonURI;
