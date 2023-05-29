@@ -1,8 +1,8 @@
 package com.eleks.placescanner.place.service.nominatim;
 
-import com.eleks.placescanner.place.domain.demographic.nominatim.GetPolygonRequest;
-import com.eleks.placescanner.place.domain.demographic.nominatim.GetPolygonResponse;
 import com.eleks.placescanner.place.service.KafkaProducer;
+import com.eleks.plecescanner.common.domain.demographic.nominatim.GetPolygonRequest;
+import com.eleks.plecescanner.common.domain.demographic.nominatim.GetPolygonResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;

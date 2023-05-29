@@ -1,9 +1,9 @@
 package com.eleks.placescanner.place.service.precisely;
 
-import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicAdvancedRequest;
-import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicRequest;
-import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.placescanner.place.domain.demographic.precisaly.polygon.Geometry;
+import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
+import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicRequest;
+import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.plecescanner.common.domain.demographic.precisaly.polygon.Geometry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

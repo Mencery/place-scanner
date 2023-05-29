@@ -1,8 +1,8 @@
 package com.eleks.placescanner.place.service;
 
-import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicResponse;
 import com.eleks.placescanner.place.service.nominatim.NominatimService;
 import com.eleks.placescanner.place.service.precisely.PreciselyService;
+import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

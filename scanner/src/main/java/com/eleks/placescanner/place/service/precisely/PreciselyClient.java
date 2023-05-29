@@ -1,10 +1,10 @@
 package com.eleks.placescanner.place.service.precisely;
 
-import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicAdvancedRequest;
-import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicRequest;
-import com.eleks.placescanner.place.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.placescanner.place.domain.demographic.precisaly.PreciselyToken;
 import com.eleks.placescanner.place.service.KafkaProducer;
+import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
+import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicRequest;
+import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.plecescanner.common.domain.demographic.precisaly.PreciselyToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;

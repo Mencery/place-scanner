@@ -1,6 +1,6 @@
 package com.eleks.placescanner.place.service.nominatim;
 
-import com.eleks.placescanner.place.domain.demographic.nominatim.GetPolygonRequest;
+import com.eleks.plecescanner.common.domain.demographic.nominatim.GetPolygonRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
