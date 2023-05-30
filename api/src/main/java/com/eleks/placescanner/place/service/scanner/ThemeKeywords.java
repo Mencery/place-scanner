@@ -8,4 +8,5 @@ public class ThemeKeywords {
     public final static String HVMEDCY = "HVMEDCY";
     public final static String CRAVGCY = "CRAVGCY";
     public final static String CRMEDCY = "CRMEDCY";
+    public final static String VEHICLEHHCX = "VEHICLEHHCX";
 }

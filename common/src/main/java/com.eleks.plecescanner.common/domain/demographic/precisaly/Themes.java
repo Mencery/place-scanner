@@ -10,6 +10,7 @@ public record Themes(
         @JsonProperty(value = "raceAndEthnicityTheme")Theme raceAndEthnicityTheme,
         @JsonProperty(value = "expenditureTheme")Theme expenditureTheme,
         @JsonProperty(value = "housingTheme")Theme housingTheme,
-        @JsonProperty(value = "incomeTheme")Theme incomeTheme
+        @JsonProperty(value = "incomeTheme")Theme incomeTheme,
+        @JsonProperty(value = "assetsAndWealthTheme")Theme assetsAndWealthTheme
 ) {
 }

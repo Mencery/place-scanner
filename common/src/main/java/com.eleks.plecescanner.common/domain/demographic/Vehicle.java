@@ -4,5 +4,5 @@ import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.F
 
 import java.util.List;
 
-public record Race(List<Field> races) {
+public record Vehicle(List<Field> vehicles) {
 }

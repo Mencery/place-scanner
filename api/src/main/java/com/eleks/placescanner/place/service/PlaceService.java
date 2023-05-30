@@ -6,6 +6,7 @@ import com.eleks.plecescanner.common.domain.PlaceResponse;
 import com.eleks.plecescanner.common.domain.demographic.Housing;
 import com.eleks.plecescanner.common.domain.demographic.Income;
 import com.eleks.plecescanner.common.domain.demographic.Race;
+import com.eleks.plecescanner.common.domain.demographic.Vehicle;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.IndividualValueVariable;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.RangeVariable;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.Theme;
@@ -53,7 +54,10 @@ public class PlaceService {
                 new BigDecimal(medianRentValue.value())
         );
 
-        return new PlaceResponse(totalPopulation.value(), race, income, housing);
+        var vehicleInfo = findRangeVariable(housingTheme, VEHICLEHHCX);
+        var vehicle = new Vehicle(vehicleInfo.field());
+
+        return new PlaceResponse(totalPopulation.value(), race, income, housing, vehicle);
     }
 
     private IndividualValueVariable findIndividualValueVariable(Theme theme, String keyword) {
