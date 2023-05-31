@@ -20,15 +20,19 @@ public class NominatimService {
         );
         var polygon = nominatimClient.callPlacePolygon(request);
         var geoJson = polygon.geojson();
-        List<List<List<Double>>> coordinates = geoJson.coordinates()
+        var coordinates = geoJson.coordinates()
                 .stream()
                 .map(x -> ((List<Object>)x)
                         .stream()
                         .map(y -> (List<Double>)y )
                         .toList())
-                .toList();
+                .findFirst();
 
-        return coordinates.stream().flatMap(Collection::stream).toList();
+        if(coordinates.isPresent()){
+            return coordinates.get();
+        }else {
+            throw new IllegalStateException("cannot parse coordinates");
+        }
     }
 
 }
