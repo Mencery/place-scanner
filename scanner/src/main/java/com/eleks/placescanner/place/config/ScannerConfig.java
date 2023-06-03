@@ -1,5 +1,6 @@
 package com.eleks.placescanner.place.config;
 
+import com.eleks.placescanner.place.service.census.CensusClient;
 import com.eleks.placescanner.place.service.nominatim.NominatimClient;
 import com.eleks.placescanner.place.service.precisely.PreciselyClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,10 +8,11 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
-
 @Configuration
+@EnableScheduling
 public class ScannerConfig {
 
     @Bean
@@ -43,4 +45,12 @@ public class ScannerConfig {
         return new NominatimClient(placePolygonURI, restTemplate);
     }
 
+    @Bean
+    @Primary
+    public CensusClient censusClient(
+            @Value("${census.api.popclock-data.url}") String popclockDataURI,
+            RestTemplate restTemplate
+    ) {
+        return new CensusClient(popclockDataURI, restTemplate);
+    }
 }
