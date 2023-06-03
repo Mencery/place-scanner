@@ -21,3 +21,10 @@ https://api.census.gov/data/2017/acs/acs5?get=NAME,STATE,group(B19013)&for=zip%2
 
 get polygon https://nominatim.openstreetmap.org/search.php?q=Wheeling&polygon_geojson=1&format=jsonv2
 https://nominatim.openstreetmap.org/search.php?q=Bloomington%2C%20IL&polygon_geojson=1&format=jsonv2
+
+MongoDB
+To start go to scripts folder from the terminal and run
+`docker-compose up`
+
+Mongo will start on localhost:27017
+And UI version will be available  on localhost:8081

@@ -1,16 +1,9 @@
 package com.eleks.plecescanner.common.domain;
 
-import com.eleks.plecescanner.common.domain.demographic.Housing;
-import com.eleks.plecescanner.common.domain.demographic.Income;
-import com.eleks.plecescanner.common.domain.demographic.Race;
-import com.eleks.plecescanner.common.domain.demographic.Vehicle;
+import com.eleks.plecescanner.dao.domain.StateTaxDto;
 
 public record PlaceResponse(
-        String totalPlacePopulation,
-        Race race,
-        Income income,
-        Housing housing,
-        Vehicle vehicle
-
+        Demographic demographic,
+        StateTaxDto stateTax
 ) {
 }
