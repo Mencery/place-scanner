@@ -3,7 +3,6 @@ package com.eleks.placescanner.place.config;
 import com.eleks.placescanner.place.service.scanner.ScannerClient;
 import com.github.cloudyrock.spring.v5.EnableMongock;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.*;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;

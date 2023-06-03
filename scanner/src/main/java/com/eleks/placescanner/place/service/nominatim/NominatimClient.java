@@ -47,7 +47,7 @@ public class NominatimClient {
             }
 
         } catch (HttpServerErrorException e) {
-            LOGGER.error("callDemographicByLocation exception " + e);
+            LOGGER.error("Nominatim call exception " + e);
             throw e;
         }
     }

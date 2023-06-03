@@ -8,9 +8,8 @@ Pollution - IQAir (v2/nearest_city?lat={{LATITUDE}}&lon={{LONGITUDE}}&key={{YOUR
 Demographic https://developer.precisely.com/software-apis/dashboard
 zip code to https://api.promaptools.com/service/us/zip-lat-lng/get/?zip=60090&key=17o8dysaCDrgvlc
 Get all population https://api.census.gov/data/2021/pep/natmonthly?get=POP,NAME,MONTHLY&for=us:*&MONTHLY=4
+Get all population in realtime = https://www.census.gov/popclock/data/population.php/us?_=1685803553787
 https://api.census.gov/data/2021/pep/population?get=DENSITY_2021,POP_2021,NAME,STATE&for=region:*
-Lombok
-5199166
 
 https://api.census.gov/data/2019/pep/population?get=COUNTY,DATE_CODE,DATE_DESC,DENSITY,POP,NAME,STATE&for=place:*&in=state:17
 https://api.census.gov/data/2018/pep/population?get=COUNTY,DATE_CODE,DATE_DESC,DENSITY,POP,GEONAME,STATE&for=county:031&in=state:17
@@ -28,3 +27,4 @@ To start go to scripts folder from the terminal and run
 
 Mongo will start on localhost:27017
 And UI version will be available  on localhost:8081
+
