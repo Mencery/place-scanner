@@ -1,6 +1,7 @@
 package com.eleks.placescanner.place.service;
 
 import com.eleks.placescanner.place.service.scanner.ScannerClient;
+import com.eleks.plecescanner.common.domain.Demographic;
 import com.eleks.plecescanner.common.domain.PlaceRequest;
 import com.eleks.plecescanner.common.domain.PlaceResponse;
 import com.eleks.plecescanner.common.domain.demographic.Housing;
@@ -10,6 +11,8 @@ import com.eleks.plecescanner.common.domain.demographic.Vehicle;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.IndividualValueVariable;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.RangeVariable;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.Theme;
+import com.eleks.plecescanner.dao.domain.StateTaxDto;
+import com.eleks.plecescanner.dao.repository.StateTaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +27,20 @@ public class PlaceService {
     @Autowired
     private ScannerClient scannerClient;
 
+    @Autowired
+    StateTaxRepository stateTaxRepository;
+
     public PlaceResponse getPlaceInfo(PlaceRequest request) {
-        return getDemographicInfo(request);
+
+        return new PlaceResponse(getDemographicInfo(request), getStateTax(request.state()));
     }
 
-    public PlaceResponse getDemographicInfo(PlaceRequest request) {
+    public StateTaxDto getStateTax(String state) {
+        var stateTaxEntity = stateTaxRepository.findStateTaxByState(state).orElseThrow(() -> new IllegalStateException("State is incorrect"));
+        return new StateTaxDto(stateTaxEntity);
+    }
+
+    public Demographic getDemographicInfo(PlaceRequest request) {
         var demographicInfo = scannerClient.callDemographicAdvance(request);
 
         var populationTheme = demographicInfo.themes().populationTheme();
@@ -57,7 +69,7 @@ public class PlaceService {
         var vehicleInfo = findRangeVariable(housingTheme, VEHICLEHHCX);
         var vehicle = new Vehicle(vehicleInfo.field());
 
-        return new PlaceResponse(totalPopulation.value(), race, income, housing, vehicle);
+        return new Demographic(totalPopulation.value(), race, income, housing, vehicle);
     }
 
     private IndividualValueVariable findIndividualValueVariable(Theme theme, String keyword) {

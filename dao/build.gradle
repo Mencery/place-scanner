@@ -5,7 +5,7 @@ plugins {
     id 'org.springframework.boot' version '3.0.6'
 }
 
-group = 'com.eleks.placescanner.common'
+group = 'com.eleks.placescanner.dao'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -14,16 +14,17 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.eleks.placescanner.dao:dao:1.0-SNAPSHOT'
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.0.6'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-autoconfigure:3.0.6'
-    implementation 'org.springframework.kafka:spring-kafka:3.0.6'
+    implementation 'org.springframework.data:spring-data-mongodb:4.1.0'
+    implementation 'com.github.cloudyrock.mongock:mongock-bom:4.3.8'
+    implementation 'com.github.cloudyrock.mongock:mongodb-springdata-v3-driver:4.3.8'
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation 'org.testcontainers:kafka:1.18.1'
-    testImplementation 'org.springframework.kafka:spring-kafka-test:3.0.6'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

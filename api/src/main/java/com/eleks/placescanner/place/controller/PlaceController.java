@@ -20,6 +20,6 @@ public class PlaceController {
     public ResponseEntity<PlaceResponse> getPlaceInfo(
             @RequestBody PlaceRequest request
     )  {
-        return new ResponseEntity<>(placeService.getDemographicInfo(request.validateRequest()), HttpStatus.OK);
+        return new ResponseEntity<>(placeService.getPlaceInfo(request.validateRequest()), HttpStatus.OK);
     }
 }

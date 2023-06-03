@@ -1,11 +1,15 @@
 package com.eleks.placescanner.place.service;
 
 import com.eleks.placescanner.place.repository.TestRepository;
+import com.eleks.plecescanner.dao.domain.StateTaxDto;
+import com.eleks.plecescanner.dao.repository.StateTaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -13,6 +17,12 @@ import java.util.stream.Collectors;
 public class TestService {
     @Autowired
     TestRepository testRepository;
+
+    @Autowired
+    StateTaxRepository stateTaxRepository;
+
+    @Autowired
+    MongoTemplate mongoTemplate;
 
     public void save(Long timestamp, String message) {
         testRepository.save(timestamp, message);
@@ -37,5 +47,9 @@ public class TestService {
 
     public void clean() {
         testRepository.clean();
+    }
+
+    public List<StateTaxDto> findAllStateTaxes() {
+        return stateTaxRepository.findAll().stream().map(StateTaxDto::new).toList();
     }
 }
