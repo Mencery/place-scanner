@@ -31,10 +31,14 @@ public class PlaceService {
     @Autowired
     UsPopulationService usPopulationService;
 
+    @Autowired
+    CrimeService crimeService;
+
     public PlaceResponse getPlaceInfo(PlaceRequest request) {
 
         return new PlaceResponse(
                 getDemographicInfo(request),//todo create demographic service
+                crimeService.getPlaceCrime(request),
                 stateTaxService.getStateTax(request.state()),
                 usPopulationService.findUsPopulation()
         );

@@ -1,5 +1,7 @@
 package com.eleks.placescanner.place.service.precisely;
 
+import com.eleks.plecescanner.common.domain.crime.CrimeRequest;
+import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicRequest;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
@@ -29,9 +31,19 @@ public class PreciselyService {
 
     public DemographicResponse getDemographicByPolygon(List<List<Double>> coordinates) {
         var request = new DemographicAdvancedRequest(
-               new Geometry(coordinates)
+                new Geometry(coordinates)
         );
         return preciselyClient.callDemographicAdvance(request);
+    }
+
+    public CrimeResponse getCrime(double longitude, double latitude) {
+        var request = new CrimeRequest(
+                longitude,
+                latitude,
+                "all",
+                "N"
+        );
+        return preciselyClient.callCrimeByLocation(request);
     }
 
 }
