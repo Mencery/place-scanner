@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class PollutionService {
 
-    @Value("${iqair.api.key}")
+    @Value("#{systemEnvironment['IQAIR_API_KEY']}")
     private String key;
 
     @Autowired
