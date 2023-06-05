@@ -41,7 +41,7 @@ public class PlaceService {
                 crimeService.getPlaceCrime(request),
                 stateTaxService.getStateTax(request.state()),
                 usPopulationService.findUsPopulation(),
-                scannerClient.getPollution(request)
+                scannerClient.getAirInfo(request)
         );
     }
 

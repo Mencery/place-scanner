@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "iqAirApi", url = "${iqair.api.url}")
 public interface IqAirClient {
 
-    @GetMapping("/city")
+    @GetMapping("/nearest_city")
     PollutionApiResponse getPollutionByPlace(
-            @RequestParam("city") String city,
-            @RequestParam("state") String state,
-            @RequestParam("country") String country,
+            @RequestParam("lat") String city,
+            @RequestParam("lon") String state,
             @RequestParam("key") String key);
 }

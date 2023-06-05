@@ -3,7 +3,7 @@ package com.eleks.placescanner.place.service.scanner;
 import com.eleks.plecescanner.common.domain.PlaceRequest;
 import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.plecescanner.common.domain.pollution.PollutionResponse;
+import com.eleks.plecescanner.common.domain.pollution.AirResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -45,17 +45,17 @@ public class ScannerClient {
         }
     }
 
-    public PollutionResponse getPollution(PlaceRequest request) {
+    public AirResponse getAirInfo(PlaceRequest request) {
         try {
             var securityToken = "";
             var uri = UriComponentsBuilder.fromUriString(scannerURI+POLLUTION).build().toUri();
             var requestEntity = buildPostRequest(uri, request, securityToken);
-            var type = new ParameterizedTypeReference<PollutionResponse>() {
+            var type = new ParameterizedTypeReference<AirResponse>() {
             };
             return restTemplate.exchange(requestEntity, type).getBody();
 
         } catch (HttpServerErrorException e) {
-            LOGGER.error("getPollution exception " + e);
+            LOGGER.error("getAirInfo exception " + e);
             throw e;
         }
     }
