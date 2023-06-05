@@ -36,7 +36,8 @@ public class PlaceService {
         return new PlaceResponse(
                 getDemographicInfo(request),//todo create demographic service
                 stateTaxService.getStateTax(request.state()),
-                usPopulationService.findUsPopulation()
+                usPopulationService.findUsPopulation(),
+                scannerClient.getPollution(request)
         );
     }
 
