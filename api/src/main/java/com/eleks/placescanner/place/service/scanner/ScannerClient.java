@@ -3,6 +3,7 @@ package com.eleks.placescanner.place.service.scanner;
 import com.eleks.plecescanner.common.domain.PlaceRequest;
 import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.plecescanner.common.domain.pollution.AirResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,6 +17,7 @@ import java.net.URI;
 
 import static com.eleks.placescanner.place.service.scanner.ScannerURLs.CRIME_BY_LOCATION;
 import static com.eleks.placescanner.place.service.scanner.ScannerURLs.DEMOGRAPHIC_ADVANCE;
+import static com.eleks.placescanner.place.service.scanner.ScannerURLs.POLLUTION;
 
 public class ScannerClient {
 
@@ -42,6 +44,22 @@ public class ScannerClient {
             throw e;
         }
     }
+
+    public AirResponse getAirInfo(PlaceRequest request) {
+        try {
+            var securityToken = "";
+            var uri = UriComponentsBuilder.fromUriString(scannerURI+POLLUTION).build().toUri();
+            var requestEntity = buildPostRequest(uri, request, securityToken);
+            var type = new ParameterizedTypeReference<AirResponse>() {
+            };
+            return restTemplate.exchange(requestEntity, type).getBody();
+
+        } catch (HttpServerErrorException e) {
+            LOGGER.error("getAirInfo exception " + e);
+            throw e;
+        }
+    }
+
 
     public CrimeResponse callCrimeByLocation(PlaceRequest request) {
         try {

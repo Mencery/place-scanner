@@ -40,7 +40,8 @@ public class PlaceService {
                 getDemographicInfo(request),//todo create demographic service
                 crimeService.getPlaceCrime(request),
                 stateTaxService.getStateTax(request.state()),
-                usPopulationService.findUsPopulation()
+                usPopulationService.findUsPopulation(),
+                scannerClient.getAirInfo(request)
         );
     }
 
