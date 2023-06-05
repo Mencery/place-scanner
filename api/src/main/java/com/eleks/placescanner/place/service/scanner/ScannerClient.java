@@ -1,6 +1,7 @@
 package com.eleks.placescanner.place.service.scanner;
 
 import com.eleks.plecescanner.common.domain.PlaceRequest;
+import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
 import com.eleks.plecescanner.common.domain.pollution.PollutionResponse;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+import static com.eleks.placescanner.place.service.scanner.ScannerURLs.CRIME_BY_LOCATION;
 import static com.eleks.placescanner.place.service.scanner.ScannerURLs.DEMOGRAPHIC_ADVANCE;
 import static com.eleks.placescanner.place.service.scanner.ScannerURLs.POLLUTION;
 
@@ -54,6 +56,22 @@ public class ScannerClient {
 
         } catch (HttpServerErrorException e) {
             LOGGER.error("getPollution exception " + e);
+            throw e;
+        }
+    }
+
+
+    public CrimeResponse callCrimeByLocation(PlaceRequest request) {
+        try {
+            var securityToken = "";
+            var uri = UriComponentsBuilder.fromUriString(scannerURI+CRIME_BY_LOCATION).build().toUri();
+            var requestEntity = buildPostRequest(uri, request, securityToken);
+            var type = new ParameterizedTypeReference<CrimeResponse>() {
+            };
+            return restTemplate.exchange(requestEntity, type).getBody();
+
+        } catch (HttpServerErrorException e) {
+            LOGGER.error("callCrimeByLocation exception " + e);
             throw e;
         }
     }

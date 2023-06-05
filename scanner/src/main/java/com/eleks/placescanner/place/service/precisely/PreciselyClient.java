@@ -1,6 +1,8 @@
 package com.eleks.placescanner.place.service.precisely;
 
 import com.eleks.placescanner.place.service.KafkaProducer;
+import com.eleks.plecescanner.common.domain.crime.CrimeRequest;
+import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicRequest;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
@@ -20,6 +22,8 @@ import java.util.Base64;
 public class PreciselyClient {
     private final String demographicByLocationURI;
     private final String demographicAdvanceURI;
+
+    private final String crimeByLocationURI;
     private final String oauthTokenURI;
 
     private final String preciselyApiKey;
@@ -30,9 +34,10 @@ public class PreciselyClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
 
-    public PreciselyClient(String demographicByLocationURI, String demographicAdvanceURI, String oauthTokenURI, String preciselyApiKey, String preciselyApiSecret, RestTemplate restTemplate) {
+    public PreciselyClient(String demographicByLocationURI, String demographicAdvanceURI, String crimeByLocationURI, String oauthTokenURI, String preciselyApiKey, String preciselyApiSecret, RestTemplate restTemplate) {
         this.demographicByLocationURI = demographicByLocationURI;
         this.demographicAdvanceURI = demographicAdvanceURI;
+        this.crimeByLocationURI = crimeByLocationURI;
         this.oauthTokenURI = oauthTokenURI;
         this.preciselyApiKey = preciselyApiKey;
         this.preciselyApiSecret = preciselyApiSecret;
@@ -73,6 +78,26 @@ public class PreciselyClient {
 
         } catch (HttpServerErrorException e) {
             LOGGER.error("callDemographicByLocation exception " + e);
+            throw e;
+        }
+    }
+
+    public CrimeResponse callCrimeByLocation(CrimeRequest request) {
+        try {
+            var securityToken = getSecurityToken();
+            var uri = UriComponentsBuilder.fromUriString(crimeByLocationURI + "?"
+                    + "longitude=" + request.longitude() + "&"
+                    + "latitude=" + request.latitude() + "&"
+                    + "type=" + request.type() + "&"
+                    + "includeGeometry=" + request.includeGeometry()
+            ).build().toUri();
+            var requestEntity = buildGetRequest(uri, securityToken);
+            var type = new ParameterizedTypeReference<CrimeResponse>() {
+            };
+            return restTemplate.exchange(requestEntity, type).getBody();
+
+        } catch (HttpServerErrorException e) {
+            LOGGER.error("callCrimeByLocation exception " + e);
             throw e;
         }
     }

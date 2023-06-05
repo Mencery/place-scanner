@@ -2,7 +2,8 @@ package com.eleks.plecescanner.common.domain;
 
 public record PlaceRequest(
         String placeName,
-        String state
+        String state,
+        String zipCode
 ) {
 
     public PlaceRequest validateRequest(){
@@ -11,6 +12,12 @@ public record PlaceRequest(
         }
         if (isEmptyString(state)){
             throw new IllegalStateException("state cannot be empty");
+        }
+        if (isEmptyString(zipCode)){
+            throw new IllegalStateException("zipCode cannot be empty");
+        }
+        if (zipCode.length() != 5 || !zipCode.matches("\\d{5}")){
+            throw new IllegalStateException("zipCode should be 5 digits");
         }
         return this;
     }
