@@ -3,7 +3,6 @@ package com.eleks.placescanner.place.service;
 import com.eleks.placescanner.place.service.scanner.ScannerClient;
 import com.eleks.plecescanner.common.domain.Crime;
 import com.eleks.plecescanner.common.domain.PlaceRequest;
-import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
