@@ -25,8 +25,8 @@ public class DemographicService {
     @Autowired
     private ScannerClient scannerClient;
 
-    public Demographic getDemographicInfo(PlaceRequest request) {
-        var demographicInfo = scannerClient.callDemographicAdvance(request);
+    public Demographic getDemographicInfo(PlaceRequest request, String securityToken) {
+        var demographicInfo = scannerClient.callDemographicAdvance(request, securityToken);
 
         var populationTheme = demographicInfo.themes().populationTheme();
         var totalPopulation = findIndividualValueVariable(populationTheme, POPCY);

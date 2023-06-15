@@ -4,6 +4,7 @@ package com.eleks.placescanner.place.controller;
 import com.eleks.placescanner.place.service.TestService;
 import com.eleks.plecescanner.dao.domain.StateTaxDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,29 +19,34 @@ public class TestController {
     @Autowired
     TestService testService;
 
-    @GetMapping("test/get/recent")
+    @GetMapping(value = {"test/get/recent", "validated/test/get/recent"})
     public String getRecent() {
         return testService.findRecent();
     }
 
-    @GetMapping("test/get/all")
+
+    @GetMapping(value = {"test/get/all", "validated/test/get/all"})
     public Map<Date, String> getAll() {
         return testService.findAll();
     }
 
-    @DeleteMapping("test/storage/clean")
+    @DeleteMapping(value = {"test/storage/clean", "validated/test/storage/clean"})
     public Map<Date, String> clean() {
         testService.clean();
         return testService.findAll();
     }
 
-    @GetMapping("test/state/taxes")
+    @GetMapping(value = {"test/state/taxes", "validated/test/state/taxes"})
     public List<StateTaxDto> getAllStateTaxes() {
         return testService.findAllStateTaxes();
     }
 
-    @GetMapping("test/user-principal")
+    @GetMapping(value = {"test/user-principal", "validated/test/user-principal"})
     public Principal getPrincipal(Principal principal) {
-        return principal;
+        var oAuth2AuthenticationToken = (OAuth2AuthenticationToken) principal;
+        //oAuth2AuthenticationToken.getAuthorities().stream().filter(grantedAuthority -> grantedAuthority.getAuthority().equals("OIDC_USER"))
+        //((OidcUserAuthority)((java.util.Collections.UnmodifiableRandomAccessList)oAuth2AuthenticationToken.authorities).get(0)).idToken
+        return oAuth2AuthenticationToken;
+
     }
 }

@@ -11,7 +11,7 @@ public class AirConditionService {
     @Autowired
     private ScannerClient scannerClient;
 
-    public AirResponse getAirInfo(PlaceRequest request){
-        return scannerClient.getAirInfo(request);
+    public AirResponse getAirInfo(PlaceRequest request, String securityToken){
+        return scannerClient.getAirInfo(request, securityToken);
     }
 }

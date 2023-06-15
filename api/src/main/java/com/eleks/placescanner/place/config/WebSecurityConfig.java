@@ -1,7 +1,5 @@
 package com.eleks.placescanner.place.config;
 
-import com.eleks.placescanner.place.service.oauth2.CookieOAuth2AuthorizationRequestRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -10,27 +8,25 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
-@RequiredArgsConstructor
 public class WebSecurityConfig {
-    private final CookieOAuth2AuthorizationRequestRepository authorizationRequestRepository;
 
     @Bean
-    SecurityFilterChain apiSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
                 .cors()
                 .and()
                 .csrf()
                 .disable()
-                .authorizeHttpRequests()
-                .anyRequest().authenticated()
-                .and()
+                .authorizeHttpRequests(
+                        auth -> auth
+                                .requestMatchers("/validated/**").permitAll()
+                                .anyRequest().authenticated()
+                )
                 .oauth2Login()
                 .and().oauth2Client(Customizer.withDefaults());
-        return httpSecurity.build();
+        return http.build();
     }
-
 }

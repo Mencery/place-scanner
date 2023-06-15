@@ -7,12 +7,14 @@ import com.eleks.placescanner.place.service.promaptools.PromaptoolsClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
+@ComponentScan(basePackages = {"com.eleks.placescanner.place", "com.eleks.plecescanner.common"})
 @EnableScheduling
 public class ScannerConfig {
 
@@ -63,5 +65,12 @@ public class ScannerConfig {
             RestTemplate restTemplate
     ) {
         return new PromaptoolsClient(latLngByZipURI, restTemplate);
+    }
+
+    @Bean
+    @Primary
+    public RequestListener requestListener(
+    ) {
+        return new RequestListener();
     }
 }

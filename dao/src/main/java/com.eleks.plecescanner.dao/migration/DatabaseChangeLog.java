@@ -2,10 +2,8 @@ package com.eleks.plecescanner.dao.migration;
 
 import com.eleks.plecescanner.dao.entity.StateTax;
 import com.eleks.plecescanner.dao.entity.UsPopulation;
-import com.eleks.plecescanner.dao.entity.User;
 import com.eleks.plecescanner.dao.repository.StateTaxRepository;
 import com.eleks.plecescanner.dao.repository.UsPopulationRepository;
-import com.eleks.plecescanner.dao.repository.UserRepository;
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 

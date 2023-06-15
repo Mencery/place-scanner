@@ -30,3 +30,6 @@ To start go to scripts folder from the terminal and run
 Mongo will start on localhost:27017
 And UI version will be available  on localhost:8081
 
+
+Test request:
+http://localhost:8080/place-info?placeName=Chicago&state=Illinois&zipCode=60090
