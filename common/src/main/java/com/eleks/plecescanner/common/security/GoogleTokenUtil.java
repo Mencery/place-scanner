@@ -14,8 +14,6 @@ public class GoogleTokenUtil {
         } else {
             var oAuth2AuthenticationToken = (OAuth2AuthenticationToken) principal;
 
-            //var authorityOptional =  oAuth2AuthenticationToken.getAuthorities().stream().filter(grantedAuthority -> Objects.equals(grantedAuthority.getAuthority(), "OICD_USER")).findFirst();
-            //var authority = (OidcUserAuthority) authorityOptional.orElseThrow(IllegalStateException::new);
             var authority = (OidcUserAuthority) oAuth2AuthenticationToken.getAuthorities().stream().findFirst().orElseThrow(IllegalStateException::new);
             return authority.getIdToken().getTokenValue();
         }

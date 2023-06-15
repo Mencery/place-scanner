@@ -25,7 +25,7 @@ public record PlaceRequest(
         return this;
     }
 
-    private boolean isEmptyString(String s){
-        return s == null || s.isEmpty()|| s.isBlank();
+    private boolean isEmptyString(String parameter){
+        return parameter == null || parameter.isEmpty()|| parameter.isBlank();
     }
 }

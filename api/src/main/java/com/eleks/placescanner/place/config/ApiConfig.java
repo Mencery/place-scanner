@@ -18,8 +18,7 @@ public class ApiConfig {
 
     @Bean
     @Primary
-    public RestTemplate restTemplate(
-    ) {
+    public RestTemplate restTemplate() {
         return new RestTemplateBuilder().build();
     }
 
@@ -35,8 +34,7 @@ public class ApiConfig {
     @Bean
     @Primary
     @Order(1)
-    public RequestListener requestListener(
-    ) {
+    public RequestListener requestListener() {
         return new RequestListener();
     }
 }

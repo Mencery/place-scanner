@@ -69,8 +69,7 @@ public class ScannerConfig {
 
     @Bean
     @Primary
-    public RequestListener requestListener(
-    ) {
+    public RequestListener requestListener() {
         return new RequestListener();
     }
 }

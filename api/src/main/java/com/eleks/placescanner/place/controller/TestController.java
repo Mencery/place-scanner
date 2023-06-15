@@ -4,7 +4,6 @@ package com.eleks.placescanner.place.controller;
 import com.eleks.placescanner.place.service.TestService;
 import com.eleks.plecescanner.dao.domain.StateTaxDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,10 +42,6 @@ public class TestController {
 
     @GetMapping(value = {"test/user-principal", "validated/test/user-principal"})
     public Principal getPrincipal(Principal principal) {
-        var oAuth2AuthenticationToken = (OAuth2AuthenticationToken) principal;
-        //oAuth2AuthenticationToken.getAuthorities().stream().filter(grantedAuthority -> grantedAuthority.getAuthority().equals("OIDC_USER"))
-        //((OidcUserAuthority)((java.util.Collections.UnmodifiableRandomAccessList)oAuth2AuthenticationToken.authorities).get(0)).idToken
-        return oAuth2AuthenticationToken;
-
+        return principal;
     }
 }
