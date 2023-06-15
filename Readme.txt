@@ -2,6 +2,8 @@ Kafka
 https://www.youtube.com/watch?v=TkhU8d-uao8&ab_channel=JavaGuides
 https://www.baeldung.com/spring-boot-kafka-testing
 https://www.geeksforgeeks.org/how-to-install-and-run-apache-kafka-on-windows/#
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+.\bin\windows\kafka-server-start.bat .\config\server.properties
 
 Crime rate - https://developer.precisely.com/software-apis/dashboard
 Pollution - IQAir (v2/nearest_city?lat={{LATITUDE}}&lon={{LONGITUDE}}&key={{YOUR_API_KEY}})
@@ -28,3 +30,6 @@ To start go to scripts folder from the terminal and run
 Mongo will start on localhost:27017
 And UI version will be available  on localhost:8081
 
+
+Test request:
+http://localhost:8080/place-info?placeName=Chicago&state=Illinois&zipCode=60090

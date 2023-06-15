@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class NominatimService {
@@ -20,16 +21,14 @@ public class NominatimService {
         );
         var polygon = nominatimClient.callPlacePolygon(request);
         var geoJson = polygon.geojson();
-        var coordinates = geoJson.coordinates()
-                .stream()
-                .map(x -> ((List<Object>)x)
-                        .stream()
-                        .map(y -> (List<Double>)y )
-                        .toList())
-                .findFirst();
-
-        if(coordinates.isPresent()){
-            return coordinates.get();
+        List<List<Double>> geoCoordinates;
+        if(Objects.equals(geoJson.type(), "MultiPolygon")){
+            var nestedness3  = (List<Object>) geoJson.coordinates().get(0) ;
+            var nestedness2 = (List<List<Double>>)nestedness3.get(0);
+            return nestedness2;
+        } else if (Objects.equals(geoJson.type(), "Polygon")){
+            var nestedness2 = (List<List<Double>>)geoJson.coordinates().get(0);
+            return nestedness2;
         }else {
             throw new IllegalStateException("cannot parse coordinates");
         }
