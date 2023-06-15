@@ -1,9 +1,12 @@
 package com.eleks.plecescanner.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public record PlaceRequest(
-        String placeName,
-        String state,
-        String zipCode
+        @JsonProperty("placeName") String placeName,
+        @JsonProperty("state") String state,
+        @JsonProperty("zipCode") String zipCode
 ) {
 
     public PlaceRequest validateRequest(){
@@ -22,7 +25,7 @@ public record PlaceRequest(
         return this;
     }
 
-    private boolean isEmptyString(String s){
-        return placeName == null || placeName.isEmpty()|| placeName.isBlank();
+    private boolean isEmptyString(String parameter){
+        return parameter == null || parameter.isEmpty()|| parameter.isBlank();
     }
 }
