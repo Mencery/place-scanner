@@ -30,10 +30,9 @@ public class ScannerClient {
         this.restTemplate = restTemplate;
     }
 
-    public DemographicResponse callDemographicAdvance(PlaceRequest request) {
+    public DemographicResponse callDemographicAdvance(PlaceRequest request, String securityToken) {
         try {
-            var securityToken = "";
-            var uri = UriComponentsBuilder.fromUriString(scannerURI+DEMOGRAPHIC_ADVANCE).build().toUri();
+            var uri = UriComponentsBuilder.fromUriString(scannerURI + DEMOGRAPHIC_ADVANCE).build().toUri();
             var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<DemographicResponse>() {
             };
@@ -45,10 +44,9 @@ public class ScannerClient {
         }
     }
 
-    public AirResponse getAirInfo(PlaceRequest request) {
+    public AirResponse getAirInfo(PlaceRequest request, String securityToken) {
         try {
-            var securityToken = "";
-            var uri = UriComponentsBuilder.fromUriString(scannerURI+POLLUTION).build().toUri();
+            var uri = UriComponentsBuilder.fromUriString(scannerURI + POLLUTION).build().toUri();
             var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<AirResponse>() {
             };
@@ -61,10 +59,9 @@ public class ScannerClient {
     }
 
 
-    public CrimeResponse callCrimeByLocation(PlaceRequest request) {
+    public CrimeResponse callCrimeByLocation(PlaceRequest request, String securityToken) {
         try {
-            var securityToken = "";
-            var uri = UriComponentsBuilder.fromUriString(scannerURI+CRIME_BY_LOCATION).build().toUri();
+            var uri = UriComponentsBuilder.fromUriString(scannerURI + CRIME_BY_LOCATION).build().toUri();
             var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<CrimeResponse>() {
             };
