@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class UsPopulationService {
@@ -33,13 +34,15 @@ public class UsPopulationService {
         }
     }
 
-    public PopClockResponse findUsPopulation() {
-        var populations = usPopulationRepository.findAll();
-        if (populations.size() == 1) {
-            var population = populations.get(0);
-            return new PopClockResponse(population.getPopulation(), population.getDate());
-        } else {
-            throw new IllegalStateException("cannot be more or less than one us population");
-        }
+    public CompletableFuture<PopClockResponse> findUsPopulation() {
+        return CompletableFuture.supplyAsync(()->{
+            var populations = usPopulationRepository.findAll();
+            if (populations.size() == 1) {
+                var population = populations.get(0);
+                return new PopClockResponse(population.getPopulation(), population.getDate());
+            } else {
+                throw new IllegalStateException("cannot be more or less than one us population");
+            }
+        });
     }
 }

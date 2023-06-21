@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.*;
 import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.VEHICLEHHCX;
@@ -25,36 +26,37 @@ public class DemographicService {
     @Autowired
     private ScannerClient scannerClient;
 
-    public Demographic getDemographicInfo(PlaceRequest request, String securityToken) {
-        var demographicInfo = scannerClient.callDemographicAdvance(request, securityToken);
+    public CompletableFuture<Demographic> getDemographicInfo(PlaceRequest request, String securityToken) {
+        return CompletableFuture.supplyAsync(() -> {
+            var demographicInfo = scannerClient.callDemographicAdvance(request, securityToken);
 
-        var populationTheme = demographicInfo.themes().populationTheme();
-        var totalPopulation = findIndividualValueVariable(populationTheme, POPCY);
+            var populationTheme = demographicInfo.themes().populationTheme();
+            var totalPopulation = findIndividualValueVariable(populationTheme, POPCY);
 
-        var raceAndEthnicityTheme = demographicInfo.themes().raceAndEthnicityTheme();
-        var raceInfo = findRangeVariable(raceAndEthnicityTheme, RACEPCX);
-        var race = new Race(raceInfo.field());
+            var raceAndEthnicityTheme = demographicInfo.themes().raceAndEthnicityTheme();
+            var raceInfo = findRangeVariable(raceAndEthnicityTheme, RACEPCX);
+            var race = new Race(raceInfo.field());
 
-        var incomeTheme = demographicInfo.themes().incomeTheme();
-        var householdAverageIncome = findIndividualValueVariable(incomeTheme, HIAVGCY);
-        var income = new Income(new BigDecimal(householdAverageIncome.value()));
+            var incomeTheme = demographicInfo.themes().incomeTheme();
+            var householdAverageIncome = findIndividualValueVariable(incomeTheme, HIAVGCY);
+            var income = new Income(new BigDecimal(householdAverageIncome.value()));
 
-        var housingTheme = demographicInfo.themes().housingTheme();
-        var averageHomeValue = findIndividualValueVariable(housingTheme, HVAVGCY);
-        var medianHomeValue = findIndividualValueVariable(housingTheme, HVMEDCY);
-        var averageRentValue = findIndividualValueVariable(housingTheme, CRAVGCY);
-        var medianRentValue = findIndividualValueVariable(housingTheme, CRMEDCY);
-        var housing = new Housing(
-                new BigDecimal(averageHomeValue.value()),
-                new BigDecimal(medianHomeValue.value()),
-                new BigDecimal(averageRentValue.value()),
-                new BigDecimal(medianRentValue.value())
-        );
+            var housingTheme = demographicInfo.themes().housingTheme();
+            var averageHomeValue = findIndividualValueVariable(housingTheme, HVAVGCY);
+            var medianHomeValue = findIndividualValueVariable(housingTheme, HVMEDCY);
+            var averageRentValue = findIndividualValueVariable(housingTheme, CRAVGCY);
+            var medianRentValue = findIndividualValueVariable(housingTheme, CRMEDCY);
+            var housing = new Housing(
+                    new BigDecimal(averageHomeValue.value()),
+                    new BigDecimal(medianHomeValue.value()),
+                    new BigDecimal(averageRentValue.value()),
+                    new BigDecimal(medianRentValue.value())
+            );
 
-        var vehicleInfo = findRangeVariable(housingTheme, VEHICLEHHCX);
-        var vehicle = new Vehicle(vehicleInfo.field());
-
-        return new Demographic(totalPopulation.value(), race, income, housing, vehicle);
+            var vehicleInfo = findRangeVariable(housingTheme, VEHICLEHHCX);
+            var vehicle = new Vehicle(vehicleInfo.field());
+            return new Demographic(totalPopulation.value(), race, income, housing, vehicle);
+        });
     }
 
     private IndividualValueVariable findIndividualValueVariable(Theme theme, String keyword) {
@@ -63,7 +65,7 @@ public class DemographicService {
                 .filter(it -> Objects.equals(it.name(), keyword))
                 .findFirst();
         checkOptional(optional);
-        return optional.get();
+        return optional.orElseThrow(IllegalStateException::new);
     }
 
     private RangeVariable findRangeVariable(Theme theme, String keyword) {
@@ -72,7 +74,7 @@ public class DemographicService {
                 .filter(it -> Objects.equals(it.name(), keyword))
                 .findFirst();
         checkOptional(optional);
-        return optional.get();
+        return optional.orElseThrow(IllegalStateException::new);
     }
 
     private <T> void checkOptional(Optional<T> optional) {

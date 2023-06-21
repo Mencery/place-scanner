@@ -5,6 +5,8 @@ import com.eleks.plecescanner.common.domain.PlaceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.ExecutionException;
+
 @Service
 public class PlaceService {
     @Autowired
@@ -24,12 +26,18 @@ public class PlaceService {
 
     public PlaceResponse getPlaceInfo(PlaceRequest request, String securityToken) {
 
-        return new PlaceResponse(
-                demographicService.getDemographicInfo(request, securityToken),
-                crimeService.getPlaceCrime(request, securityToken),
-                stateTaxService.getStateTax(request.state()),
-                usPopulationService.findUsPopulation(),
-                airConditionService.getAirInfo(request, securityToken)
-        );
+        try {
+            return new PlaceResponse(
+                    demographicService.getDemographicInfo(request, securityToken).get(),
+                    crimeService.getPlaceCrime(request, securityToken).get(),
+                    stateTaxService.getStateTax(request.state()).get(),
+                    usPopulationService.findUsPopulation().get(),
+                    airConditionService.getAirInfo(request, securityToken).get()
+            );
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

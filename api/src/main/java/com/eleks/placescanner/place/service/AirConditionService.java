@@ -6,12 +6,14 @@ import com.eleks.plecescanner.common.domain.pollution.AirResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CompletableFuture;
+
 @Service
 public class AirConditionService {
     @Autowired
     private ScannerClient scannerClient;
 
-    public AirResponse getAirInfo(PlaceRequest request, String securityToken){
-        return scannerClient.getAirInfo(request, securityToken);
+    public CompletableFuture<AirResponse> getAirInfo(PlaceRequest request, String securityToken){
+        return CompletableFuture.supplyAsync(()-> scannerClient.getAirInfo(request, securityToken));
     }
 }
