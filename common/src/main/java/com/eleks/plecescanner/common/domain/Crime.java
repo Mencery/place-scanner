@@ -4,8 +4,5 @@ import com.eleks.plecescanner.common.domain.crime.IndexVariable;
 
 import java.util.List;
 
-public record Crime(
-        List<IndexVariable> crimes
-
-) {
+public record Crime(List<IndexVariable> crimes) {
 }

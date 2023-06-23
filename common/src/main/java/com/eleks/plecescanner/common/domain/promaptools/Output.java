@@ -6,6 +6,5 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public record Output(
         String zip,
         String latitude,
-        String longitude
-) {
+        String longitude) {
 }

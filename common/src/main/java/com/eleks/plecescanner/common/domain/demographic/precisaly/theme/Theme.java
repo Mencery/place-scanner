@@ -5,9 +5,9 @@ import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.R
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Theme(
-         ArrayList<IndividualValueVariable> individualValueVariable,
-         ArrayList<RangeVariable> rangeVariable
-){
+        ArrayList<IndividualValueVariable> individualValueVariable,
+        ArrayList<RangeVariable> rangeVariable) {
 }

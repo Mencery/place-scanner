@@ -5,7 +5,5 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record PollutionApiResponse(
-        @JsonProperty(value = "data") Data data
-) {
+public record PollutionApiResponse(@JsonProperty(value = "data") Data data) {
 }

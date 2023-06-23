@@ -18,24 +18,24 @@ public class TestController {
     @Autowired
     TestService testService;
 
-    @GetMapping(value = {"test/get/recent", "validated/test/get/recent"})
+    @GetMapping(value = {"test/recent-message", "validated/test/recent-message"})
     public String getRecent() {
         return testService.findRecent();
     }
 
 
-    @GetMapping(value = {"test/get/all", "validated/test/get/all"})
+    @GetMapping(value = {"test/all-messages", "validated/test/all-messages"})
     public Map<Date, String> getAll() {
         return testService.findAll();
     }
 
-    @DeleteMapping(value = {"test/storage/clean", "validated/test/storage/clean"})
+    @DeleteMapping(value = {"test/all-messages", "validated/test/all-messages"})
     public Map<Date, String> clean() {
         testService.clean();
         return testService.findAll();
     }
 
-    @GetMapping(value = {"test/state/taxes", "validated/test/state/taxes"})
+    @GetMapping(value = {"test/state-taxes", "validated/test/state-taxes"})
     public List<StateTaxDto> getAllStateTaxes() {
         return testService.findAllStateTaxes();
     }

@@ -18,7 +18,7 @@ public class PollutionController {
     private PollutionService pollutionService;
 
     @PostMapping
-    public ResponseEntity<AirResponse> getPollution(@RequestBody PlaceRequest request)  {
+    public ResponseEntity<AirResponse> getPollution(@RequestBody PlaceRequest request) {
         return new ResponseEntity<>(
                 pollutionService.getPollutionByPlace(request.zipCode()),
                 HttpStatus.OK

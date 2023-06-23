@@ -26,8 +26,7 @@ public class ApiConfig {
     @Primary
     public ScannerClient scannerClient(
             @Value("${scanner.url}") String scannerURI,
-            RestTemplate restTemplate
-    ) {
+            RestTemplate restTemplate) {
         return new ScannerClient(scannerURI, restTemplate);
     }
 

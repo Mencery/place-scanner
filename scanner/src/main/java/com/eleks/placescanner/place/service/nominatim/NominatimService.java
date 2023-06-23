@@ -4,7 +4,6 @@ import com.eleks.plecescanner.common.domain.demographic.nominatim.GetPolygonRequ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,14 +21,14 @@ public class NominatimService {
         var polygon = nominatimClient.callPlacePolygon(request);
         var geoJson = polygon.geojson();
         List<List<Double>> geoCoordinates;
-        if(Objects.equals(geoJson.type(), "MultiPolygon")){
-            var nestedness3  = (List<Object>) geoJson.coordinates().get(0) ;
-            var nestedness2 = (List<List<Double>>)nestedness3.get(0);
+        if (Objects.equals(geoJson.type(), "MultiPolygon")) {
+            var nestedness3 = (List<Object>) geoJson.coordinates().get(0);
+            var nestedness2 = (List<List<Double>>) nestedness3.get(0);
             return nestedness2;
-        } else if (Objects.equals(geoJson.type(), "Polygon")){
-            var nestedness2 = (List<List<Double>>)geoJson.coordinates().get(0);
+        } else if (Objects.equals(geoJson.type(), "Polygon")) {
+            var nestedness2 = (List<List<Double>>) geoJson.coordinates().get(0);
             return nestedness2;
-        }else {
+        } else {
             throw new IllegalStateException("cannot parse coordinates");
         }
     }

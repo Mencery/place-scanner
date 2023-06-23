@@ -1,2 +1,3 @@
 rootProject.name = 'common'
-
+include ':dao'
+project(':dao').projectDir = new File('../dao')

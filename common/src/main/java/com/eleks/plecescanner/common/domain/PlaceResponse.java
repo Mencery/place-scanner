@@ -9,6 +9,5 @@ public record PlaceResponse(
         Crime crime,
         StateTaxDto stateTax,
         PopClockResponse popClockResponse,
-        AirResponse airInfo
-) {
+        AirResponse airInfo) {
 }
