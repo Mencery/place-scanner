@@ -6,6 +6,5 @@ public record Housing(
         BigDecimal averageHomeValue,
         BigDecimal medianHomeValue,
         BigDecimal averageContractRent,
-        BigDecimal medianContractRent
-) {
+        BigDecimal medianContractRent) {
 }

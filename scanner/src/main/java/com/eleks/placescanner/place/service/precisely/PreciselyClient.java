@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -58,8 +59,12 @@ public class PreciselyClient {
             var requestEntity = buildGetRequest(uri, securityToken);
             var type = new ParameterizedTypeReference<DemographicResponse>() {
             };
+            var response = restTemplate.exchange(requestEntity, type);
+            checkStatusCode(response);
             return restTemplate.exchange(requestEntity, type).getBody();
 
+        } catch (NullPointerException e) {
+            throw new IllegalStateException("callDemographicByLocation exception returns empty body");
         } catch (HttpServerErrorException e) {
             LOGGER.error("callDemographicByLocation exception " + e);
             throw e;
@@ -73,11 +78,14 @@ public class PreciselyClient {
             var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<DemographicResponse>() {
             };
-            return restTemplate.
-                    exchange(requestEntity, type).getBody();
 
+            var response = restTemplate.exchange(requestEntity, type);
+            checkStatusCode(response);
+            return restTemplate.exchange(requestEntity, type).getBody();
+        } catch (NullPointerException e) {
+            throw new IllegalStateException("callDemographicAdvance exception returns empty body");
         } catch (HttpServerErrorException e) {
-            LOGGER.error("callDemographicByLocation exception " + e);
+            LOGGER.error("callDemographicAdvance exception " + e);
             throw e;
         }
     }
@@ -94,8 +102,12 @@ public class PreciselyClient {
             var requestEntity = buildGetRequest(uri, securityToken);
             var type = new ParameterizedTypeReference<CrimeResponse>() {
             };
+            var response = restTemplate.exchange(requestEntity, type);
+            checkStatusCode(response);
             return restTemplate.exchange(requestEntity, type).getBody();
-
+        }
+        catch (NullPointerException e) {
+            throw new IllegalStateException("callCrimeByLocation exception returns empty body");
         } catch (HttpServerErrorException e) {
             LOGGER.error("callCrimeByLocation exception " + e);
             throw e;
@@ -113,7 +125,7 @@ public class PreciselyClient {
 
         var response = restTemplate.exchange(requestEntity, new ParameterizedTypeReference<PreciselyToken>() {
         }).getBody();
-        if (response == null || response.accessToken() == null) {
+        if (response == null || response.accessToken() == null || response.accessToken().isEmpty()) {
             throw new IllegalStateException("no token");
         }
         return "Bearer " + response.accessToken();
@@ -134,5 +146,11 @@ public class PreciselyClient {
                 .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .header(HttpHeaders.AUTHORIZATION, securityToken)
                 .body(request);
+    }
+
+    private <T> void checkStatusCode(ResponseEntity<T> response) {
+        if (response.getStatusCode().isError()) {
+            throw new HttpServerErrorException(response.getStatusCode());
+        }
     }
 }

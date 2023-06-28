@@ -41,7 +41,7 @@ public class TestService {
         Map<Long, String> storage = testRepository.findAll();
         Date d = new Date();
 
-        Map<Date, String> dataToMessage = storage.entrySet().stream().collect(Collectors.toMap( e -> new Date(e.getKey()),Map.Entry::getValue));
+        Map<Date, String> dataToMessage = storage.entrySet().stream().collect(Collectors.toMap(e -> new Date(e.getKey()), Map.Entry::getValue));
         return dataToMessage;
     }
 

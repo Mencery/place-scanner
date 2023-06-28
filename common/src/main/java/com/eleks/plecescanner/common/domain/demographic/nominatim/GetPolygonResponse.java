@@ -20,6 +20,5 @@ public record GetPolygonResponse(
         String type,
         double importance,
         String icon,
-        GeoJson geojson
-) {
+        GeoJson geojson) {
 }

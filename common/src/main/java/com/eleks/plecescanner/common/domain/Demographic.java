@@ -10,6 +10,5 @@ public record Demographic(
         Race race,
         Income income,
         Housing housing,
-        Vehicle vehicle
-) {
+        Vehicle vehicle) {
 }

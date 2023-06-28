@@ -1,0 +1,5 @@
+rootProject.name = 'api'
+include ':common'
+include ':dao'
+project(':common').projectDir = new File('../common')
+project(':dao').projectDir = new File('../dao')

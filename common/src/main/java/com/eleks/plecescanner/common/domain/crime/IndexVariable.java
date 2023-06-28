@@ -8,6 +8,5 @@ public record IndexVariable(
          String score,
          String category,
          String percentile,
-         String stateScore
-) {
+         String stateScore) {
 }

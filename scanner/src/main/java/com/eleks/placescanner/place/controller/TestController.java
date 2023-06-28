@@ -34,32 +34,33 @@ public class TestController {
 
     @Value("${test.topic}")
     private String topic;
-    @GetMapping("/test/kafka")
+
+    @GetMapping("test/kafka/send")
     public String kafkaTest(@RequestParam(value = "text", defaultValue = "No text") String text) {
         producer.send(topic, text);
         return "sent";
     }
 
-    @GetMapping("/test/demographic")
+    @GetMapping("test/demographic")
     public DemographicResponse preciselyDemographicTest(@RequestParam(value = "longitude") Double longitude,
                                                         @RequestParam(value = "latitude") Double latitude) {
         return preciselyService.getDemographic(longitude, latitude);
     }
 
-    @GetMapping("/test/demographic/advance")
+    @GetMapping("test/demographic-advance")
     public DemographicResponse preciselyDemographicAdvanceTest(@RequestParam(value = "placeName") String placeName,
-                                                        @RequestParam(value = "state") String state) {
-        return demographicService.getPopulationForPlace(placeName,state);
+                                                               @RequestParam(value = "state") String state) {
+        return demographicService.getPopulationForPlace(placeName, state);
     }
 
-    @GetMapping("/test/popclock/data")
+    @GetMapping("test/popclock-data")
     public PopClockResponse getUSPopulationByClock() {
         return censusService.getPopulationByClock();
     }
 
-    @GetMapping("/test/nominant-coordinates")
+    @GetMapping("test/nominant-coordinates")
     public List<List<Double>> getCoordinates(@RequestParam(value = "placeName") String placeName,
-                                                     @RequestParam(value = "state") String state) {
+                                             @RequestParam(value = "state") String state) {
         return nominatimService.getPolygon(placeName, state);
     }
 }

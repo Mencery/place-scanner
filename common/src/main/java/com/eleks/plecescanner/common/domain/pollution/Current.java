@@ -7,6 +7,5 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Current(
         @JsonProperty(value = "pollution") Pollution pollution,
-        @JsonProperty(value = "weather") Weather weather
-) {
+        @JsonProperty(value = "weather") Weather weather) {
 }

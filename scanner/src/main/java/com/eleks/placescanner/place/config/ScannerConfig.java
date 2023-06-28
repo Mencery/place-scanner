@@ -20,8 +20,7 @@ public class ScannerConfig {
 
     @Bean
     @Primary
-    public RestTemplate restTemplate(
-    ) {
+    public RestTemplate restTemplate() {
         return new RestTemplateBuilder().build();
     }
 
@@ -34,9 +33,7 @@ public class ScannerConfig {
             @Value("${precisely.api.oauth.token.url}") String oauthTokenURI,
             @Value("#{systemEnvironment['PRECISELY_API_KEY']}") String preciselyApiKey,
             @Value("#{systemEnvironment['PRECISELY_API_SECRET']}") String preciselyApiSecret,
-            RestTemplate restTemplate
-
-    ) {
+            RestTemplate restTemplate) {
         return new PreciselyClient(demographicByLocationURI, demographicAdvanceURI, crimeByLocationURI, oauthTokenURI, preciselyApiKey, preciselyApiSecret, restTemplate);
     }
 
@@ -44,8 +41,7 @@ public class ScannerConfig {
     @Primary
     public NominatimClient nominatimClient(
             @Value("${nominatim.api.place-polygon.url}") String placePolygonURI,
-            RestTemplate restTemplate
-    ) {
+            RestTemplate restTemplate) {
         return new NominatimClient(placePolygonURI, restTemplate);
     }
 
@@ -53,8 +49,7 @@ public class ScannerConfig {
     @Primary
     public CensusClient censusClient(
             @Value("${census.api.popclock-data.url}") String popclockDataURI,
-            RestTemplate restTemplate
-    ) {
+            RestTemplate restTemplate) {
         return new CensusClient(popclockDataURI, restTemplate);
     }
 
@@ -62,8 +57,7 @@ public class ScannerConfig {
     @Primary
     public PromaptoolsClient promaptoolsClient(
             @Value("${promaptools.api.get-lat-lng-by-zip.url}") String latLngByZipURI,
-            RestTemplate restTemplate
-    ) {
+            RestTemplate restTemplate) {
         return new PromaptoolsClient(latLngByZipURI, restTemplate);
     }
 

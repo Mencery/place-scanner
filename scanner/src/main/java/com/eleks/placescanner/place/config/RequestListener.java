@@ -17,13 +17,13 @@ public class RequestListener extends OrderedRequestContextFilter {
 
     @Autowired
     GoogleTokenVerifier googleTokenVerifier;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = request.getHeader("Authorization");
-        if(googleTokenVerifier.isAuthorizationHeaderNotEmpty(token) && googleTokenVerifier.isTokenValid(token, clientId)){
+        if (googleTokenVerifier.isAuthorizationHeaderNotEmpty(token) && googleTokenVerifier.isTokenValid(token, clientId)) {
             super.doFilterInternal(request, response, filterChain);
-        }
-        else {
+        } else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }

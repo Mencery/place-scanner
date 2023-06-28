@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DemographicService {
-   @Autowired
-   private NominatimService nominatimService;
-   @Autowired
-   private PreciselyService preciselyService;
-   public DemographicResponse getPopulationForPlace(String placeName, String state){
-      var polygon = nominatimService.getPolygon(placeName, state);
-      return preciselyService.getDemographicByPolygon(polygon);
-   }
+    @Autowired
+    private NominatimService nominatimService;
+    @Autowired
+    private PreciselyService preciselyService;
+
+    public DemographicResponse getPopulationForPlace(String placeName, String state) {
+        var polygon = nominatimService.getPolygon(placeName, state);
+        return preciselyService.getDemographicByPolygon(polygon);
+    }
 }

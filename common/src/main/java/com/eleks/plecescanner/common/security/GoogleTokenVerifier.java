@@ -9,11 +9,12 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+
 @Component
 public class GoogleTokenVerifier {
 
     @SneakyThrows
-    public boolean isTokenValid(String token, String clientId){
+    public boolean isTokenValid(String token, String clientId) {
         NetHttpTransport transport = new NetHttpTransport();
         JsonFactory jsonFactory = new GsonFactory();
 

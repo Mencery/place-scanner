@@ -6,6 +6,5 @@ public record DemographicRequest(
         String profile,
         String filter,
         String valueFormat,
-        String variableLevel
-) {
+        String variableLevel) {
 }

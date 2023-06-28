@@ -10,6 +10,5 @@ public record PreciselyToken(
         String issuedAt,
         String expiresIn,
         String clientID,
-        String org
-) {
+        String org) {
 }

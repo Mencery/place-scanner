@@ -5,7 +5,5 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record Pollution(
-        @JsonProperty(value = "aqius") int aqius
-) {
+public record Pollution(@JsonProperty(value = "aqius") int aqius) {
 }

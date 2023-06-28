@@ -13,11 +13,9 @@ public class DemographicController {
     @Autowired
     private DemographicService demographicService;
 
-    @PostMapping(value = "demographic/advance", consumes = {"application/json"})
-    //todo
+    @PostMapping(value = "demographic", consumes = {"application/json"})
     public ResponseEntity<DemographicResponse> getRecent(
-            @RequestBody PlaceRequest request
-    ) {
+            @RequestBody PlaceRequest request) {
         return new ResponseEntity<>(demographicService.getPopulationForPlace(request.placeName(), request.state()), HttpStatus.OK);
     }
 }

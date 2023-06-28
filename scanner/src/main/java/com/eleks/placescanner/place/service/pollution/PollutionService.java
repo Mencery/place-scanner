@@ -27,7 +27,7 @@ public class PollutionService {
     @Autowired
     private PromaptoolsService promaptoolsService;
 
-    public AirResponse getPollutionByPlace(String zipcode){
+    public AirResponse getPollutionByPlace(String zipcode) {
         Output output = promaptoolsService.getLatLongByZip(zipcode);
         String latitude = output.latitude();
         String longitude = output.longitude();
@@ -42,7 +42,7 @@ public class PollutionService {
         return new AirResponse(pollutionResponse, weatherResponse);
     }
 
-    private String getAirQualityByIndex(int airQualityIndex){
+    private String getAirQualityByIndex(int airQualityIndex) {
         Optional<AirQuality> airQuality = Arrays.stream(AirQuality.values()).filter(p -> p.airQualityIndex > airQualityIndex).findFirst();
         return airQuality.get().airQualityName;
     }
