@@ -2,8 +2,10 @@ package com.eleks.plecescanner.dao.migration;
 
 import com.eleks.plecescanner.dao.entity.StateTax;
 import com.eleks.plecescanner.dao.entity.UsPopulation;
+import com.eleks.plecescanner.dao.entity.User;
 import com.eleks.plecescanner.dao.repository.StateTaxRepository;
 import com.eleks.plecescanner.dao.repository.UsPopulationRepository;
+import com.eleks.plecescanner.dao.repository.UserRepository;
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 
@@ -13,6 +15,7 @@ import java.util.List;
 
 @ChangeLog
 public class DatabaseChangeLog {
+
     @ChangeSet(order = "001", id = "fillStateTaxes", author = "Denys Plekhanov")
     public void stateTaxDatabase(StateTaxRepository repository) {
         List<StateTax> stateTaxes = new ArrayList<>();
@@ -75,5 +78,13 @@ public class DatabaseChangeLog {
         if (populations.size() == 0) {
             repository.insert(new UsPopulation(334847576, new Date()));
         }
+    }
+
+    @ChangeSet(order = "003", id = "fillUsers", author = "Denys Plekhanov")
+    public void userDatabase(UserRepository repository) {
+        List<User> users = new ArrayList<>();
+        users.add(new User("plekhanov1090@gmail.com", "admin"));
+        users.add(new User("vladyslav.fedorkin@gmail.com", "user"));
+        repository.insert(users);
     }
 }

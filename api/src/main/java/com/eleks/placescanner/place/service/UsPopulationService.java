@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 @Service
 public class UsPopulationService {
+
     @Autowired
     UsPopulationRepository usPopulationRepository;
 

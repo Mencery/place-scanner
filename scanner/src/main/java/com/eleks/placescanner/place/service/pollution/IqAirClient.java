@@ -6,7 +6,7 @@ import com.eleks.plecescanner.common.domain.pollution.PollutionApiResponse;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@FeignClient(value = "iqAirApi", url = "${iqair.api.url}")
+@FeignClient(value = "iqAirApi", url = "${url.api.iqair}")
 public interface IqAirClient {
 
     @GetMapping("/nearest_city")

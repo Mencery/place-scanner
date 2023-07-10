@@ -37,21 +37,25 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class PreciselyClientTest {
-    @SpyBean
-    private PreciselyClient preciselyClient;
-    @MockBean
-    private RestTemplate restTemplate;
+
     @Autowired
     private MockMvc mockMvc;
-    @Value("${precisely.api.oauth.token.url}")
+
+    @SpyBean
+    private PreciselyClient preciselyClient;
+
+    @MockBean
+    private RestTemplate restTemplate;
+
+
+    @Value("${url.api.precisely.oauth-token}")
     private String OAUTH_TOKEN_URI;
     @Value("#{systemEnvironment['PRECISELY_API_KEY']}")
     private String PRECISELY_API_KEY;
     @Value("#{systemEnvironment['PRECISELY_API_SECRET']}")
     private String PRECISELY_API_SECRET;
-    @Value("${precisely.api.demographic-by-location.url}")
+    @Value("${url.api.precisely.demographic-by-location}")
     private String demographicByLocationURI;
-
 
     private static final String DEMOGRAPHICS_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsByLocationResponse.json";
     private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsSegmentationAdvancedResponse.json";
@@ -59,9 +63,7 @@ class PreciselyClientTest {
     private static final String CRIME_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/crimeByLocationResponse.json";
 
     private ObjectMapper objectMapper;
-
     private ResponseEntity response;
-
     private DemographicRequest demographicRequest;
     private DemographicAdvancedRequest demographicAdvancedRequest;
     private CrimeRequest crimeRequest;

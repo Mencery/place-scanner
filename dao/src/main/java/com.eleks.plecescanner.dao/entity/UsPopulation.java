@@ -11,6 +11,7 @@ import java.util.Date;
 public class UsPopulation {
     @Id
     private String id;
+
     private int population;
     private Date date;
 

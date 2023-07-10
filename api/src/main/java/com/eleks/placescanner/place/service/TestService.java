@@ -1,6 +1,5 @@
 package com.eleks.placescanner.place.service;
 
-import com.eleks.placescanner.place.repository.TestRepository;
 import com.eleks.plecescanner.dao.domain.StateTaxDto;
 import com.eleks.plecescanner.dao.repository.StateTaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 @Component
 public class TestService {
-    @Autowired
-    TestRepository testRepository;
 
     @Autowired
     StateTaxRepository stateTaxRepository;
@@ -24,29 +22,28 @@ public class TestService {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    Map<Long, String> kafkaTestMap = new HashMap<>();
+
     public void save(Long timestamp, String message) {
-        testRepository.save(timestamp, message);
+        kafkaTestMap.put(timestamp, message);
     }
 
     public String findRecent() {
-        Map<Long, String> storage = testRepository.findAll();
-        Long recent = storage.keySet().stream().max(Comparator.comparing(Long::valueOf)).orElse(0L);
+
+        Long recent = kafkaTestMap.keySet().stream().max(Comparator.comparing(Long::valueOf)).orElse(0L);
         if (recent == 0) {
             return "nothing found";
         }
-        return storage.get(recent);
+        return kafkaTestMap.get(recent);
     }
 
     public Map<Date, String> findAll() {
-        Map<Long, String> storage = testRepository.findAll();
-        Date d = new Date();
-
-        Map<Date, String> dataToMessage = storage.entrySet().stream().collect(Collectors.toMap(e -> new Date(e.getKey()), Map.Entry::getValue));
+        Map<Date, String> dataToMessage = kafkaTestMap.entrySet().stream().collect(Collectors.toMap(e -> new Date(e.getKey()), Map.Entry::getValue));
         return dataToMessage;
     }
 
-    public void clean() {
-        testRepository.clean();
+    public void  clear() {
+        kafkaTestMap.clear();
     }
 
     public List<StateTaxDto> findAllStateTaxes() {

@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DemographicService {
+
     @Autowired
     private NominatimService nominatimService;
+
     @Autowired
     private PreciselyService preciselyService;
 

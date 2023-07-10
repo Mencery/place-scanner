@@ -1,13 +1,13 @@
 package com.eleks.plecescanner.dao.repository;
 
-import com.eleks.plecescanner.dao.entity.StateTax;
+import com.eleks.plecescanner.dao.entity.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface StateTaxRepository extends MongoRepository<StateTax, String> {
+public interface UserRepository extends MongoRepository<User, String> {
 
-    Optional<StateTax> findStateTaxByState(String state);
+    Optional<User> findByEmail(String email);
 }

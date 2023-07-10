@@ -23,6 +23,7 @@ public class ScannerClient {
 
     private final String scannerURI;
     private final RestTemplate restTemplate;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ScannerClient.class);
 
     public ScannerClient(String scannerURI, RestTemplate restTemplate) {
@@ -80,5 +81,4 @@ public class ScannerClient {
                 .header(HttpHeaders.AUTHORIZATION, securityToken)
                 .body(request);
     }
-
 }

@@ -12,6 +12,7 @@ public class NominatimService {
 
     @Autowired
     private NominatimClient nominatimClient;
+
     @SuppressWarnings("unchecked")
     public List<List<Double>> getPolygon(String placeName, String state) {
         var request = new GetPolygonRequest(
@@ -32,5 +33,4 @@ public class NominatimService {
             throw new IllegalStateException("cannot parse coordinates");
         }
     }
-
 }

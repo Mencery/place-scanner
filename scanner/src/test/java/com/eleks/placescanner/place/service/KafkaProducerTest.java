@@ -16,11 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @Disabled("Requires Kafka local set up and running api application ")
 class KafkaProducerTest {
 
-
     @Autowired
     private KafkaProducer producer;
 
-    @Value("${test.topic}")
+    @Value("${topic.test}")
     private String topic;
 
     @Test

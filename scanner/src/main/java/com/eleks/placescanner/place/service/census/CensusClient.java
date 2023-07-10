@@ -16,10 +16,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 public class CensusClient {
+
     private final String popclockDataURI;
     private final RestTemplate restTemplate;
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
     private final ObjectMapper objectMapper;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
+
 
     public CensusClient(String popclockDataURI, RestTemplate restTemplate) {
         this.popclockDataURI = popclockDataURI;

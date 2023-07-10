@@ -22,6 +22,7 @@ import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.VEHICLE
 
 @Service
 public class DemographicService {
+
     @Autowired
     private ScannerClient scannerClient;
 

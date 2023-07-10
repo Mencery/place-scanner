@@ -16,17 +16,15 @@ import java.util.concurrent.CountDownLatch;
 public class KafkaConsumer {
 
     @Autowired
-    TestService testService;
-
-    @Autowired
     UsPopulationService usPopulationService;
+
+    private CountDownLatch latch = new CountDownLatch(1);
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
 
-    private CountDownLatch latch = new CountDownLatch(1);
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    @KafkaListener(topics = "${us-population.topic}")
+    @KafkaListener(topics = "${topic.us-population}")
     public void receiveUsPopulation(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
 
         LOGGER.info("received payload='{}'", consumerRecord.toString());
@@ -36,18 +34,4 @@ public class KafkaConsumer {
 
         usPopulationService.updateUsPopulation(popClock);
     }
-
-    @KafkaListener(topics = "${test.topic}")
-    public void receive(ConsumerRecord<String, String> consumerRecord) {
-
-        LOGGER.info("received payload='{}'", consumerRecord.toString());
-        var payload = consumerRecord.toString();
-        testService.save(consumerRecord.timestamp(), consumerRecord.value());
-        latch.countDown();
-    }
-
-    public void resetLatch() {
-        latch = new CountDownLatch(1);
-    }
-
 }

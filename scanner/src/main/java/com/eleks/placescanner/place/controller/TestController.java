@@ -18,11 +18,13 @@ import java.util.List;
 
 @RestController
 public class TestController {
+
     @Autowired
     private KafkaProducer producer;
 
     @Autowired
     private PreciselyService preciselyService;
+
     @Autowired
     private DemographicService demographicService;
 
@@ -32,7 +34,7 @@ public class TestController {
     @Autowired
     private NominatimService nominatimService;
 
-    @Value("${test.topic}")
+    @Value("${topic.test}")
     private String topic;
 
     @GetMapping("test/kafka/send")

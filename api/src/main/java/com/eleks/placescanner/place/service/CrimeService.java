@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CrimeService {
+
     @Autowired
     private ScannerClient scannerClient;
 
@@ -20,5 +21,4 @@ public class CrimeService {
             throw new IllegalStateException("crime shoud have one default theme, theme size: " + crimeResponse.themes().size());
         }
     }
-
 }

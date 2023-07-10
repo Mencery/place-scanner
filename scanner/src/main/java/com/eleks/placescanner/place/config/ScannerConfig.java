@@ -27,10 +27,10 @@ public class ScannerConfig {
     @Bean
     @Primary
     public PreciselyClient preciselyClient(
-            @Value("${precisely.api.demographic-by-location.url}") String demographicByLocationURI,
-            @Value("${precisely.api.demographic-advance.url}") String demographicAdvanceURI,
-            @Value("${precisely.api.crime-by-location.url}") String crimeByLocationURI,
-            @Value("${precisely.api.oauth.token.url}") String oauthTokenURI,
+            @Value("${url.api.precisely.demographic-by-location}") String demographicByLocationURI,
+            @Value("${url.api.precisely.demographic-advance}") String demographicAdvanceURI,
+            @Value("${url.api.precisely.crime-by-location}") String crimeByLocationURI,
+            @Value("${url.api.precisely.oauth-token}") String oauthTokenURI,
             @Value("#{systemEnvironment['PRECISELY_API_KEY']}") String preciselyApiKey,
             @Value("#{systemEnvironment['PRECISELY_API_SECRET']}") String preciselyApiSecret,
             RestTemplate restTemplate) {
@@ -40,7 +40,7 @@ public class ScannerConfig {
     @Bean
     @Primary
     public NominatimClient nominatimClient(
-            @Value("${nominatim.api.place-polygon.url}") String placePolygonURI,
+            @Value("${url.api.nominatim.place-polygon}") String placePolygonURI,
             RestTemplate restTemplate) {
         return new NominatimClient(placePolygonURI, restTemplate);
     }
@@ -48,7 +48,7 @@ public class ScannerConfig {
     @Bean
     @Primary
     public CensusClient censusClient(
-            @Value("${census.api.popclock-data.url}") String popclockDataURI,
+            @Value("${url.api.census.popclock-data}") String popclockDataURI,
             RestTemplate restTemplate) {
         return new CensusClient(popclockDataURI, restTemplate);
     }
@@ -56,7 +56,7 @@ public class ScannerConfig {
     @Bean
     @Primary
     public PromaptoolsClient promaptoolsClient(
-            @Value("${promaptools.api.get-lat-lng-by-zip.url}") String latLngByZipURI,
+            @Value("${url.api.promaptools.get-lat-lng-by-zip}") String latLngByZipURI,
             RestTemplate restTemplate) {
         return new PromaptoolsClient(latLngByZipURI, restTemplate);
     }
