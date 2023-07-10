@@ -13,18 +13,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class KafkaProducer {
-    @Value("${us-population.topic}")
-    private String usPopulationTopic;
-
     @Autowired
     private CensusService censusService;
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    @Value("${topic.us-population}")
+    private String usPopulationTopic;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
-
-    @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
 
     public void send(String topic, String payload) {
         LOGGER.info("sending payload='{}' to topic='{}'", payload, topic);

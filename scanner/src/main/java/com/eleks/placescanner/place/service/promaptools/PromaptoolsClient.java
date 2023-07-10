@@ -15,8 +15,8 @@ import java.net.URI;
 import java.util.List;
 
 public class PromaptoolsClient {
-    private final String latLngByZipURI;
 
+    private final String latLngByZipURI;
     private final RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);

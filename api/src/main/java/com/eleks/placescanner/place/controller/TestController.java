@@ -15,32 +15,33 @@ import java.util.Map;
 
 @RestController
 public class TestController {
+
     @Autowired
     TestService testService;
 
-    @GetMapping(value = {"test/recent-message", "validated/test/recent-message"})
+    @GetMapping(value = {"test/recent-message"})
     public String getRecent() {
         return testService.findRecent();
     }
 
 
-    @GetMapping(value = {"test/all-messages", "validated/test/all-messages"})
+    @GetMapping(value = {"test/all-messages"})
     public Map<Date, String> getAll() {
         return testService.findAll();
     }
 
-    @DeleteMapping(value = {"test/all-messages", "validated/test/all-messages"})
+    @DeleteMapping(value = {"test/all-messages"})
     public Map<Date, String> clean() {
-        testService.clean();
+        testService.clear();
         return testService.findAll();
     }
 
-    @GetMapping(value = {"test/state-taxes", "validated/test/state-taxes"})
+    @GetMapping(value = {"test/state-taxes"})
     public List<StateTaxDto> getAllStateTaxes() {
         return testService.findAllStateTaxes();
     }
 
-    @GetMapping(value = {"test/user-principal", "validated/test/user-principal"})
+    @GetMapping(value = {"test/user-principal"})
     public Principal getPrincipal(Principal principal) {
         return principal;
     }

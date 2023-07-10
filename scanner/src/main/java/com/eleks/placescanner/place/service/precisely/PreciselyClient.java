@@ -21,19 +21,16 @@ import java.net.URI;
 import java.util.Base64;
 
 public class PreciselyClient {
+
     private final String demographicByLocationURI;
     private final String demographicAdvanceURI;
-
     private final String crimeByLocationURI;
     private final String oauthTokenURI;
-
     private final String preciselyApiKey;
     private final String preciselyApiSecret;
-
     private final RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
-
 
     public PreciselyClient(String demographicByLocationURI, String demographicAdvanceURI, String crimeByLocationURI, String oauthTokenURI, String preciselyApiKey, String preciselyApiSecret, RestTemplate restTemplate) {
         this.demographicByLocationURI = demographicByLocationURI;

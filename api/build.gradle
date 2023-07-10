@@ -4,7 +4,7 @@ plugins {
     id 'org.springframework.boot' version '3.0.6'
 }
 
-group = 'com.eleks.skyscanner.flight'
+group = 'com.eleks.placescanner.api'
 version = '1.0-SNAPSHOT'
 
 repositories {

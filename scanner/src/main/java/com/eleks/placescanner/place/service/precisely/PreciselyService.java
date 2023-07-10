@@ -45,5 +45,4 @@ public class PreciselyService {
         );
         return preciselyClient.callCrimeByLocation(request);
     }
-
 }

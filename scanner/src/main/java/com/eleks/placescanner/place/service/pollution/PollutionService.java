@@ -17,15 +17,14 @@ import java.util.Optional;
 
 @Service
 public class PollutionService {
-
-    @Value("#{systemEnvironment['IQAIR_API_KEY']}")
-    private String key;
-
     @Autowired
     private IqAirClient iqAirClient;
 
     @Autowired
     private PromaptoolsService promaptoolsService;
+
+    @Value("#{systemEnvironment['IQAIR_API_KEY']}")
+    private String key;
 
     public AirResponse getPollutionByPlace(String zipcode) {
         Output output = promaptoolsService.getLatLongByZip(zipcode);

@@ -16,8 +16,8 @@ import java.net.URI;
 import java.util.List;
 
 public class NominatimClient {
-    private final String placePolygonURI;
 
+    private final String placePolygonURI;
     private final RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);

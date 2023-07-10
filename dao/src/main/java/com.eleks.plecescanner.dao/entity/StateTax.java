@@ -8,10 +8,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document("stateTax")
 public class StateTax {
+
     @Id
     private String id;
+
     @Indexed(unique = true)
     private String state;
+    
     private String individualIncomeTax;
     private String onSaleTax;
 

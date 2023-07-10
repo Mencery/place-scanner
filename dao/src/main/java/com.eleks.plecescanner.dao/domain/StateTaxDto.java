@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class StateTaxDto {
+
     private String state;
     private String individualIncomeTax;
     private String onSaleTax;

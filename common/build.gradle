@@ -17,12 +17,12 @@ repositories {
 dependencies {
     api 'org.apache.commons:commons-math3:3.6.1'
     implementation project(':dao')
-    //implementation 'com.eleks.placescanner.dao:dao:1.0-SNAPSHOT'
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.0.6'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-autoconfigure:3.0.6'
     implementation 'org.springframework.kafka:spring-kafka:3.0.6'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:3.1.0'
     implementation 'org.springframework.security:spring-security-core:6.1.0'
     implementation 'org.springframework.security:spring-security-oauth2-client:6.1.0'
     implementation 'com.google.api-client:google-api-client:2.1.3'

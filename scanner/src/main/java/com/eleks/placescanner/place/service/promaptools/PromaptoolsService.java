@@ -4,8 +4,6 @@ import com.eleks.plecescanner.common.domain.promaptools.Output;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class PromaptoolsService {
 
@@ -23,5 +21,4 @@ public class PromaptoolsService {
             throw new IllegalStateException("no latitude or longitude were found by zip code " + zipCode);
         }
     }
-
 }
