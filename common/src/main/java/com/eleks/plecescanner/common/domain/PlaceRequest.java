@@ -1,5 +1,6 @@
 package com.eleks.plecescanner.common.domain;
 
+import com.eleks.plecescanner.common.exception.domain.InvalidRequestException;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,16 +12,16 @@ public record PlaceRequest(
 
     public PlaceRequest validateRequest() {
         if (isEmptyString(placeName)) {
-            throw new IllegalStateException("placeName cannot be empty");
+            throw new InvalidRequestException("placeName cannot be empty");
         }
         if (isEmptyString(state)) {
-            throw new IllegalStateException("state cannot be empty");
+            throw new InvalidRequestException("state cannot be empty");
         }
         if (isEmptyString(zipCode)) {
-            throw new IllegalStateException("zipCode cannot be empty");
+            throw new InvalidRequestException("zipCode cannot be empty");
         }
         if (zipCode.length() != 5 || !zipCode.matches("\\d{5}")) {
-            throw new IllegalStateException("zipCode should be 5 digits");
+            throw new InvalidRequestException("zipCode should be 5 digits");
         }
         return this;
     }

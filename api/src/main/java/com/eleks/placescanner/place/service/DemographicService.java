@@ -10,10 +10,13 @@ import com.eleks.plecescanner.common.domain.demographic.Vehicle;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.Theme;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.IndividualValueVariable;
 import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.RangeVariable;
+import com.eleks.plecescanner.common.exception.domain.ErrorMessage;
+import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -26,8 +29,12 @@ public class DemographicService {
     @Autowired
     private ScannerClient scannerClient;
 
-    public Demographic getDemographicInfo(PlaceRequest request, String securityToken) {
-        var demographicInfo = scannerClient.callDemographicAdvance(request, securityToken);
+    public Demographic getDemographicInfo(PlaceRequest request, String securityToken, List<ErrorMessage> errorMessages) {
+        var demographicInfo = scannerClient.callDemographicAdvance(request, securityToken, errorMessages);
+
+        if (demographicInfo == null) {
+            return null;
+        }
 
         var populationTheme = demographicInfo.themes().populationTheme();
         var totalPopulation = findIndividualValueVariable(populationTheme, POPCY);
@@ -78,7 +85,7 @@ public class DemographicService {
 
     private <T> void checkOptional(Optional<T> optional) {
         if (optional.isEmpty()) {
-            throw new IllegalStateException("incorrect demographicInfo response");
+            throw new UnexpectedResponseException("incorrect demographicInfo response");
         }
     }
 }

@@ -51,7 +51,7 @@ public class TestController {
 
     @GetMapping("test/demographic-advance")
     public DemographicResponse preciselyDemographicAdvanceTest(@RequestParam(value = "placeName") String placeName,
-                                                               @RequestParam(value = "state") String state) {
+                                                                     @RequestParam(value = "state") String state) {
         return demographicService.getPopulationForPlace(placeName, state);
     }
 

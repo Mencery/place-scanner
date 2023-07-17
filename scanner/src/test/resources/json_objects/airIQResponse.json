@@ -1,0 +1,33 @@
+{
+  "status": "success",
+  "data": {
+    "city": "Wheeling",
+    "state": "Illinois",
+    "country": "USA",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -87.92896,
+        42.13919
+      ]
+    },
+    "current": {
+      "pollution": {
+        "ts": "2023-07-15T21:00:00.000Z",
+        "aqius": 38,
+        "mainus": "p2",
+        "aqicn": 13,
+        "maincn": "p2"
+      },
+      "weather": {
+        "ts": "2023-07-15T21:00:00.000Z",
+        "tp": 28,
+        "pr": 1009,
+        "hu": 58,
+        "ws": 4.12,
+        "wd": 320,
+        "ic": "02d"
+      }
+    }
+  }
+}

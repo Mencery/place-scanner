@@ -14,8 +14,12 @@ import java.util.List;
 @Service
 public class PreciselyService {
 
+    private final PreciselyClient preciselyClient;
+
     @Autowired
-    private PreciselyClient preciselyClient;
+    PreciselyService(PreciselyClient preciselyClient){
+        this.preciselyClient = preciselyClient;
+    }
 
     public DemographicResponse getDemographic(double longitude, double latitude) {
         var request = new DemographicRequest(

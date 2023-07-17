@@ -1,4 +1,4 @@
-package com.eleks.placescanner.place.service.security;
+package com.eleks.plecescanner.common.security.service;
 
 import com.eleks.plecescanner.dao.entity.User;
 import lombok.Data;

@@ -4,6 +4,14 @@ server:
   port: 8090
 
 spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      database: dev
+      host: localhost
+      password: rootpass
+      port: 27017
+      username: rootuser
   security:
     oauth2:
       client:

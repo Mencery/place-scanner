@@ -2,6 +2,8 @@ package com.eleks.placescanner.place.service.promaptools;
 
 import com.eleks.placescanner.place.service.KafkaProducer;
 import com.eleks.plecescanner.common.domain.promaptools.PromaptoolsResponse;
+import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 public class PromaptoolsClient {
 
@@ -36,10 +37,13 @@ public class PromaptoolsClient {
             var requestEntity = buildGetRequest(uri);
             var type = new ParameterizedTypeReference<PromaptoolsResponse>() {
             };
-            return restTemplate.exchange(requestEntity, type).getBody();
+            var response = restTemplate.exchange(requestEntity, type).getBody();
+            checkResponseNotNull(response);
+            return response;
+
         } catch (HttpServerErrorException e) {
             LOGGER.error("Promaptools call exception " + e);
-            throw e;
+            throw new UnexpectedResponseException(e.getMessage());
         }
     }
 
@@ -48,5 +52,11 @@ public class PromaptoolsClient {
                 .get(endpoint)
                 .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .build();
+    }
+
+    private void checkResponseNotNull(PromaptoolsResponse promaptoolsResponse) {
+        if (promaptoolsResponse.outputList() == null || promaptoolsResponse.outputList().isEmpty()) {
+            throw new ResourceNotFoundException("No us population was found");
+        }
     }
 }

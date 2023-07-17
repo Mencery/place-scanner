@@ -1,19 +1,19 @@
-package com.eleks.placescanner.place.config.security;
+package com.eleks.plecescanner.common.security.filter;
 
-import com.eleks.placescanner.place.service.security.CustomUserDetailsService;
 import com.eleks.plecescanner.common.security.GoogleTokenUtil;
 import com.eleks.plecescanner.common.security.GoogleTokenVerifier;
+import com.eleks.plecescanner.common.security.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 

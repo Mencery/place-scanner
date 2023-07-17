@@ -10,12 +10,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@ComponentScan(basePackages = {"com.eleks.placescanner.place", "com.eleks.plecescanner.common"})
+@ComponentScan(basePackages = {"com.eleks.placescanner.place", "com.eleks.plecescanner.dao", "com.eleks.plecescanner.common"})
 @EnableScheduling
+@EnableMongoRepositories(basePackages = {"com.eleks.plecescanner.dao.repository"})
 public class ScannerConfig {
 
     @Bean

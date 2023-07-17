@@ -1,5 +1,6 @@
-package com.eleks.placescanner.place.service.pollution;
+package com.eleks.placescanner.place.controller;
 
+import com.eleks.placescanner.place.service.pollution.PollutionService;
 import com.eleks.plecescanner.common.domain.PlaceRequest;
 import com.eleks.plecescanner.common.domain.pollution.AirResponse;
 import com.eleks.plecescanner.common.domain.pollution.PollutionResponse;
