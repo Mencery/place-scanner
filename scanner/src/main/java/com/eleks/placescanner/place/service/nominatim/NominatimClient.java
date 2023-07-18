@@ -1,8 +1,10 @@
 package com.eleks.placescanner.place.service.nominatim;
 
 import com.eleks.placescanner.place.service.KafkaProducer;
-import com.eleks.plecescanner.common.domain.demographic.nominatim.GetPolygonRequest;
-import com.eleks.plecescanner.common.domain.demographic.nominatim.GetPolygonResponse;
+import com.eleks.placescanner.common.domain.demographic.nominatim.GetPolygonRequest;
+import com.eleks.placescanner.common.domain.demographic.nominatim.GetPolygonResponse;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -43,12 +45,12 @@ public class NominatimClient {
             if (array != null && array.size() > 0) {
                 return array.get(0);
             } else {
-                throw new IllegalStateException("Polygon not found");
+                throw new ResourceNotFoundException("Polygon not found");
             }
 
         } catch (HttpServerErrorException e) {
             LOGGER.error("Nominatim call exception " + e);
-            throw e;
+            throw new UnexpectedResponseException(e.getMessage());
         }
     }
 

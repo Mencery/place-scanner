@@ -1,8 +1,8 @@
 package com.eleks.placescanner.place.controller;
 
 import com.eleks.placescanner.place.service.PlaceService;
-import com.eleks.plecescanner.common.domain.PlaceRequest;
-import com.eleks.plecescanner.common.security.GoogleTokenUtil;
+import com.eleks.placescanner.common.domain.PlaceRequest;
+import com.eleks.placescanner.common.security.GoogleTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

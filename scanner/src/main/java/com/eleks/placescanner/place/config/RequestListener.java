@@ -1,6 +1,6 @@
 package com.eleks.placescanner.place.config;
 
-import com.eleks.plecescanner.common.security.GoogleTokenVerifier;
+import com.eleks.placescanner.common.security.GoogleTokenVerifier;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +20,6 @@ public class RequestListener extends OrderedRequestContextFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var token = request.getHeader("Authorization");
-        if (googleTokenVerifier.isAuthorizationHeaderNotEmpty(token) && googleTokenVerifier.isTokenValid(token, clientId)) {
-            super.doFilterInternal(request, response, filterChain);
-        } else {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        }
+        super.doFilterInternal(request, response, filterChain);
     }
 }

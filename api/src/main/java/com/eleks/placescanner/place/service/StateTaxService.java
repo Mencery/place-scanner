@@ -1,7 +1,7 @@
 package com.eleks.placescanner.place.service;
 
-import com.eleks.plecescanner.dao.domain.StateTaxDto;
-import com.eleks.plecescanner.dao.repository.StateTaxRepository;
+import com.eleks.placescanner.dao.domain.StateTaxDto;
+import com.eleks.placescanner.dao.repository.StateTaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,12 +1,14 @@
 package com.eleks.placescanner.place.service.precisely;
 
 import com.eleks.placescanner.place.service.KafkaProducer;
-import com.eleks.plecescanner.common.domain.crime.CrimeRequest;
-import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.PreciselyToken;
+import com.eleks.placescanner.common.domain.crime.CrimeRequest;
+import com.eleks.placescanner.common.domain.crime.CrimeResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.PreciselyToken;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -61,10 +63,10 @@ public class PreciselyClient {
             return restTemplate.exchange(requestEntity, type).getBody();
 
         } catch (NullPointerException e) {
-            throw new IllegalStateException("callDemographicByLocation exception returns empty body");
+            throw new ResourceNotFoundException("callDemographicByLocation exception returns empty body");
         } catch (HttpServerErrorException e) {
             LOGGER.error("callDemographicByLocation exception " + e);
-            throw e;
+            throw new UnexpectedResponseException(e.getMessage());
         }
     }
 
@@ -80,10 +82,10 @@ public class PreciselyClient {
             checkStatusCode(response);
             return restTemplate.exchange(requestEntity, type).getBody();
         } catch (NullPointerException e) {
-            throw new IllegalStateException("callDemographicAdvance exception returns empty body");
+            throw new ResourceNotFoundException("callDemographicAdvance exception returns empty body");
         } catch (HttpServerErrorException e) {
             LOGGER.error("callDemographicAdvance exception " + e);
-            throw e;
+             throw new UnexpectedResponseException(e.getMessage());
         }
     }
 
@@ -104,10 +106,10 @@ public class PreciselyClient {
             return restTemplate.exchange(requestEntity, type).getBody();
         }
         catch (NullPointerException e) {
-            throw new IllegalStateException("callCrimeByLocation exception returns empty body");
+           throw new ResourceNotFoundException("callCrimeByLocation exception returns empty body");
         } catch (HttpServerErrorException e) {
             LOGGER.error("callCrimeByLocation exception " + e);
-            throw e;
+             throw new UnexpectedResponseException(e.getMessage());
         }
     }
 
@@ -123,7 +125,7 @@ public class PreciselyClient {
         var response = restTemplate.exchange(requestEntity, new ParameterizedTypeReference<PreciselyToken>() {
         }).getBody();
         if (response == null || response.accessToken() == null || response.accessToken().isEmpty()) {
-            throw new IllegalStateException("no token");
+           throw new ResourceNotFoundException("no token");
         }
         return "Bearer " + response.accessToken();
 

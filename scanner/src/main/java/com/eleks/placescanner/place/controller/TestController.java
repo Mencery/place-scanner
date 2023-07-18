@@ -6,8 +6,8 @@ import com.eleks.placescanner.place.service.KafkaProducer;
 import com.eleks.placescanner.place.service.census.CensusService;
 import com.eleks.placescanner.place.service.nominatim.NominatimService;
 import com.eleks.placescanner.place.service.precisely.PreciselyService;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.plecescanner.common.domain.population.PopClockResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.common.domain.population.PopClockResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +51,7 @@ public class TestController {
 
     @GetMapping("test/demographic-advance")
     public DemographicResponse preciselyDemographicAdvanceTest(@RequestParam(value = "placeName") String placeName,
-                                                               @RequestParam(value = "state") String state) {
+                                                                     @RequestParam(value = "state") String state) {
         return demographicService.getPopulationForPlace(placeName, state);
     }
 

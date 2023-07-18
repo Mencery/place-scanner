@@ -1,5 +1,5 @@
 mongock:
-  change-logs-scan-package: com.eleks.plecescanner.dao.migration
+  change-logs-scan-package: com.eleks.placescanner.dao.migration
 
 server:
   port: 8080

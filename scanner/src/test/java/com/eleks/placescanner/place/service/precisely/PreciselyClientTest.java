@@ -1,27 +1,26 @@
 package com.eleks.placescanner.place.service.precisely;
 
-import com.eleks.plecescanner.common.domain.crime.CrimeRequest;
-import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.PreciselyToken;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.polygon.Geometry;
+import com.eleks.placescanner.common.domain.crime.CrimeRequest;
+import com.eleks.placescanner.common.domain.crime.CrimeResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.PreciselyToken;
+import com.eleks.placescanner.common.domain.demographic.precisaly.polygon.Geometry;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,11 +34,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
 class PreciselyClientTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    private static final String DEMOGRAPHICS_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsByLocationResponse.json";
+    private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsSegmentationAdvancedResponse.json";
+    private static final String DEMOGRAPHICS_ADVANCE_COORDINATES_PATH = "./src/test/resources/json_objects/demographicAdvanceCoordinates.json";
+    private static final String CRIME_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/crimeByLocationResponse.json";
 
     @SpyBean
     private PreciselyClient preciselyClient;
@@ -47,20 +47,17 @@ class PreciselyClientTest {
     @MockBean
     private RestTemplate restTemplate;
 
-
     @Value("${url.api.precisely.oauth-token}")
     private String OAUTH_TOKEN_URI;
+
     @Value("#{systemEnvironment['PRECISELY_API_KEY']}")
     private String PRECISELY_API_KEY;
+
     @Value("#{systemEnvironment['PRECISELY_API_SECRET']}")
     private String PRECISELY_API_SECRET;
+
     @Value("${url.api.precisely.demographic-by-location}")
     private String demographicByLocationURI;
-
-    private static final String DEMOGRAPHICS_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsByLocationResponse.json";
-    private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsSegmentationAdvancedResponse.json";
-    private static final String DEMOGRAPHICS_ADVANCE_COORDINATES_PATH = "./src/test/resources/json_objects/demographicAdvanceCoordinates.json";
-    private static final String CRIME_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/crimeByLocationResponse.json";
 
     private ObjectMapper objectMapper;
     private ResponseEntity response;
@@ -86,7 +83,7 @@ class PreciselyClientTest {
     }
 
     @Test
-    void callDemographicByLocation() throws IOException {
+    void shouldReturnDemographicByLocation() throws IOException {
         DemographicResponse expectedResponse = objectMapper.readValue(
                 new File(DEMOGRAPHICS_ADVANCE_RESPONSE_PATH),
                 DemographicResponse.class);
@@ -100,33 +97,33 @@ class PreciselyClientTest {
     }
 
     @Test
-    void callDemographicByLocationWhenReturnNotFound() {
+    void shouldReturnDemographicByLocation_whenReturnNotFound() {
         doReturn("token").when(preciselyClient).getSecurityToken();
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(404)));
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
-        Assertions.assertThrows(HttpServerErrorException.class, () -> preciselyClient.callDemographicByLocation(demographicRequest), HttpStatusCode.valueOf(404).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callDemographicByLocation(demographicRequest), HttpStatusCode.valueOf(404).toString());
     }
 
     @Test
-    void callDemographicByLocationWhenReturnServerError() {
+    void shouldReturnDemographicByLocation_whenReturnServerError() {
         doReturn("token").when(preciselyClient).getSecurityToken();
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(500)));
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
 
-        Assertions.assertThrows(HttpServerErrorException.class, () -> preciselyClient.callDemographicByLocation(demographicRequest), HttpStatusCode.valueOf(500).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callDemographicByLocation(demographicRequest), HttpStatusCode.valueOf(500).toString());
     }
 
     @Test
-    void callDemographicByLocationWhenReturnNull() {
+    void shouldReturnDemographicByLocation_whenReturnNull() {
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(null);
 
-        Assertions.assertThrows(IllegalStateException.class,
+        Assertions.assertThrows(ResourceNotFoundException.class,
                 () -> preciselyClient.callDemographicByLocation(demographicRequest),
                 "callDemographicByLocation exception returns empty body");
     }
 
     @Test
-    void callDemographicAdvance() throws IOException {
+    void shouldReturnDemographicAdvance() throws IOException {
         DemographicResponse expectedResponse = objectMapper.readValue(
                 new File(DEMOGRAPHICS_BY_LOCATION_RESPONSE_PATH),
                 DemographicResponse.class);
@@ -140,31 +137,31 @@ class PreciselyClientTest {
     }
 
     @Test
-    void callDemographicAdvanceWhenReturnBadRequest() {
+    void shouldReturnDemographicAdvance_whenReturnBadRequest() {
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(400)));
 
-        Assertions.assertThrows(HttpServerErrorException.class, () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest), HttpStatusCode.valueOf(400).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest), HttpStatusCode.valueOf(400).toString());
     }
 
     @Test
-    void callDemographicAdvanceWhenReturnServerError() {
+    void shouldReturnDemographicAdvance_whenReturnServerError() {
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(500)));
 
-        Assertions.assertThrows(HttpServerErrorException.class, () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest), HttpStatusCode.valueOf(500).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest), HttpStatusCode.valueOf(500).toString());
     }
 
     @Test
-    void callDemographicAdvanceWhenResponseNull() {
+    void shouldReturnDemographicAdvance_whenResponseNull() {
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(null);
 
-        Assertions.assertThrows(IllegalStateException.class, () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest), "callDemographicAdvance exception returns empty body");
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest), "callDemographicAdvance exception returns empty body");
     }
 
     @Test
-    void callCrimeByLocation() throws IOException {
+    void shouldReturnCrimeByLocation() throws IOException {
         CrimeResponse expectedResponse = objectMapper.readValue(
                 new File(CRIME_BY_LOCATION_RESPONSE_PATH),
                 CrimeResponse.class);
@@ -178,31 +175,31 @@ class PreciselyClientTest {
     }
 
     @Test
-    void callCrimeByLocationWhenReturnBadRequest() {
+    void shouldReturnCrimeByLocation_whenReturnBadRequest() {
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(400)));
 
-        Assertions.assertThrows(HttpServerErrorException.class, () -> preciselyClient.callCrimeByLocation(crimeRequest), HttpStatusCode.valueOf(400).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callCrimeByLocation(crimeRequest), HttpStatusCode.valueOf(400).toString());
     }
 
     @Test
-    void callCrimeByLocationWhenReturnServerError() {
+    void shouldReturnCrimeByLocation_whenReturnServerError() {
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(500)));
 
-        Assertions.assertThrows(HttpServerErrorException.class, () -> preciselyClient.callCrimeByLocation(crimeRequest), HttpStatusCode.valueOf(500).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callCrimeByLocation(crimeRequest), HttpStatusCode.valueOf(500).toString());
     }
 
     @Test
-    void callCrimeByLocationWhenResponseNull() {
+    void shouldReturnCrimeByLocation_whenResponseNull() {
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(null);
 
-        Assertions.assertThrows(IllegalStateException.class, () -> preciselyClient.callCrimeByLocation(crimeRequest), "callCrimeByLocation exception returns empty body");
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> preciselyClient.callCrimeByLocation(crimeRequest), "callCrimeByLocation exception returns empty body");
     }
 
     @Test
-    void getSecurityToken() {
+    void shouldReturnSecurityToken() {
 
         var preciselyToken = new PreciselyToken("token", "", "", "", "", "");
 
@@ -213,28 +210,28 @@ class PreciselyClientTest {
     }
 
     @Test
-    void securityTokenThrowsErrorWhenResponseBodyNull() {
+    void shouldReturnSecurityTokenThrowsError_whenResponseBodyNull() {
         when(response.getBody()).thenReturn(null);
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(response);
-        Assertions.assertThrows(IllegalStateException.class, () -> preciselyClient.getSecurityToken(), "no token");
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> preciselyClient.getSecurityToken(), "no token");
     }
 
     @Test
-    void securityTokenThrowsErrorWhenAccessTokenNull() {
+    void shouldReturnSecurityTokenThrowsError_whenAccessTokenNull() {
         var preciselyToken = new PreciselyToken(null, "", "", "", "", "");
 
         when(response.getBody()).thenReturn(preciselyToken);
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(response);
-        Assertions.assertThrows(IllegalStateException.class, () -> preciselyClient.getSecurityToken(), "no token");
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> preciselyClient.getSecurityToken(), "no token");
     }
 
     @Test
-    void securityTokenThrowsErrorWhenAccessTokenEmpty() {
+    void shouldReturnSecurityTokenThrowsError_whenAccessTokenEmpty() {
         var preciselyToken = new PreciselyToken("", "", "", "", "", "");
 
         when(response.getBody()).thenReturn(preciselyToken);
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(response);
-        Assertions.assertThrows(IllegalStateException.class, () -> preciselyClient.getSecurityToken(), "no token");
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> preciselyClient.getSecurityToken(), "no token");
     }
 
     private URI getDemographicByLocationURI(DemographicRequest request) {
