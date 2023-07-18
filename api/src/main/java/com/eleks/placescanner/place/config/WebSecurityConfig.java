@@ -1,6 +1,6 @@
 package com.eleks.placescanner.place.config;
 
-import com.eleks.plecescanner.common.security.filter.TokenAuthenticationFilter;
+import com.eleks.placescanner.common.security.filter.TokenAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -22,8 +22,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors()
+        http.cors()
                 .and()
                 .csrf()
                 .disable()

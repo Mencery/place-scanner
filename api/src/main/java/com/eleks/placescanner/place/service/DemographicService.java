@@ -1,17 +1,17 @@
 package com.eleks.placescanner.place.service;
 
 import com.eleks.placescanner.place.service.scanner.ScannerClient;
-import com.eleks.plecescanner.common.domain.Demographic;
-import com.eleks.plecescanner.common.domain.PlaceRequest;
-import com.eleks.plecescanner.common.domain.demographic.Housing;
-import com.eleks.plecescanner.common.domain.demographic.Income;
-import com.eleks.plecescanner.common.domain.demographic.Race;
-import com.eleks.plecescanner.common.domain.demographic.Vehicle;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.Theme;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.IndividualValueVariable;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.theme.params.RangeVariable;
-import com.eleks.plecescanner.common.exception.domain.ErrorMessage;
-import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.common.domain.Demographic;
+import com.eleks.placescanner.common.domain.PlaceRequest;
+import com.eleks.placescanner.common.domain.demographic.Housing;
+import com.eleks.placescanner.common.domain.demographic.Income;
+import com.eleks.placescanner.common.domain.demographic.Race;
+import com.eleks.placescanner.common.domain.demographic.Vehicle;
+import com.eleks.placescanner.common.domain.demographic.precisaly.theme.Theme;
+import com.eleks.placescanner.common.domain.demographic.precisaly.theme.params.IndividualValueVariable;
+import com.eleks.placescanner.common.domain.demographic.precisaly.theme.params.RangeVariable;
+import com.eleks.placescanner.common.exception.domain.ErrorMessage;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

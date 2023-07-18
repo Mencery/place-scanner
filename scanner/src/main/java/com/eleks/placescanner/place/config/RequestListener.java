@@ -1,6 +1,6 @@
 package com.eleks.placescanner.place.config;
 
-import com.eleks.plecescanner.common.security.GoogleTokenVerifier;
+import com.eleks.placescanner.common.security.GoogleTokenVerifier;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

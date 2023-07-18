@@ -1,7 +1,7 @@
 package com.eleks.placescanner.place.service.promaptools;
 
-import com.eleks.plecescanner.common.domain.promaptools.Output;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.domain.promaptools.Output;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

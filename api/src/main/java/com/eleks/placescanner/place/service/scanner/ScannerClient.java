@@ -1,11 +1,10 @@
 package com.eleks.placescanner.place.service.scanner;
 
-import com.eleks.plecescanner.common.domain.PlaceRequest;
-import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.plecescanner.common.domain.pollution.AirResponse;
-import com.eleks.plecescanner.common.exception.domain.ErrorMessage;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.eleks.placescanner.common.domain.PlaceRequest;
+import com.eleks.placescanner.common.domain.crime.CrimeResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.common.domain.pollution.AirResponse;
+import com.eleks.placescanner.common.exception.domain.ErrorMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;

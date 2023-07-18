@@ -1,14 +1,14 @@
 package com.eleks.placescanner.place.service.precisely;
 
-import com.eleks.plecescanner.common.domain.crime.CrimeRequest;
-import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.PreciselyToken;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.polygon.Geometry;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
-import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.common.domain.crime.CrimeRequest;
+import com.eleks.placescanner.common.domain.crime.CrimeResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.PreciselyToken;
+import com.eleks.placescanner.common.domain.demographic.precisaly.polygon.Geometry;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,6 @@
 package com.eleks.placescanner.place.service.census;
 
-import com.eleks.plecescanner.common.domain.population.PopClockResponse;
+import com.eleks.placescanner.common.domain.population.PopClockResponse;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;

@@ -2,12 +2,12 @@ package com.eleks.placescanner.place.service.pollution;
 
 import com.eleks.placescanner.place.service.promaptools.PromaptoolsService;
 import com.eleks.placescanner.place.service.utils.TemperatureUtil;
-import com.eleks.plecescanner.common.domain.pollution.AirQuality;
-import com.eleks.plecescanner.common.domain.pollution.AirResponse;
-import com.eleks.plecescanner.common.domain.pollution.PollutionApiResponse;
-import com.eleks.plecescanner.common.domain.pollution.PollutionResponse;
-import com.eleks.plecescanner.common.domain.pollution.weather.WeatherResponse;
-import com.eleks.plecescanner.common.domain.promaptools.Output;
+import com.eleks.placescanner.common.domain.pollution.AirQuality;
+import com.eleks.placescanner.common.domain.pollution.AirResponse;
+import com.eleks.placescanner.common.domain.pollution.PollutionApiResponse;
+import com.eleks.placescanner.common.domain.pollution.PollutionResponse;
+import com.eleks.placescanner.common.domain.pollution.weather.WeatherResponse;
+import com.eleks.placescanner.common.domain.promaptools.Output;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.eleks.placescanner.place.service.census;
 
-import com.eleks.plecescanner.common.domain.population.PopClockResponse;
+import com.eleks.placescanner.common.domain.population.PopClockResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

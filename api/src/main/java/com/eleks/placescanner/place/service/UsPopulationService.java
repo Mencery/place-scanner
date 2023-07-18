@@ -1,10 +1,10 @@
 package com.eleks.placescanner.place.service;
 
-import com.eleks.plecescanner.common.domain.population.PopClockResponse;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
-import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
-import com.eleks.plecescanner.dao.entity.UsPopulation;
-import com.eleks.plecescanner.dao.repository.UsPopulationRepository;
+import com.eleks.placescanner.common.domain.population.PopClockResponse;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.dao.entity.UsPopulation;
+import com.eleks.placescanner.dao.repository.UsPopulationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

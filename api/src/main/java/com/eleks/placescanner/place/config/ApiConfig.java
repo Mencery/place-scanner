@@ -11,8 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Configuration
-@ComponentScan(basePackages = {"com.eleks.placescanner.place", "com.eleks.plecescanner.dao", "com.eleks.plecescanner.common"})
-@EnableMongoRepositories(basePackages = {"com.eleks.plecescanner.dao.repository"})
+@ComponentScan(basePackages = {"com.eleks.placescanner.place", "com/eleks/placescanner/dao", "com.eleks.placescanner.common"})
+@EnableMongoRepositories(basePackages = {"com.eleks.placescanner.dao.repository"})
 @EnableMongock
 public class ApiConfig {
 

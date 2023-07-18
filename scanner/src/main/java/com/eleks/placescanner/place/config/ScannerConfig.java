@@ -15,9 +15,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@ComponentScan(basePackages = {"com.eleks.placescanner.place", "com.eleks.plecescanner.dao", "com.eleks.plecescanner.common"})
+@ComponentScan(basePackages = {"com.eleks.placescanner.place", "com/eleks/placescanner/dao", "com.eleks.placescanner.common"})
 @EnableScheduling
-@EnableMongoRepositories(basePackages = {"com.eleks.plecescanner.dao.repository"})
+@EnableMongoRepositories(basePackages = {"com.eleks.placescanner.dao.repository"})
 public class ScannerConfig {
 
     @Bean

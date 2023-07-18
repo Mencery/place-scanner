@@ -1,10 +1,10 @@
 package com.eleks.placescanner.place.service;
 
 import com.eleks.placescanner.place.service.scanner.ScannerClient;
-import com.eleks.plecescanner.common.domain.Crime;
-import com.eleks.plecescanner.common.domain.PlaceRequest;
-import com.eleks.plecescanner.common.exception.domain.ErrorMessage;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.domain.Crime;
+import com.eleks.placescanner.common.domain.PlaceRequest;
+import com.eleks.placescanner.common.exception.domain.ErrorMessage;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

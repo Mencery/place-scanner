@@ -1,7 +1,9 @@
 package com.eleks.placescanner.place.service.precisely;
 
-import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.*;
+import com.eleks.placescanner.common.domain.crime.CrimeResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.Boundaries;
+import com.eleks.placescanner.common.domain.demographic.precisaly.Boundary;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

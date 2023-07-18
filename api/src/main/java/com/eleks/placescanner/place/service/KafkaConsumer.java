@@ -1,6 +1,6 @@
 package com.eleks.placescanner.place.service;
 
-import com.eleks.plecescanner.common.domain.population.PopClockResponse;
+import com.eleks.placescanner.common.domain.population.PopClockResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

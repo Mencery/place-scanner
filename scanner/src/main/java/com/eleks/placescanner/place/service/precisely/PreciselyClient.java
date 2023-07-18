@@ -1,14 +1,14 @@
 package com.eleks.placescanner.place.service.precisely;
 
 import com.eleks.placescanner.place.service.KafkaProducer;
-import com.eleks.plecescanner.common.domain.crime.CrimeRequest;
-import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.PreciselyToken;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
-import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.common.domain.crime.CrimeRequest;
+import com.eleks.placescanner.common.domain.crime.CrimeResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.PreciselyToken;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;

@@ -1,9 +1,9 @@
 package com.eleks.placescanner.place.service.nominatim;
 
-import com.eleks.plecescanner.common.domain.demographic.nominatim.GeoJson;
-import com.eleks.plecescanner.common.domain.demographic.nominatim.GetPolygonResponse;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
-import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.common.domain.demographic.nominatim.GeoJson;
+import com.eleks.placescanner.common.domain.demographic.nominatim.GetPolygonResponse;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

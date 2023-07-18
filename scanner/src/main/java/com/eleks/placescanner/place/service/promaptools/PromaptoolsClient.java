@@ -1,9 +1,9 @@
 package com.eleks.placescanner.place.service.promaptools;
 
 import com.eleks.placescanner.place.service.KafkaProducer;
-import com.eleks.plecescanner.common.domain.promaptools.PromaptoolsResponse;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
-import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.common.domain.promaptools.PromaptoolsResponse;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;

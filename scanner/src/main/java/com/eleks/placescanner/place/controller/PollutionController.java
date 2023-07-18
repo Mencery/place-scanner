@@ -1,10 +1,8 @@
 package com.eleks.placescanner.place.controller;
 
 import com.eleks.placescanner.place.service.pollution.PollutionService;
-import com.eleks.plecescanner.common.domain.PlaceRequest;
-import com.eleks.plecescanner.common.domain.pollution.AirResponse;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
-import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.common.domain.PlaceRequest;
+import com.eleks.placescanner.common.domain.pollution.AirResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

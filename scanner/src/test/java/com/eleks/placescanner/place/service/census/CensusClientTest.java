@@ -1,9 +1,9 @@
 package com.eleks.placescanner.place.service.census;
 
-import com.eleks.plecescanner.common.domain.population.CensusResponse;
-import com.eleks.plecescanner.common.domain.population.PopClockResponse;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
-import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.common.domain.population.CensusResponse;
+import com.eleks.placescanner.common.domain.population.PopClockResponse;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

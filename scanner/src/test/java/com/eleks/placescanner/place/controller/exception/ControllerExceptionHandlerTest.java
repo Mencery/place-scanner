@@ -2,10 +2,10 @@ package com.eleks.placescanner.place.controller.exception;
 
 import com.eleks.placescanner.place.controller.CrimeController;
 import com.eleks.placescanner.place.service.CrimeService;
-import com.eleks.plecescanner.common.domain.PlaceRequest;
-import com.eleks.plecescanner.common.exception.ControllerExceptionHandler;
-import com.eleks.plecescanner.common.exception.domain.UnexpectedResponseException;
-import com.eleks.plecescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.domain.PlaceRequest;
+import com.eleks.placescanner.common.exception.ControllerExceptionHandler;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,11 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
