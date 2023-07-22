@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class AirConditionService {
 
-    private ScannerClient scannerClient;
+    private final ScannerClient scannerClient;
 
     @Autowired
     public AirConditionService(ScannerClient scannerClient) {

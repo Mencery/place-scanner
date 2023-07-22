@@ -1,7 +1,6 @@
 package com.eleks.placescanner.place.service;
 
 import com.eleks.placescanner.common.domain.population.PopClockResponse;
-import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.eleks.placescanner.dao.entity.UsPopulation;
 import com.eleks.placescanner.dao.repository.UsPopulationRepository;
@@ -14,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class UsPopulationService {
 
-    UsPopulationRepository usPopulationRepository;
+    private final UsPopulationRepository usPopulationRepository;
 
     @Autowired
     public UsPopulationService(UsPopulationRepository usPopulationRepository) {

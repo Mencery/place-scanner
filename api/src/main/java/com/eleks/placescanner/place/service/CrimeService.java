@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class CrimeService {
 
-    private ScannerClient scannerClient;
+    private final ScannerClient scannerClient;
 
     @Autowired
     public CrimeService(ScannerClient scannerClient) {

@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.*;
@@ -27,7 +26,7 @@ import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.VEHICLE
 @Service
 public class DemographicService {
 
-    private ScannerClient scannerClient;
+    private final ScannerClient scannerClient;
 
     @Autowired
     public DemographicService(ScannerClient scannerClient) {
@@ -82,8 +81,7 @@ public class DemographicService {
                 .stream()
                 .filter(it -> Objects.equals(it.name(), keyword))
                 .findFirst();
-        checkOptional(optional);
-        return optional.get();
+        return optional.orElseThrow(() -> new UnexpectedResponseException("incorrect demographicInfo response"));
     }
 
     private RangeVariable findRangeVariable(Theme theme, String keyword) {
@@ -91,13 +89,6 @@ public class DemographicService {
                 .stream()
                 .filter(it -> Objects.equals(it.name(), keyword))
                 .findFirst();
-        checkOptional(optional);
-        return optional.get();
-    }
-
-    private <T> void checkOptional(Optional<T> optional) {
-        if (optional.isEmpty()) {
-            throw new UnexpectedResponseException("incorrect demographicInfo response");
-        }
+        return optional.orElseThrow(() -> new UnexpectedResponseException("incorrect demographicInfo response"));
     }
 }

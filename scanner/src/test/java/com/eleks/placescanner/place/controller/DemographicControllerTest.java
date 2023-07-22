@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -45,15 +43,12 @@ class DemographicControllerTest {
     private DemographicService demographicService;
 
     private ObjectMapper objectMapper;
-    private ResponseEntity demographicResponse;
-    private ParameterizedTypeReference<DemographicResponse> demographicResponseType;
     private PlaceRequest placeRequest;
 
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
-        demographicResponseType = new ParameterizedTypeReference<>() {
-        };
+
 
         placeRequest = new PlaceRequest("Wheeling", "Illinois", "60090");
 

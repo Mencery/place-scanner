@@ -16,10 +16,10 @@ import java.security.Principal;
 public class PlaceController {
 
     @Autowired
-    GoogleTokenUtil googleTokenUtil;
+    private GoogleTokenUtil googleTokenUtil;
 
     @Autowired
-    PlaceService placeService;
+    private PlaceService placeService;
 
     @GetMapping(value = {"place-info"})
     public PlaceResponse getPlaceInfo(

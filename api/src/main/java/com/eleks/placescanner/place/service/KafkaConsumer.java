@@ -16,7 +16,7 @@ import java.util.concurrent.CountDownLatch;
 public class KafkaConsumer {
 
     @Autowired
-    UsPopulationService usPopulationService;
+    private UsPopulationService usPopulationService;
 
     private CountDownLatch latch = new CountDownLatch(1);
 

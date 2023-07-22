@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class StateTaxService {
 
-    StateTaxRepository stateTaxRepository;
+    private final StateTaxRepository stateTaxRepository;
 
     @Autowired
     public StateTaxService(StateTaxRepository stateTaxRepository) {

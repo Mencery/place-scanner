@@ -2,7 +2,6 @@ package com.eleks.placescanner.place.controller;
 
 import com.eleks.placescanner.common.domain.PlaceRequest;
 import com.eleks.placescanner.common.domain.PlaceResponse;
-import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
 import com.eleks.placescanner.common.exception.ControllerExceptionHandler;
 import com.eleks.placescanner.common.exception.domain.InvalidRequestException;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
@@ -15,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -46,15 +43,11 @@ class PlaceControllerTest {
     private PlaceService placeService;
 
     private ObjectMapper objectMapper;
-    private ResponseEntity placeResponse;
-    private ParameterizedTypeReference<DemographicResponse> placeResponseType;
     private PlaceRequest placeRequest;
 
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
-        placeResponseType = new ParameterizedTypeReference<>() {
-        };
 
         placeRequest = new PlaceRequest("test", "test", "11111");
 

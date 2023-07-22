@@ -65,7 +65,7 @@ class CrimeServiceTest {
     }
 
     @Test
-    void getPlaceCrime_WhenNoThemes(){
+    void getPlaceCrime_WhenNoThemes() {
         var response = new CrimeResponse(new ArrayList<>());
         var placeRequest = new PlaceRequest("testName", "testState", "testZip");
         var errorMessages = new ArrayList<ErrorMessage>();
@@ -79,7 +79,7 @@ class CrimeServiceTest {
 
     @Test
     void getPlaceCrime_WhenMoreThanOneThemes() {
-        var themesMock = mock( ArrayList.class);
+        var themesMock = mock(ArrayList.class);
         var response = new CrimeResponse(themesMock);
         var placeRequest = new PlaceRequest("testName", "testState", "testZip");
         var errorMessages = new ArrayList<ErrorMessage>();
