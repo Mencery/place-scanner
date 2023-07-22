@@ -8,14 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class AirConditionService {
 
-    @Autowired
     private ScannerClient scannerClient;
 
-    public AirResponse getAirInfo(PlaceRequest request, String securityToken, List<ErrorMessage> errorMessages){
-        return scannerClient.getAirInfo(request, securityToken, errorMessages);
+    @Autowired
+    public AirConditionService(ScannerClient scannerClient) {
+        this.scannerClient = scannerClient;
     }
+
+    public CompletableFuture<AirResponse> getAirInfo(PlaceRequest request, String securityToken, List<ErrorMessage> errorMessages) {
+        return CompletableFuture.supplyAsync(() -> scannerClient.getAirInfo(request, securityToken, errorMessages));
+
+    }
+
 }

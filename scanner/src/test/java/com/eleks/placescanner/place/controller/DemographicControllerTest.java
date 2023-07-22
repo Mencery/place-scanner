@@ -46,13 +46,13 @@ class DemographicControllerTest {
 
     private ObjectMapper objectMapper;
     private ResponseEntity demographicResponse;
-    private ParameterizedTypeReference<DemographicResponse> crimeResponseType;
+    private ParameterizedTypeReference<DemographicResponse> demographicResponseType;
     private PlaceRequest placeRequest;
 
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
-        crimeResponseType = new ParameterizedTypeReference<>() {
+        demographicResponseType = new ParameterizedTypeReference<>() {
         };
 
         placeRequest = new PlaceRequest("Wheeling", "Illinois", "60090");

@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.*;
 import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.VEHICLEHHCX;
@@ -26,43 +27,54 @@ import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.VEHICLE
 @Service
 public class DemographicService {
 
-    @Autowired
     private ScannerClient scannerClient;
 
-    public Demographic getDemographicInfo(PlaceRequest request, String securityToken, List<ErrorMessage> errorMessages) {
-        var demographicInfo = scannerClient.callDemographicAdvance(request, securityToken, errorMessages);
+    @Autowired
+    public DemographicService(ScannerClient scannerClient) {
+        this.scannerClient = scannerClient;
+    }
 
-        if (demographicInfo == null) {
-            return null;
-        }
+    public CompletableFuture<Demographic> getDemographicInfo(PlaceRequest request, String securityToken, List<ErrorMessage> errorMessages) {
+        return CompletableFuture.supplyAsync(() -> {
+            var demographicInfo = scannerClient.callDemographicAdvance(request, securityToken, errorMessages);
 
-        var populationTheme = demographicInfo.themes().populationTheme();
-        var totalPopulation = findIndividualValueVariable(populationTheme, POPCY);
+            if (demographicInfo == null) {
+                return null;
+            }
 
-        var raceAndEthnicityTheme = demographicInfo.themes().raceAndEthnicityTheme();
-        var raceInfo = findRangeVariable(raceAndEthnicityTheme, RACEPCX);
-        var race = new Race(raceInfo.field());
+            //population
+            var populationTheme = demographicInfo.themes().populationTheme();
+            var totalPopulation = findIndividualValueVariable(populationTheme, POPCY);
 
-        var incomeTheme = demographicInfo.themes().incomeTheme();
-        var householdAverageIncome = findIndividualValueVariable(incomeTheme, HIAVGCY);
-        var income = new Income(new BigDecimal(householdAverageIncome.value()));
+            //race
+            var raceAndEthnicityTheme = demographicInfo.themes().raceAndEthnicityTheme();
+            var raceInfo = findRangeVariable(raceAndEthnicityTheme, RACEPCX);
+            var race = new Race(raceInfo.field());
 
-        var housingTheme = demographicInfo.themes().housingTheme();
-        var averageHomeValue = findIndividualValueVariable(housingTheme, HVAVGCY);
-        var medianHomeValue = findIndividualValueVariable(housingTheme, HVMEDCY);
-        var averageRentValue = findIndividualValueVariable(housingTheme, CRAVGCY);
-        var medianRentValue = findIndividualValueVariable(housingTheme, CRMEDCY);
-        var housing = new Housing(
-                new BigDecimal(averageHomeValue.value()),
-                new BigDecimal(medianHomeValue.value()),
-                new BigDecimal(averageRentValue.value()),
-                new BigDecimal(medianRentValue.value())
-        );
+            //income
+            var incomeTheme = demographicInfo.themes().incomeTheme();
+            var householdAverageIncome = findIndividualValueVariable(incomeTheme, HIAVGCY);
+            var income = new Income(new BigDecimal(householdAverageIncome.value()));
 
-        var vehicleInfo = findRangeVariable(housingTheme, VEHICLEHHCX);
-        var vehicle = new Vehicle(vehicleInfo.field());
+            //housing
+            var housingTheme = demographicInfo.themes().housingTheme();
+            var averageHomeValue = findIndividualValueVariable(housingTheme, HVAVGCY);
+            var medianHomeValue = findIndividualValueVariable(housingTheme, HVMEDCY);
+            var averageRentValue = findIndividualValueVariable(housingTheme, CRAVGCY);
+            var medianRentValue = findIndividualValueVariable(housingTheme, CRMEDCY);
+            var housing = new Housing(
+                    new BigDecimal(averageHomeValue.value()),
+                    new BigDecimal(medianHomeValue.value()),
+                    new BigDecimal(averageRentValue.value()),
+                    new BigDecimal(medianRentValue.value())
+            );
 
-        return new Demographic(totalPopulation.value(), race, income, housing, vehicle);
+            //vehicle
+            var vehicleInfo = findRangeVariable(housingTheme, VEHICLEHHCX);
+            var vehicle = new Vehicle(vehicleInfo.field());
+
+            return new Demographic(totalPopulation.value(), race, income, housing, vehicle);
+        });
     }
 
     private IndividualValueVariable findIndividualValueVariable(Theme theme, String keyword) {
