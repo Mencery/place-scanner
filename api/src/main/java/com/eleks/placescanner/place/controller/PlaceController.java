@@ -1,5 +1,6 @@
 package com.eleks.placescanner.place.controller;
 
+import com.eleks.placescanner.common.domain.PlaceResponse;
 import com.eleks.placescanner.place.service.PlaceService;
 import com.eleks.placescanner.common.domain.PlaceRequest;
 import com.eleks.placescanner.common.security.GoogleTokenUtil;
@@ -15,24 +16,18 @@ import java.security.Principal;
 public class PlaceController {
 
     @Autowired
-    GoogleTokenUtil googleTokenUtil;
+    private GoogleTokenUtil googleTokenUtil;
 
     @Autowired
-    PlaceService placeService;
+    private PlaceService placeService;
 
     @GetMapping(value = {"place-info"})
-    public ResponseEntity<?> getPlaceInfo(
+    public PlaceResponse getPlaceInfo(
             @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization,
             PlaceRequest placeRequest,
             Principal principal) {
         var securityToken = googleTokenUtil.getToken(authorization, principal);
-        PlaceRequest validatedRequest;
-        try {
-            validatedRequest = placeRequest.validateRequest();
-        } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-        return new ResponseEntity<>(placeService.getPlaceInfo(validatedRequest, securityToken), HttpStatus.OK);
+        return placeService.getPlaceInfo(placeRequest.validateRequest(), securityToken);
     }
 
     @PostMapping(value = {"places/place-info"}, consumes = {"application/json"})
@@ -41,12 +36,6 @@ public class PlaceController {
             @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization,
             Principal principal) {
         var securityToken = googleTokenUtil.getToken(authorization, principal);
-        PlaceRequest validatedRequest;
-        try {
-            validatedRequest = request.validateRequest();
-        } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
         return new ResponseEntity<>(placeService.getPlaceInfo(request.validateRequest(), securityToken), HttpStatus.OK);
     }
 }

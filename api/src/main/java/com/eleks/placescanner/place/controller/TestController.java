@@ -17,7 +17,7 @@ import java.util.Map;
 public class TestController {
 
     @Autowired
-    TestService testService;
+    private TestService testService;
 
     @GetMapping(value = {"test/recent-message"})
     public String getRecent() {

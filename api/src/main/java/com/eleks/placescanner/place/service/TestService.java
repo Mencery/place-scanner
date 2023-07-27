@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 public class TestService {
 
     @Autowired
-    StateTaxRepository stateTaxRepository;
+    private StateTaxRepository stateTaxRepository;
 
     @Autowired
-    MongoTemplate mongoTemplate;
+    private MongoTemplate mongoTemplate;
 
-    Map<Long, String> kafkaTestMap = new HashMap<>();
+    private Map<Long, String> kafkaTestMap = new HashMap<>();
 
     public void save(Long timestamp, String message) {
         kafkaTestMap.put(timestamp, message);

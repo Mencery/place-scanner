@@ -1,7 +1,6 @@
 package com.eleks.placescanner.place.service;
 
 import com.eleks.placescanner.common.domain.population.PopClockResponse;
-import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.eleks.placescanner.dao.entity.UsPopulation;
 import com.eleks.placescanner.dao.repository.UsPopulationRepository;
@@ -9,12 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class UsPopulationService {
 
+    private final UsPopulationRepository usPopulationRepository;
+
     @Autowired
-    UsPopulationRepository usPopulationRepository;
+    public UsPopulationService(UsPopulationRepository usPopulationRepository) {
+        this.usPopulationRepository = usPopulationRepository;
+    }
 
     public void updateUsPopulation(PopClockResponse popClock) {
         try {
@@ -32,17 +36,19 @@ public class UsPopulationService {
                 throw new SQLException("cannot be more or less than one us population");
             }
         } catch (SQLException e) {
-            throw new ResourceNotFoundException("cannot be more than one us population");
+            throw new UnexpectedResponseException(e.getMessage());
         }
     }
 
-    public PopClockResponse findUsPopulation() {
-        var populations = usPopulationRepository.findAll();
-        if (populations.size() == 1) {
-            var population = populations.get(0);
-            return new PopClockResponse(population.getPopulation(), population.getDate());
-        } else {
-            throw new UnexpectedResponseException("cannot be more or less than one us population");
-        }
+    public CompletableFuture<PopClockResponse> findUsPopulation() {
+        return CompletableFuture.supplyAsync(()->{
+            var populations = usPopulationRepository.findAll();
+            if (populations.size() == 1) {
+                var population = populations.get(0);
+                return new PopClockResponse(population.getPopulation(), population.getDate());
+            } else {
+                throw new UnexpectedResponseException("cannot be more or less than one us population");
+            }
+        });
     }
 }
