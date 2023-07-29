@@ -1,17 +1,15 @@
 package com.eleks.placescanner.place.controller;
 
-
-import com.eleks.placescanner.place.service.TestService;
 import com.eleks.placescanner.dao.domain.StateTaxDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.eleks.placescanner.place.service.TestService;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {

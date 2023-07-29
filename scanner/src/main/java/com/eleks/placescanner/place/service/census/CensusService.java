@@ -10,7 +10,7 @@ public class CensusService {
     private final CensusClient censusClient;
 
     @Autowired
-    CensusService(CensusClient censusClient){
+    CensusService(CensusClient censusClient) {
         this.censusClient = censusClient;
     }
 

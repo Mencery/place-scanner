@@ -11,7 +11,7 @@ public class PromaptoolsService {
     private final PromaptoolsClient promaptoolsClient;
 
     @Autowired
-    PromaptoolsService(PromaptoolsClient promaptoolsClient){
+    PromaptoolsService(PromaptoolsClient promaptoolsClient) {
         this.promaptoolsClient = promaptoolsClient;
     }
 

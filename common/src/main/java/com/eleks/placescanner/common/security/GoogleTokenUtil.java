@@ -3,12 +3,11 @@ package com.eleks.placescanner.common.security;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import java.io.IOException;
+import java.security.Principal;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.security.Principal;
 
 @Component
 public class GoogleTokenUtil {
@@ -17,12 +16,14 @@ public class GoogleTokenUtil {
         if (authorizationHeader != null && !authorizationHeader.isEmpty()) {
             return authorizationHeader;
         } else if (principal != null) {
-            var oAuth2AuthenticationToken = (OAuth2AuthenticationToken) principal;
+            var authenticationToken = (OAuth2AuthenticationToken) principal;
 
-            var authority = (OidcUserAuthority) oAuth2AuthenticationToken.getAuthorities().stream().findFirst().orElseThrow(IllegalStateException::new);
+            var authority = (OidcUserAuthority) authenticationToken.getAuthorities()
+                    .stream()
+                    .findFirst()
+                    .orElseThrow(IllegalStateException::new);
             return authority.getIdToken().getTokenValue();
-        }
-        else {
+        } else {
             return null;
         }
     }

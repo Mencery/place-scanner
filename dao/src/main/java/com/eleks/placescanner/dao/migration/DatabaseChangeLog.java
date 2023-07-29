@@ -8,7 +8,6 @@ import com.eleks.placescanner.dao.repository.UsPopulationRepository;
 import com.eleks.placescanner.dao.repository.UserRepository;
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

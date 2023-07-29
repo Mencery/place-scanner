@@ -1,8 +1,8 @@
 package com.eleks.placescanner.place.controller;
 
-import com.eleks.placescanner.place.service.CrimeService;
 import com.eleks.placescanner.common.domain.PlaceRequest;
 import com.eleks.placescanner.common.domain.crime.CrimeResponse;
+import com.eleks.placescanner.place.service.CrimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

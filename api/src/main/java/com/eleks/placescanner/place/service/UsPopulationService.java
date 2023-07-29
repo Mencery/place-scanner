@@ -4,11 +4,10 @@ import com.eleks.placescanner.common.domain.population.PopClockResponse;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.eleks.placescanner.dao.entity.UsPopulation;
 import com.eleks.placescanner.dao.repository.UsPopulationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.sql.SQLException;
 import java.util.concurrent.CompletableFuture;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UsPopulationService {
@@ -41,7 +40,7 @@ public class UsPopulationService {
     }
 
     public CompletableFuture<PopClockResponse> findUsPopulation() {
-        return CompletableFuture.supplyAsync(()->{
+        return CompletableFuture.supplyAsync(() -> {
             var populations = usPopulationRepository.findAll();
             if (populations.size() == 1) {
                 var population = populations.get(0);

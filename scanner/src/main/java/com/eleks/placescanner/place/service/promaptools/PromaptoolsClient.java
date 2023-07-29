@@ -1,9 +1,10 @@
 package com.eleks.placescanner.place.service.promaptools;
 
-import com.eleks.placescanner.place.service.KafkaProducer;
 import com.eleks.placescanner.common.domain.promaptools.PromaptoolsResponse;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.place.service.KafkaProducer;
+import java.net.URI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -13,17 +14,15 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-
 public class PromaptoolsClient {
 
-    private final String latLngByZipURI;
+    private final String latLngByZipUrl;
     private final RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
-    public PromaptoolsClient(String latLngByZipURI, RestTemplate restTemplate) {
-        this.latLngByZipURI = latLngByZipURI;
+    public PromaptoolsClient(String latLngByZipUrl, RestTemplate restTemplate) {
+        this.latLngByZipUrl = latLngByZipUrl;
         this.restTemplate = restTemplate;
     }
 
@@ -31,7 +30,7 @@ public class PromaptoolsClient {
         try {
 
             var uri = UriComponentsBuilder.fromUriString(
-                    latLngByZipURI + "?"
+                    latLngByZipUrl + "?"
                             + "zip=" + zipCode + "&key=17o8dysaCDrgvlc"
             ).build().toUri();
             var requestEntity = buildGetRequest(uri);

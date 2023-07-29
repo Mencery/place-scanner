@@ -9,6 +9,6 @@ public record PreciselyToken(
         String tokenType,
         String issuedAt,
         String expiresIn,
-        String clientID,
+        @JsonProperty(value = "clientID") String clientId,
         String org) {
 }

@@ -2,16 +2,15 @@ package com.eleks.placescanner.place.service;
 
 import com.eleks.placescanner.dao.domain.StateTaxDto;
 import com.eleks.placescanner.dao.repository.StateTaxRepository;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 @Component
 public class TestService {
@@ -38,11 +37,13 @@ public class TestService {
     }
 
     public Map<Date, String> findAll() {
-        Map<Date, String> dataToMessage = kafkaTestMap.entrySet().stream().collect(Collectors.toMap(e -> new Date(e.getKey()), Map.Entry::getValue));
+        Map<Date, String> dataToMessage = kafkaTestMap.entrySet()
+                .stream()
+                .collect(Collectors.toMap(e -> new Date(e.getKey()), Map.Entry::getValue));
         return dataToMessage;
     }
 
-    public void  clear() {
+    public void clear() {
         kafkaTestMap.clear();
     }
 

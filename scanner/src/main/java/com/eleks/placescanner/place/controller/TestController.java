@@ -1,20 +1,18 @@
 package com.eleks.placescanner.place.controller;
 
-
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.common.domain.population.PopClockResponse;
 import com.eleks.placescanner.place.service.DemographicService;
 import com.eleks.placescanner.place.service.KafkaProducer;
 import com.eleks.placescanner.place.service.census.CensusService;
 import com.eleks.placescanner.place.service.nominatim.NominatimService;
 import com.eleks.placescanner.place.service.precisely.PreciselyService;
-import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.placescanner.common.domain.population.PopClockResponse;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class TestController {
@@ -51,12 +49,12 @@ public class TestController {
 
     @GetMapping("test/demographic-advance")
     public DemographicResponse preciselyDemographicAdvanceTest(@RequestParam(value = "placeName") String placeName,
-                                                                     @RequestParam(value = "state") String state) {
+                                                               @RequestParam(value = "state") String state) {
         return demographicService.getPopulationForPlace(placeName, state);
     }
 
     @GetMapping("test/popclock-data")
-    public PopClockResponse getUSPopulationByClock() {
+    public PopClockResponse getUsPopulationByClock() {
         return censusService.getPopulationByClock();
     }
 

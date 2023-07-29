@@ -1,12 +1,13 @@
 package com.eleks.placescanner.place.service.census;
 
-import com.eleks.placescanner.place.service.KafkaProducer;
 import com.eleks.placescanner.common.domain.population.CensusResponse;
 import com.eleks.placescanner.common.domain.population.PopClockResponse;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.place.service.KafkaProducer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -15,19 +16,17 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-
 public class CensusClient {
 
-    private final String popclockDataURI;
+    private final String popclockDataUrl;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
 
-    public CensusClient(String popclockDataURI, RestTemplate restTemplate) {
-        this.popclockDataURI = popclockDataURI;
+    public CensusClient(String popclockDataUrl, RestTemplate restTemplate) {
+        this.popclockDataUrl = popclockDataUrl;
         this.restTemplate = restTemplate;
         objectMapper = new ObjectMapper();
     }
@@ -36,7 +35,7 @@ public class CensusClient {
         try {
 
             var uri = UriComponentsBuilder.fromUriString(
-                    popclockDataURI + "?"
+                    popclockDataUrl + "?"
                             + "_=" + System.currentTimeMillis()
             ).build().toUri();
             var requestEntity = buildGetRequest(uri);
@@ -61,8 +60,8 @@ public class CensusClient {
                 .build();
     }
 
-    private void checkUsNotNull(CensusResponse censusResponse){
-        if(censusResponse.us() == null){
+    private void checkUsNotNull(CensusResponse censusResponse) {
+        if (censusResponse.us() == null) {
             throw new ResourceNotFoundException("No us population was found");
         }
     }

@@ -48,7 +48,7 @@ class PreciselyClientTest {
     private RestTemplate restTemplate;
 
     @Value("${url.api.precisely.oauth-token}")
-    private String OAUTH_TOKEN_URI;
+    private String OAUTH_TOKEN_Url;
 
     @Value("#{systemEnvironment['PRECISELY_API_KEY']}")
     private String PRECISELY_API_KEY;
@@ -57,7 +57,7 @@ class PreciselyClientTest {
     private String PRECISELY_API_SECRET;
 
     @Value("${url.api.precisely.demographic-by-location}")
-    private String demographicByLocationURI;
+    private String demographicByLocationUrl;
 
     private ObjectMapper objectMapper;
     private ResponseEntity response;
@@ -234,8 +234,8 @@ class PreciselyClientTest {
         Assertions.assertThrows(ResourceNotFoundException.class, () -> preciselyClient.getSecurityToken(), "no token");
     }
 
-    private URI getDemographicByLocationURI(DemographicRequest request) {
-        return UriComponentsBuilder.fromUriString(demographicByLocationURI + "?"
+    private URI getDemographicByLocationUrl(DemographicRequest request) {
+        return UriComponentsBuilder.fromUriString(demographicByLocationUrl + "?"
                 + "longitude=" + request.longitude() + "&"
                 + "latitude=" + request.latitude() + "&"
                 + "profile=" + request.profile() + "&"

@@ -1,16 +1,16 @@
 package com.eleks.placescanner.common.security.service;
 
 import com.eleks.placescanner.dao.entity.User;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 @Data
 public class UserPrincipal implements OAuth2User, UserDetails {
 
@@ -26,8 +26,8 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     }
 
     public static UserPrincipal create(User user) {
-        List<GrantedAuthority> authorities = Collections.
-                singletonList(new SimpleGrantedAuthority(user.getRole()));
+        List<GrantedAuthority> authorities = Collections
+                .singletonList(new SimpleGrantedAuthority(user.getRole()));
 
         return new UserPrincipal(
                 user.getId(),
