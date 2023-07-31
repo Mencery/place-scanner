@@ -1,6 +1,14 @@
 package com.eleks.placescanner.place.service;
 
-import com.eleks.placescanner.place.service.scanner.ScannerClient;
+import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.CRAVGCY;
+import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.CRMEDCY;
+import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.HIAVGCY;
+import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.HVAVGCY;
+import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.HVMEDCY;
+import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.POPCY;
+import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.RACEPCX;
+import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.VEHICLEHHCX;
+
 import com.eleks.placescanner.common.domain.Demographic;
 import com.eleks.placescanner.common.domain.PlaceRequest;
 import com.eleks.placescanner.common.domain.demographic.Housing;
@@ -12,16 +20,13 @@ import com.eleks.placescanner.common.domain.demographic.precisaly.theme.params.I
 import com.eleks.placescanner.common.domain.demographic.precisaly.theme.params.RangeVariable;
 import com.eleks.placescanner.common.exception.domain.ErrorMessage;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.eleks.placescanner.place.service.scanner.ScannerClient;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-
-import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.*;
-import static com.eleks.placescanner.place.service.scanner.ThemeKeywords.VEHICLEHHCX;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DemographicService {
@@ -33,7 +38,9 @@ public class DemographicService {
         this.scannerClient = scannerClient;
     }
 
-    public CompletableFuture<Demographic> getDemographicInfo(PlaceRequest request, String securityToken, List<ErrorMessage> errorMessages) {
+    public CompletableFuture<Demographic> getDemographicInfo(PlaceRequest request,
+                                                             String securityToken,
+                                                             List<ErrorMessage> errorMessages) {
         return CompletableFuture.supplyAsync(() -> {
             var demographicInfo = scannerClient.callDemographicAdvance(request, securityToken, errorMessages);
 

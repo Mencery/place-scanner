@@ -18,18 +18,18 @@ import java.util.concurrent.ExecutionException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class CrimeServiceTest {
+class CrimeApiServiceTest {
 
     private static final String CRIME_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/crimeByLocationResponse.json";
 
     private ScannerClient scannerClient;
-    private CrimeService crimeService;
+    private CrimeApiService crimeApiService;
     private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() {
         scannerClient = mock(ScannerClient.class);
-        crimeService = new CrimeService(scannerClient);
+        crimeApiService = new CrimeApiService(scannerClient);
         objectMapper = new ObjectMapper();
     }
 
@@ -45,7 +45,7 @@ class CrimeServiceTest {
 
         var indexVariables = response.themes().get(0).crimeIndexTheme().indexVariable();
         var expected = new Crime(indexVariables);
-        var actual = crimeService.getPlaceCrime(placeRequest, "", errorMessages).get();
+        var actual = crimeApiService.getPlaceCrime(placeRequest, "", errorMessages).get();
 
         verify(scannerClient, times(1)).callCrimeByLocation(placeRequest, "", errorMessages);
         assertEquals(expected, actual);
@@ -58,7 +58,7 @@ class CrimeServiceTest {
 
         when(scannerClient.getAirInfo(placeRequest, "", errorMessages)).thenReturn(null);
 
-        var actual = crimeService.getPlaceCrime(placeRequest, "", errorMessages).get();
+        var actual = crimeApiService.getPlaceCrime(placeRequest, "", errorMessages).get();
 
         verify(scannerClient, times(1)).callCrimeByLocation(placeRequest, "", errorMessages);
         assertNull(actual);
@@ -73,7 +73,7 @@ class CrimeServiceTest {
         when(scannerClient.callCrimeByLocation(placeRequest, "", errorMessages)).thenReturn(response);
 
         assertThrows(CompletionException.class,
-                () -> crimeService.getPlaceCrime(placeRequest, "", errorMessages).join(),
+                () -> crimeApiService.getPlaceCrime(placeRequest, "", errorMessages).join(),
                 "crime shoud have one default theme, theme size: 0");
     }
 
@@ -88,7 +88,7 @@ class CrimeServiceTest {
         when(scannerClient.callCrimeByLocation(placeRequest, "", errorMessages)).thenReturn(response);
 
         assertThrows(CompletionException.class,
-                () -> crimeService.getPlaceCrime(placeRequest, "", errorMessages).join(),
+                () -> crimeApiService.getPlaceCrime(placeRequest, "", errorMessages).join(),
                 "crime shoud have one default theme, theme size: 2");
     }
 }

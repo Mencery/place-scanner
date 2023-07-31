@@ -1,11 +1,17 @@
 package com.eleks.placescanner.place.service.scanner;
 
+import static com.eleks.placescanner.place.service.scanner.ScannerUrls.CRIME_BY_LOCATION;
+import static com.eleks.placescanner.place.service.scanner.ScannerUrls.DEMOGRAPHIC_ADVANCE;
+import static com.eleks.placescanner.place.service.scanner.ScannerUrls.POLLUTION;
+
 import com.eleks.placescanner.common.domain.PlaceRequest;
 import com.eleks.placescanner.common.domain.crime.CrimeResponse;
 import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
 import com.eleks.placescanner.common.domain.pollution.AirResponse;
 import com.eleks.placescanner.common.exception.domain.ErrorMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
+import java.util.List;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,31 +22,26 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-import java.util.List;
-
-import static com.eleks.placescanner.place.service.scanner.ScannerURLs.CRIME_BY_LOCATION;
-import static com.eleks.placescanner.place.service.scanner.ScannerURLs.DEMOGRAPHIC_ADVANCE;
-import static com.eleks.placescanner.place.service.scanner.ScannerURLs.POLLUTION;
-
 public class ScannerClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScannerClient.class);
 
-    private final String scannerURI;
+    private final String scannerUrl;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
 
-    public ScannerClient(String scannerURI, RestTemplate restTemplate) {
-        this.scannerURI = scannerURI;
+    public ScannerClient(String scannerUrl, RestTemplate restTemplate) {
+        this.scannerUrl = scannerUrl;
         this.restTemplate = restTemplate;
         objectMapper = new ObjectMapper();
     }
 
-    public DemographicResponse callDemographicAdvance(PlaceRequest request, String securityToken, List<ErrorMessage> errorMessages) {
+    public DemographicResponse callDemographicAdvance(PlaceRequest request,
+                                                      String securityToken,
+                                                      List<ErrorMessage> errorMessages) {
         try {
-            var uri = UriComponentsBuilder.fromUriString(scannerURI + DEMOGRAPHIC_ADVANCE).build().toUri();
+            var uri = UriComponentsBuilder.fromUriString(scannerUrl + DEMOGRAPHIC_ADVANCE).build().toUri();
             var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<DemographicResponse>() {
             };
@@ -55,7 +56,7 @@ public class ScannerClient {
 
     public AirResponse getAirInfo(PlaceRequest request, String securityToken, List<ErrorMessage> errorMessages) {
         try {
-            var uri = UriComponentsBuilder.fromUriString(scannerURI + POLLUTION).build().toUri();
+            var uri = UriComponentsBuilder.fromUriString(scannerUrl + POLLUTION).build().toUri();
             var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<AirResponse>() {
             };
@@ -69,9 +70,11 @@ public class ScannerClient {
     }
 
 
-    public CrimeResponse callCrimeByLocation(PlaceRequest request, String securityToken, List<ErrorMessage> errorMessages) {
+    public CrimeResponse callCrimeByLocation(PlaceRequest request,
+                                             String securityToken,
+                                             List<ErrorMessage> errorMessages) {
         try {
-            var uri = UriComponentsBuilder.fromUriString(scannerURI + CRIME_BY_LOCATION).build().toUri();
+            var uri = UriComponentsBuilder.fromUriString(scannerUrl + CRIME_BY_LOCATION).build().toUri();
             var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<CrimeResponse>() {
             };

@@ -1,6 +1,5 @@
 package com.eleks.placescanner.place.service.precisely;
 
-import com.eleks.placescanner.place.service.KafkaProducer;
 import com.eleks.placescanner.common.domain.crime.CrimeRequest;
 import com.eleks.placescanner.common.domain.crime.CrimeResponse;
 import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
@@ -9,6 +8,9 @@ import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicRes
 import com.eleks.placescanner.common.domain.demographic.precisaly.PreciselyToken;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.place.service.KafkaProducer;
+import java.net.URI;
+import java.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,26 +21,29 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-import java.util.Base64;
-
 public class PreciselyClient {
 
-    private final String demographicByLocationURI;
-    private final String demographicAdvanceURI;
-    private final String crimeByLocationURI;
-    private final String oauthTokenURI;
+    private final String demographicByLocationUrl;
+    private final String demographicAdvanceUrl;
+    private final String crimeByLocationUrl;
+    private final String oauthTokenUrl;
     private final String preciselyApiKey;
     private final String preciselyApiSecret;
     private final RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
-    public PreciselyClient(String demographicByLocationURI, String demographicAdvanceURI, String crimeByLocationURI, String oauthTokenURI, String preciselyApiKey, String preciselyApiSecret, RestTemplate restTemplate) {
-        this.demographicByLocationURI = demographicByLocationURI;
-        this.demographicAdvanceURI = demographicAdvanceURI;
-        this.crimeByLocationURI = crimeByLocationURI;
-        this.oauthTokenURI = oauthTokenURI;
+    public PreciselyClient(String demographicByLocationUrl,
+                           String demographicAdvanceUrl,
+                           String crimeByLocationUrl,
+                           String oauthTokenUrl,
+                           String preciselyApiKey,
+                           String preciselyApiSecret,
+                           RestTemplate restTemplate) {
+        this.demographicByLocationUrl = demographicByLocationUrl;
+        this.demographicAdvanceUrl = demographicAdvanceUrl;
+        this.crimeByLocationUrl = crimeByLocationUrl;
+        this.oauthTokenUrl = oauthTokenUrl;
         this.preciselyApiKey = preciselyApiKey;
         this.preciselyApiSecret = preciselyApiSecret;
         this.restTemplate = restTemplate;
@@ -47,7 +52,7 @@ public class PreciselyClient {
     public DemographicResponse callDemographicByLocation(DemographicRequest request) {
         try {
             var securityToken = getSecurityToken();
-            var uri = UriComponentsBuilder.fromUriString(demographicByLocationURI + "?"
+            var uri = UriComponentsBuilder.fromUriString(demographicByLocationUrl + "?"
                     + "longitude=" + request.longitude() + "&"
                     + "latitude=" + request.latitude() + "&"
                     + "profile=" + request.profile() + "&"
@@ -73,7 +78,7 @@ public class PreciselyClient {
     public DemographicResponse callDemographicAdvance(DemographicAdvancedRequest request) {
         try {
             var securityToken = getSecurityToken();
-            var uri = UriComponentsBuilder.fromUriString(demographicAdvanceURI).build().toUri();
+            var uri = UriComponentsBuilder.fromUriString(demographicAdvanceUrl).build().toUri();
             var requestEntity = buildPostRequest(uri, request, securityToken);
             var type = new ParameterizedTypeReference<DemographicResponse>() {
             };
@@ -85,14 +90,14 @@ public class PreciselyClient {
             throw new ResourceNotFoundException("callDemographicAdvance exception returns empty body");
         } catch (HttpServerErrorException e) {
             LOGGER.error("callDemographicAdvance exception " + e);
-             throw new UnexpectedResponseException(e.getMessage());
+            throw new UnexpectedResponseException(e.getMessage());
         }
     }
 
     public CrimeResponse callCrimeByLocation(CrimeRequest request) {
         try {
             var securityToken = getSecurityToken();
-            var uri = UriComponentsBuilder.fromUriString(crimeByLocationURI + "?"
+            var uri = UriComponentsBuilder.fromUriString(crimeByLocationUrl + "?"
                     + "longitude=" + request.longitude() + "&"
                     + "latitude=" + request.latitude() + "&"
                     + "type=" + request.type() + "&"
@@ -104,12 +109,11 @@ public class PreciselyClient {
             var response = restTemplate.exchange(requestEntity, type);
             checkStatusCode(response);
             return restTemplate.exchange(requestEntity, type).getBody();
-        }
-        catch (NullPointerException e) {
-           throw new ResourceNotFoundException("callCrimeByLocation exception returns empty body");
+        } catch (NullPointerException e) {
+            throw new ResourceNotFoundException("callCrimeByLocation exception returns empty body");
         } catch (HttpServerErrorException e) {
             LOGGER.error("callCrimeByLocation exception " + e);
-             throw new UnexpectedResponseException(e.getMessage());
+            throw new UnexpectedResponseException(e.getMessage());
         }
     }
 
@@ -117,7 +121,7 @@ public class PreciselyClient {
         var creds = String.format("%s:%s", preciselyApiKey, preciselyApiSecret);
         var encodedCreds = "Basic  " + Base64.getEncoder().encodeToString(creds.getBytes());
         var requestEntity = buildPostRequest(
-                UriComponentsBuilder.fromUriString(oauthTokenURI).build().toUri(),
+                UriComponentsBuilder.fromUriString(oauthTokenUrl).build().toUri(),
                 "grant_type=client_credentials",
                 encodedCreds
         );
@@ -125,7 +129,7 @@ public class PreciselyClient {
         var response = restTemplate.exchange(requestEntity, new ParameterizedTypeReference<PreciselyToken>() {
         }).getBody();
         if (response == null || response.accessToken() == null || response.accessToken().isEmpty()) {
-           throw new ResourceNotFoundException("no token");
+            throw new ResourceNotFoundException("no token");
         }
         return "Bearer " + response.accessToken();
 

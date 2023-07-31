@@ -5,11 +5,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
-
-import java.io.IOException;
 
 public class RequestListener extends OrderedRequestContextFilter {
     @Autowired
@@ -19,7 +18,9 @@ public class RequestListener extends OrderedRequestContextFilter {
     private String clientId;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         super.doFilterInternal(request, response, filterChain);
     }
 }
