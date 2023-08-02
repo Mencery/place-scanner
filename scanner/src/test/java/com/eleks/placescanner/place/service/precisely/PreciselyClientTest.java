@@ -1,5 +1,11 @@
 package com.eleks.placescanner.place.service.precisely;
 
+import static com.eleks.placescanner.place.Util.JSON_OBJECTS_FOLDER;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.crime.CrimeRequest;
 import com.eleks.placescanner.common.domain.crime.CrimeResponse;
 import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
@@ -10,6 +16,10 @@ import com.eleks.placescanner.common.domain.demographic.precisaly.polygon.Geomet
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,37 +34,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @SpringBootTest
 class PreciselyClientTest {
 
-    private static final String DEMOGRAPHICS_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsByLocationResponse.json";
-    private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsSegmentationAdvancedResponse.json";
-    private static final String DEMOGRAPHICS_ADVANCE_COORDINATES_PATH = "./src/test/resources/json_objects/demographicAdvanceCoordinates.json";
-    private static final String CRIME_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/crimeByLocationResponse.json";
+    private static final String DEMOGRAPHICS_BY_LOCATION_JSON =
+            JSON_OBJECTS_FOLDER + "demographicsByLocationResponse.json";
+
+    private static final String DEMOGRAPHICS_ADV_JSON =
+            JSON_OBJECTS_FOLDER + "demographicsSegmentationAdvancedResponse.json";
+
+    private static final String DEMOGRAPHICS_ADV_LATLON_JSON =
+            JSON_OBJECTS_FOLDER + "demographicAdvanceCoordinates.json";
+
+    private static final String CRIME_BY_LOCATION_JSON =
+            JSON_OBJECTS_FOLDER + "crimeByLocationResponse.json";
 
     @SpyBean
     private PreciselyClient preciselyClient;
 
     @MockBean
     private RestTemplate restTemplate;
-
-    @Value("${url.api.precisely.oauth-token}")
-    private String OAUTH_TOKEN_Url;
-
-    @Value("#{systemEnvironment['PRECISELY_API_KEY']}")
-    private String PRECISELY_API_KEY;
-
-    @Value("#{systemEnvironment['PRECISELY_API_SECRET']}")
-    private String PRECISELY_API_SECRET;
 
     @Value("${url.api.precisely.demographic-by-location}")
     private String demographicByLocationUrl;
@@ -85,12 +84,13 @@ class PreciselyClientTest {
     @Test
     void shouldReturnDemographicByLocation() throws IOException {
         DemographicResponse expectedResponse = objectMapper.readValue(
-                new File(DEMOGRAPHICS_ADVANCE_RESPONSE_PATH),
+                new File(DEMOGRAPHICS_ADV_JSON),
                 DemographicResponse.class);
 
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(response.getBody()).thenReturn(expectedResponse);
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(response);
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
+                .thenReturn(response);
 
         DemographicResponse actualResponse = preciselyClient.callDemographicByLocation(demographicRequest);
         Assertions.assertEquals(expectedResponse, actualResponse);
@@ -99,17 +99,23 @@ class PreciselyClientTest {
     @Test
     void shouldReturnDemographicByLocation_whenReturnNotFound() {
         doReturn("token").when(preciselyClient).getSecurityToken();
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
+                .thenReturn(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
-        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callDemographicByLocation(demographicRequest), HttpStatusCode.valueOf(404).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class,
+                () -> preciselyClient.callDemographicByLocation(demographicRequest),
+                HttpStatusCode.valueOf(404).toString());
     }
 
     @Test
     void shouldReturnDemographicByLocation_whenReturnServerError() {
         doReturn("token").when(preciselyClient).getSecurityToken();
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
+                .thenReturn(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
 
-        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callDemographicByLocation(demographicRequest), HttpStatusCode.valueOf(500).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class,
+                () -> preciselyClient.callDemographicByLocation(demographicRequest),
+                HttpStatusCode.valueOf(500).toString());
     }
 
     @Test
@@ -125,12 +131,13 @@ class PreciselyClientTest {
     @Test
     void shouldReturnDemographicAdvance() throws IOException {
         DemographicResponse expectedResponse = objectMapper.readValue(
-                new File(DEMOGRAPHICS_BY_LOCATION_RESPONSE_PATH),
+                new File(DEMOGRAPHICS_BY_LOCATION_JSON),
                 DemographicResponse.class);
 
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(response.getBody()).thenReturn(expectedResponse);
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(response);
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
+                .thenReturn(response);
 
         DemographicResponse actualResponse = preciselyClient.callDemographicAdvance(demographicAdvancedRequest);
         Assertions.assertEquals(expectedResponse, actualResponse);
@@ -139,31 +146,40 @@ class PreciselyClientTest {
     @Test
     void shouldReturnDemographicAdvance_whenReturnBadRequest() {
         doReturn("token").when(preciselyClient).getSecurityToken();
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(400)));
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
+                .thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(400)));
 
-        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest), HttpStatusCode.valueOf(400).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class,
+                () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest),
+                HttpStatusCode.valueOf(400).toString());
     }
 
     @Test
     void shouldReturnDemographicAdvance_whenReturnServerError() {
         doReturn("token").when(preciselyClient).getSecurityToken();
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(500)));
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
+                .thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(500)));
 
-        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest), HttpStatusCode.valueOf(500).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class,
+                () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest),
+                HttpStatusCode.valueOf(500).toString());
     }
 
     @Test
     void shouldReturnDemographicAdvance_whenResponseNull() {
         doReturn("token").when(preciselyClient).getSecurityToken();
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(null);
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
+                .thenReturn(null);
 
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest), "callDemographicAdvance exception returns empty body");
+        Assertions.assertThrows(ResourceNotFoundException.class,
+                () -> preciselyClient.callDemographicAdvance(demographicAdvancedRequest),
+                "callDemographicAdvance exception returns empty body");
     }
 
     @Test
     void shouldReturnCrimeByLocation() throws IOException {
         CrimeResponse expectedResponse = objectMapper.readValue(
-                new File(CRIME_BY_LOCATION_RESPONSE_PATH),
+                new File(CRIME_BY_LOCATION_JSON),
                 CrimeResponse.class);
 
         doReturn("token").when(preciselyClient).getSecurityToken();
@@ -177,17 +193,23 @@ class PreciselyClientTest {
     @Test
     void shouldReturnCrimeByLocation_whenReturnBadRequest() {
         doReturn("token").when(preciselyClient).getSecurityToken();
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(400)));
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
+                .thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(400)));
 
-        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callCrimeByLocation(crimeRequest), HttpStatusCode.valueOf(400).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class,
+                () -> preciselyClient.callCrimeByLocation(crimeRequest),
+                HttpStatusCode.valueOf(400).toString());
     }
 
     @Test
     void shouldReturnCrimeByLocation_whenReturnServerError() {
         doReturn("token").when(preciselyClient).getSecurityToken();
-        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(500)));
+        when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
+                .thenReturn(new ResponseEntity<>(HttpStatusCode.valueOf(500)));
 
-        Assertions.assertThrows(UnexpectedResponseException.class, () -> preciselyClient.callCrimeByLocation(crimeRequest), HttpStatusCode.valueOf(500).toString());
+        Assertions.assertThrows(UnexpectedResponseException.class,
+                () -> preciselyClient.callCrimeByLocation(crimeRequest),
+                HttpStatusCode.valueOf(500).toString());
     }
 
     @Test
@@ -195,7 +217,9 @@ class PreciselyClientTest {
         doReturn("token").when(preciselyClient).getSecurityToken();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class))).thenReturn(null);
 
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> preciselyClient.callCrimeByLocation(crimeRequest), "callCrimeByLocation exception returns empty body");
+        Assertions.assertThrows(ResourceNotFoundException.class,
+                () -> preciselyClient.callCrimeByLocation(crimeRequest),
+                "callCrimeByLocation exception returns empty body");
     }
 
     @Test
@@ -249,7 +273,7 @@ class PreciselyClientTest {
     private List<List<Double>> getCoordinates() {
         try {
             var list = objectMapper.readValue(
-                    new File(DEMOGRAPHICS_ADVANCE_COORDINATES_PATH),
+                    new File(DEMOGRAPHICS_ADV_LATLON_JSON),
                     List.class);
 
             return (List<List<Double>>) list;

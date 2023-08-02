@@ -1,18 +1,20 @@
 package com.eleks.placescanner.place.service.precisely;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.crime.CrimeResponse;
 import com.eleks.placescanner.common.domain.demographic.precisaly.Boundaries;
 import com.eleks.placescanner.common.domain.demographic.precisaly.Boundary;
 import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.Test;
 
 class PreciselyServiceTest {
 
