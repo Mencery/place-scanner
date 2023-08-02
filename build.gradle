@@ -8,9 +8,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.puppycrawl.tools:checkstyle:10.12.1'
-    implementation 'org.apache.maven.plugins:maven-checkstyle-plugin:3.3.0'
-
+    implementation(libs.bundles.checkstyle.dependencies)
 }
 
 // Create a lifecycle task in the root project.
@@ -39,7 +37,7 @@ subprojects {
     }
 
     checkstyle {
-        toolVersion '10.12.1'
+        toolVersion libs.versions.checkstyle.get()
         configFile = file('../checkstyle.xml')
     }
 }
