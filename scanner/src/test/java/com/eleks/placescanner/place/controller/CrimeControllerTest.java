@@ -1,13 +1,27 @@
 package com.eleks.placescanner.place.controller;
 
-import com.eleks.placescanner.place.service.precisely.PreciselyClient;
+import static com.eleks.placescanner.place.Util.JSON_OBJECTS_FOLDER;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.eleks.placescanner.common.domain.PlaceRequest;
 import com.eleks.placescanner.common.domain.crime.CrimeResponse;
 import com.eleks.placescanner.common.domain.promaptools.PromaptoolsResponse;
 import com.eleks.placescanner.common.exception.ControllerExceptionHandler;
-import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.place.service.precisely.PreciselyClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +39,17 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class CrimeControllerTest {
 
     private static final String CRIME_BY_LOCATION_URL = "/crime-by-location";
-    private static final String CRIME_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/crimeByLocationResponse.json";
-    private static final String LATITUDE_LONGITUDE_FOR_60090_RESPONSE_PATH = "./src/test/resources/json_objects/promaptoolZip60090Response.json";
+
+    private static final String CRIME_BY_LOCATION_RESPONSE_PATH
+            = JSON_OBJECTS_FOLDER + "crimeByLocationResponse.json";
+
+    private static final String LATITUDE_LONGITUDE_FOR_60090_RESPONSE_PATH
+            = JSON_OBJECTS_FOLDER + "promaptoolZip60090Response.json";
 
     @Autowired
     private MockMvc mockMvc;

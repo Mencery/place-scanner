@@ -1,16 +1,19 @@
 package com.eleks.placescanner.place.service.promaptools;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.promaptools.Output;
 import com.eleks.placescanner.common.domain.promaptools.PromaptoolsResponse;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
+import org.junit.jupiter.api.Test;
 
 class PromaptoolsServiceTest {
 

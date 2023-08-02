@@ -1,12 +1,14 @@
 package com.eleks.placescanner.place.service.census;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.population.PopClockResponse;
-import org.junit.jupiter.api.Test;
-
 import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.Test;
 
 class CensusServiceTest {
 
@@ -14,7 +16,7 @@ class CensusServiceTest {
     private final CensusService service = new CensusService(censusClient);
 
     @Test
-    void shouldReturnUSPopulation() {
+    void shouldReturnUsPopulation() {
         PopClockResponse expectedResponse = new PopClockResponse(100000, new Date(0L));
 
         when(censusClient.callPopulationByClock()).thenReturn(expectedResponse);

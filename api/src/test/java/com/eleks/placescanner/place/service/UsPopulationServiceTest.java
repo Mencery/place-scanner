@@ -1,19 +1,23 @@
 package com.eleks.placescanner.place.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.population.PopClockResponse;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.eleks.placescanner.dao.entity.UsPopulation;
 import com.eleks.placescanner.dao.repository.UsPopulationRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class UsPopulationServiceTest {
 
@@ -41,7 +45,7 @@ class UsPopulationServiceTest {
     }
 
     @Test
-    void updateUsPopulation_WhenNoDataInDB() {
+    void updateUsPopulation_WhenNoDataInDb() {
         var popClock = new PopClockResponse(330000000, null);
         var usPopulation = new UsPopulation(popClock.population(), popClock.date());
         var usPopulationList = new ArrayList<UsPopulation>();
@@ -55,7 +59,7 @@ class UsPopulationServiceTest {
     }
 
     @Test
-    void updateUsPopulation_WhenMoreThan2RowsInDB() {
+    void updateUsPopulation_WhenMoreThan2RowsInDb() {
         var popClock = new PopClockResponse(330000000, null);
         var usPopulation = new UsPopulation(popClock.population(), popClock.date());
         var usPopulationList = List.of(usPopulation, usPopulation);
