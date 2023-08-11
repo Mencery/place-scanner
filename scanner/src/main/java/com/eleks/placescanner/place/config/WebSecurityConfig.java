@@ -26,10 +26,7 @@ public class WebSecurityConfig {
                 .and()
                 .csrf()
                 .disable()
-                .authorizeHttpRequests(
-                        auth -> auth
-                                .anyRequest().authenticated()
-                )
+                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .oauth2Login()
                 .and().oauth2Client(Customizer.withDefaults())
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

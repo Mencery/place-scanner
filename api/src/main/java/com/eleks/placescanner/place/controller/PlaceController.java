@@ -34,11 +34,11 @@ public class PlaceController {
     }
 
     @PostMapping(value = {"places/place-info"}, consumes = {"application/json"})
-    public ResponseEntity<?> postPlaceInfo(
+    public PlaceResponse postPlaceInfo(
             @RequestBody PlaceRequest request,
             @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization,
             Principal principal) {
         var securityToken = googleTokenUtil.getToken(authorization, principal);
-        return new ResponseEntity<>(placeService.getPlaceInfo(request.validateRequest(), securityToken), HttpStatus.OK);
+        return placeService.getPlaceInfo(request.validateRequest(), securityToken);
     }
 }

@@ -17,8 +17,7 @@ public class DemographicController {
 
     @PostMapping(value = "demographic", consumes = {"application/json"})
     @ResponseBody
-    public DemographicResponse getRecent(
-            @RequestBody PlaceRequest request) {
+    public DemographicResponse getRecent(@RequestBody PlaceRequest request) {
         return demographicService.getPopulationForPlace(request.placeName(), request.state());
     }
 }

@@ -42,14 +42,12 @@ public class PlaceService {
         var usPopulation = usPopulationService.findUsPopulation();
         var airCondition = airConditionService.getAirInfo(request, securityToken, errorMessages);
         try {
-            return new PlaceResponse(
-                    demographic.get(),
+            return new PlaceResponse(demographic.get(),
                     crime.get(),
                     stateTax.get(),
                     usPopulation.get(),
                     airCondition.get(),
-                    errorMessages
-            );
+                    errorMessages);
         } catch (InterruptedException | ExecutionException e) {
             throw new UnexpectedResponseException(e.getMessage());
         }
