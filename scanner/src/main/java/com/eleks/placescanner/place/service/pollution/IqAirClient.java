@@ -1,12 +1,11 @@
 package com.eleks.placescanner.place.service.pollution;
 
+import com.eleks.placescanner.common.domain.pollution.PollutionApiResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.eleks.plecescanner.common.domain.pollution.PollutionApiResponse;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-@FeignClient(value = "iqAirApi", url = "${iqair.api.url}")
+@FeignClient(value = "iqAirApi", url = "${url.api.iqair}")
 public interface IqAirClient {
 
     @GetMapping("/nearest_city")

@@ -1,2 +1,11 @@
 rootProject.name = 'common'
+include ':dao'
+project(':dao').projectDir = new File('../dao')
 
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
+}

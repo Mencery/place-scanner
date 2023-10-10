@@ -1,2 +1,13 @@
+rootProject.name = 'scanner'
+include ':common'
+include ':dao'
+project(':common').projectDir = new File('../common')
+project(':dao').projectDir = new File('../dao')
 
-
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
+}

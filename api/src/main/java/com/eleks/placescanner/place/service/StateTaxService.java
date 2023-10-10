@@ -1,18 +1,27 @@
 package com.eleks.placescanner.place.service;
 
-import com.eleks.plecescanner.dao.domain.StateTaxDto;
-import com.eleks.plecescanner.dao.repository.StateTaxRepository;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.dao.domain.StateTaxDto;
+import com.eleks.placescanner.dao.repository.StateTaxRepository;
+import java.util.concurrent.CompletableFuture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StateTaxService {
 
-    @Autowired
-    StateTaxRepository stateTaxRepository;
+    private final StateTaxRepository stateTaxRepository;
 
-    public StateTaxDto getStateTax(String state) {
-        var stateTaxEntity = stateTaxRepository.findStateTaxByState(state).orElseThrow(() -> new IllegalStateException("State is incorrect"));
-        return new StateTaxDto(stateTaxEntity);
+    @Autowired
+    public StateTaxService(StateTaxRepository stateTaxRepository) {
+        this.stateTaxRepository = stateTaxRepository;
+    }
+
+    public CompletableFuture<StateTaxDto> getStateTax(String state) {
+        return CompletableFuture.supplyAsync(() -> {
+            var stateTaxEntity = stateTaxRepository.findStateTaxByState(state)
+                    .orElseThrow(() -> new UnexpectedResponseException("State is incorrect"));
+            return new StateTaxDto(stateTaxEntity);
+        });
     }
 }

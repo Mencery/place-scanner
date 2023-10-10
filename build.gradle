@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(libs.bundles.checkstyle.dependencies)
+}
+
+// Create a lifecycle task in the root project.
+// We'll make this depend on all checkstyle tasks from subprojects (see below)
+def checkstyleAllTask = task("checkstyleAll")
+
+// Make 'check' task depend on our new lifecycle task
+check.dependsOn(checkstyleAllTask)
+
+subprojects {
+
+    apply plugin: 'checkstyle'
+
+    // Ensure all checkstyle tasks are a dependency of the "checkstyleAll" task
+    checkstyleAllTask.dependsOn(tasks.withType(Checkstyle))
+
+    tasks.withType(Test) {
+
+        // Indicate that testing tasks should run after the "checkstyleAll" task
+        shouldRunAfter(checkstyleAllTask)
+
+        // Indicate that testing tasks should run after any checksytle tasks.
+        // This is useful for when you only want to run an individual
+        // subproject's checks (e.g. ./gradlew ::subprojA::check)
+        shouldRunAfter(tasks.withType(Checkstyle))
+    }
+
+    checkstyle {
+        toolVersion libs.versions.checkstyle.get()
+        configFile = file('../checkstyle.xml')
+    }
+}

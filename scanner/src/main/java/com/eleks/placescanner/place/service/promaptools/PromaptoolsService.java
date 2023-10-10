@@ -1,27 +1,28 @@
 package com.eleks.placescanner.place.service.promaptools;
 
-import com.eleks.plecescanner.common.domain.promaptools.Output;
+import com.eleks.placescanner.common.domain.promaptools.Output;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PromaptoolsService {
 
+    private final PromaptoolsClient promaptoolsClient;
+
     @Autowired
-    private PromaptoolsClient promaptoolsClient;
+    PromaptoolsService(PromaptoolsClient promaptoolsClient) {
+        this.promaptoolsClient = promaptoolsClient;
+    }
 
     public Output getLatLongByZip(String zipCode) {
 
         var promaptoolsResponse = promaptoolsClient.callLatLngByZip(zipCode);
 
         if (promaptoolsResponse.outputList().size() > 0) {
-            var firstOutput = promaptoolsResponse.outputList().get(0);
-            return firstOutput;
+            return promaptoolsResponse.outputList().get(0);
         } else {
-            throw new IllegalStateException("no latitude or longitude were found by zip code " + zipCode);
+            throw new ResourceNotFoundException("no latitude or longitude were found by zip code " + zipCode);
         }
     }
-
 }

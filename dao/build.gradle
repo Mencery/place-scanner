@@ -1,8 +1,9 @@
 plugins {
     id 'java'
+    id 'java-library'
     id 'maven-publish'
-    id 'io.spring.dependency-management' version '1.1.0'
-    id 'org.springframework.boot' version '3.0.6'
+    alias(libs.plugins.dependency.management)
+    alias(libs.plugins.springframework)
 }
 
 group = 'com.eleks.placescanner.dao'
@@ -14,19 +15,17 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
-    implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.0.6'
-    implementation 'org.springframework.boot:spring-boot-autoconfigure:3.0.6'
-    implementation 'org.springframework.data:spring-data-mongodb:4.1.0'
-    implementation 'com.github.cloudyrock.mongock:mongock-bom:4.3.8'
-    implementation 'com.github.cloudyrock.mongock:mongodb-springdata-v3-driver:4.3.8'
+    api(libs.commons.math)
+    implementation(libs.httpcomponents.httpclient)
+    implementation(libs.bundles.spring.core.dependencies)
+    implementation(libs.spring.boot.starter.data.mongodb)
+    implementation(libs.bundles.mongock.dependencies)
 
-    compileOnly 'org.projectlombok:lombok:1.18.28'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    implementation(libs.lombok)
+    annotationProcessor(libs.lombok)
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation(libs.bundles.test.core.dependencies)
+    testImplementation platform(libs.junit.bom)
 }
 
 bootJar {

@@ -10,6 +10,7 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 @EnableFeignClients
 @ImportAutoConfiguration({FeignAutoConfiguration.class})
 public class ScannerApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(ScannerApplication.class, args);
     }

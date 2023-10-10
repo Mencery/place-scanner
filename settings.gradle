@@ -1,0 +1,5 @@
+rootProject.name = 'place-scanner'
+include 'api'
+include 'common'
+include 'dao'
+include 'scanner'
