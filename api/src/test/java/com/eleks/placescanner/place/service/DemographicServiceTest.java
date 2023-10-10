@@ -1,28 +1,34 @@
 package com.eleks.placescanner.place.service;
 
+import static com.eleks.placescanner.place.Util.JSON_OBJECTS_FOLDER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.PlaceRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
 import com.eleks.placescanner.common.domain.demographic.precisaly.Themes;
 import com.eleks.placescanner.common.domain.demographic.precisaly.theme.Theme;
-import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
 import com.eleks.placescanner.common.exception.domain.ErrorMessage;
 import com.eleks.placescanner.place.service.scanner.ScannerClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class DemographicServiceTest {
 
-    private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsSegmentationAdvancedResponse.json";
+    private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH
+            = JSON_OBJECTS_FOLDER + "demographicsSegmentationAdvancedResponse.json";
 
     private ScannerClient scannerClient;
     private DemographicService demographicService;
@@ -72,7 +78,7 @@ class DemographicServiceTest {
     @Test
     void getDemographicInfo_WheNoThemeFound() {
         var populationTheme = new Theme(new ArrayList<>(), new ArrayList<>());
-        var themes = new Themes(populationTheme, null, null, null,null,null );
+        var themes = new Themes(populationTheme, null, null, null, null, null);
         var response = new DemographicResponse(null, themes);
 
         var placeRequest = new PlaceRequest("testName", "testState", "testZip");

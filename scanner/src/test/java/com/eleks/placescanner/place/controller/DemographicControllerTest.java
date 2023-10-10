@@ -1,12 +1,23 @@
 package com.eleks.placescanner.place.controller;
 
-import com.eleks.placescanner.place.service.DemographicService;
+import static com.eleks.placescanner.place.Util.JSON_OBJECTS_FOLDER;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.eleks.placescanner.common.domain.PlaceRequest;
 import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
 import com.eleks.placescanner.common.exception.ControllerExceptionHandler;
-import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
+import com.eleks.placescanner.place.service.DemographicService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class DemographicControllerTest {
 
     private static final String DEMOGRAPHIC_URL = "/demographic";
-    private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsSegmentationAdvancedResponse.json";
+    private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH =
+            JSON_OBJECTS_FOLDER + "demographicsSegmentationAdvancedResponse.json";
 
     @Autowired
     private MockMvc mockMvc;

@@ -1,9 +1,19 @@
 package com.eleks.placescanner.place.service.promaptools;
 
+import static com.eleks.placescanner.place.Util.JSON_OBJECTS_FOLDER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.promaptools.PromaptoolsResponse;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +25,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 @SpringBootTest
 class PromaptoolsClientTest {
 
-    private static final String LATITUDE_LONGITUDE_FOR_60090_RESPONSE_PATH = "./src/test/resources/json_objects/promaptoolZip60090Response.json";
+    private static final String LATITUDE_LONGITUDE_FOR_60090_RESPONSE_PATH
+            = JSON_OBJECTS_FOLDER + "promaptoolZip60090Response.json";
 
     @MockBean
     private RestTemplate restTemplate;
@@ -49,7 +51,7 @@ class PromaptoolsClientTest {
     }
 
     @Test
-    void shouldReturnUSPopulation() throws IOException {
+    void shouldReturnUsPopulation() throws IOException {
         PromaptoolsResponse expectedResponse = objectMapper.readValue(
                 new File(LATITUDE_LONGITUDE_FOR_60090_RESPONSE_PATH),
                 PromaptoolsResponse.class);
@@ -72,7 +74,8 @@ class PromaptoolsClientTest {
 
     @Test
     void getUnexpectedResultWhenCensusReturnsServerErrorResponse() {
-        when(restTemplate.exchange(any(), eq(type))).thenThrow(new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR));
+        when(restTemplate.exchange(any(), eq(type)))
+                .thenThrow(new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR));
 
         assertThrows(UnexpectedResponseException.class, () -> promaptoolsClient.callLatLngByZip("60090"));
     }

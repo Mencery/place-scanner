@@ -1,17 +1,20 @@
 package com.eleks.placescanner.place.service.nominatim;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.demographic.nominatim.GeoJson;
 import com.eleks.placescanner.common.domain.demographic.nominatim.GetPolygonResponse;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
+import org.junit.jupiter.api.Test;
 
 class NominatimServiceTest {
 

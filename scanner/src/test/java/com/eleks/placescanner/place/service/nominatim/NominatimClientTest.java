@@ -1,11 +1,23 @@
 package com.eleks.placescanner.place.service.nominatim;
 
+import static com.eleks.placescanner.place.Util.JSON_OBJECTS_FOLDER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.demographic.nominatim.GetPolygonRequest;
 import com.eleks.placescanner.common.domain.demographic.nominatim.GetPolygonResponse;
 import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
 import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +29,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 @SpringBootTest
 class NominatimClientTest {
 
-    private static final String NOMINATIM_POLYGON_RESPONSE_PATH = "./src/test/resources/json_objects/nominatimPolygonResponse.json";
+    private static final String NOMINATIM_POLYGON_RESPONSE_PATH = JSON_OBJECTS_FOLDER + "nominatimPolygonResponse.json";
 
     @MockBean
     private RestTemplate restTemplate;
@@ -59,7 +60,7 @@ class NominatimClientTest {
     @Test
     void shouldReturnPlacePolygon() throws IOException {
         var file = new File(NOMINATIM_POLYGON_RESPONSE_PATH);
-        List<GetPolygonResponse> expectedResponse = objectMapper.readValue(file, new TypeReference<List<GetPolygonResponse>>() {
+        List<GetPolygonResponse> expectedResponse = objectMapper.readValue(file, new TypeReference<>() {
         });
 
         when(response.getBody()).thenReturn(expectedResponse);

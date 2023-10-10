@@ -1,26 +1,32 @@
 package com.eleks.placescanner.place.service;
 
+import static com.eleks.placescanner.place.Util.JSON_OBJECTS_FOLDER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.Crime;
 import com.eleks.placescanner.common.domain.PlaceRequest;
 import com.eleks.placescanner.common.domain.crime.CrimeResponse;
 import com.eleks.placescanner.common.exception.domain.ErrorMessage;
 import com.eleks.placescanner.place.service.scanner.ScannerClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class CrimeApiServiceTest {
 
-    private static final String CRIME_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/crimeByLocationResponse.json";
+    private static final String CRIME_BY_LOCATION_RESPONSE_PATH
+            = JSON_OBJECTS_FOLDER + "crimeByLocationResponse.json";
 
     private ScannerClient scannerClient;
     private CrimeApiService crimeApiService;

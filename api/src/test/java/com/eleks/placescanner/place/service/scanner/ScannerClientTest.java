@@ -1,11 +1,22 @@
 package com.eleks.placescanner.place.service.scanner;
 
+import static com.eleks.placescanner.place.Util.JSON_OBJECTS_FOLDER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.eleks.placescanner.common.domain.PlaceRequest;
 import com.eleks.placescanner.common.domain.crime.CrimeResponse;
 import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
 import com.eleks.placescanner.common.domain.pollution.AirResponse;
 import com.eleks.placescanner.common.exception.domain.ErrorMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,19 +30,13 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class ScannerClientTest {
 
-    private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH = "./src/test/resources/json_objects/demographicsSegmentationAdvancedResponse.json";
-    private static final String IQ_AIR_RESPONSE_PATH = "./src/test/resources/json_objects/airIQResponse.json";
-    private static final String CRIME_BY_LOCATION_RESPONSE_PATH = "./src/test/resources/json_objects/crimeByLocationResponse.json";
+    private static final String IQ_AIR_RESPONSE_PATH = JSON_OBJECTS_FOLDER + "airIQResponse.json";
+    private static final String CRIME_BY_LOCATION_RESPONSE_PATH = JSON_OBJECTS_FOLDER + "crimeByLocationResponse.json";
+    private static final String DEMOGRAPHICS_ADVANCE_RESPONSE_PATH
+            = JSON_OBJECTS_FOLDER + "demographicsSegmentationAdvancedResponse.json";
 
     @MockBean
     private RestTemplate restTemplate;
@@ -68,7 +73,10 @@ class ScannerClientTest {
         var errorMessage = new ErrorMessage(404, null, "not found", "test");
         var errorMessagesList = new ArrayList<ErrorMessage>();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
-                .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND, "test", objectMapper.writeValueAsBytes(errorMessage), null));
+                .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND,
+                        "test",
+                        objectMapper.writeValueAsBytes(errorMessage),
+                        null));
 
         var actualResponse = scannerClient.callDemographicAdvance(placeRequest, "", errorMessagesList);
 
@@ -82,7 +90,10 @@ class ScannerClientTest {
         var errorMessage = new ErrorMessage(500, null, "internal server error", "test");
         var errorMessagesList = new ArrayList<ErrorMessage>();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
-                .thenThrow(new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "test", objectMapper.writeValueAsBytes(errorMessage), null));
+                .thenThrow(new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "test",
+                        objectMapper.writeValueAsBytes(errorMessage),
+                        null));
 
         var actualResponse = scannerClient.callDemographicAdvance(placeRequest, "", errorMessagesList);
 
@@ -109,7 +120,10 @@ class ScannerClientTest {
         var errorMessage = new ErrorMessage(404, null, "not found", "test");
         var errorMessagesList = new ArrayList<ErrorMessage>();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
-                .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND, "test", objectMapper.writeValueAsBytes(errorMessage), null));
+                .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND,
+                        "test",
+                        objectMapper.writeValueAsBytes(errorMessage),
+                        null));
 
         var actualResponse = scannerClient.getAirInfo(placeRequest, "", errorMessagesList);
 
@@ -123,7 +137,10 @@ class ScannerClientTest {
         var errorMessage = new ErrorMessage(500, null, "internal server error", "test");
         var errorMessagesList = new ArrayList<ErrorMessage>();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
-                .thenThrow(new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "test", objectMapper.writeValueAsBytes(errorMessage), null));
+                .thenThrow(new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "test",
+                        objectMapper.writeValueAsBytes(errorMessage),
+                        null));
 
         var actualResponse = scannerClient.getAirInfo(placeRequest, "", errorMessagesList);
 
@@ -150,7 +167,9 @@ class ScannerClientTest {
         var errorMessage = new ErrorMessage(404, null, "not found", "test");
         var errorMessagesList = new ArrayList<ErrorMessage>();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
-                .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND, "test", objectMapper.writeValueAsBytes(errorMessage), null));
+                .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND,
+                        "test", objectMapper.writeValueAsBytes(errorMessage),
+                        null));
 
         var actualResponse = scannerClient.callCrimeByLocation(placeRequest, "", errorMessagesList);
 
@@ -164,7 +183,9 @@ class ScannerClientTest {
         var errorMessage = new ErrorMessage(500, null, "internal server error", "test");
         var errorMessagesList = new ArrayList<ErrorMessage>();
         when(restTemplate.exchange(any(), any(ParameterizedTypeReference.class)))
-                .thenThrow(new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "test", objectMapper.writeValueAsBytes(errorMessage), null));
+                .thenThrow(new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "test", objectMapper.writeValueAsBytes(errorMessage),
+                        null));
 
         var actualResponse = scannerClient.callCrimeByLocation(placeRequest, "", errorMessagesList);
 
