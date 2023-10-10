@@ -4,7 +4,7 @@ plugins {
     id 'org.springframework.boot' version '3.0.6'
 }
 
-group = 'com.eleks.skyscanner.flight'
+group = 'com.eleks.placescanner.api'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -13,8 +13,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.eleks.placescanner.common:common:1.0-SNAPSHOT'
-    implementation 'com.eleks.placescanner.dao:dao:1.0-SNAPSHOT'
+    implementation project(':common')
+    implementation project(':dao')
     implementation 'org.projectlombok:lombok'
     implementation 'org.springframework.kafka:spring-kafka:3.0.6'
     implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.0.6'

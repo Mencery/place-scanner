@@ -1,12 +1,12 @@
 package com.eleks.placescanner.place.service.scanner;
 
 public class ThemeKeywords {
-    public final static String POPCY = "POPCY";
-    public final static String RACEPCX = "RACEPCX";
-    public final static String HIAVGCY = "HIAVGCY";
-    public final static String HVAVGCY = "HVAVGCY";
-    public final static String HVMEDCY = "HVMEDCY";
-    public final static String CRAVGCY = "CRAVGCY";
-    public final static String CRMEDCY = "CRMEDCY";
-    public final static String VEHICLEHHCX = "VEHICLEHHCX";
+    public static final String POPCY = "POPCY";
+    public static final String RACEPCX = "RACEPCX";
+    public static final String HIAVGCY = "HIAVGCY";
+    public static final String HVAVGCY = "HVAVGCY";
+    public static final String HVMEDCY = "HVMEDCY";
+    public static final String CRAVGCY = "CRAVGCY";
+    public static final String CRMEDCY = "CRMEDCY";
+    public static final String VEHICLEHHCX = "VEHICLEHHCX";
 }

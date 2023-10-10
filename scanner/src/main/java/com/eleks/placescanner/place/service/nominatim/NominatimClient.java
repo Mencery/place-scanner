@@ -1,8 +1,12 @@
 package com.eleks.placescanner.place.service.nominatim;
 
+import com.eleks.placescanner.common.domain.demographic.nominatim.GetPolygonRequest;
+import com.eleks.placescanner.common.domain.demographic.nominatim.GetPolygonResponse;
+import com.eleks.placescanner.common.exception.domain.ResourceNotFoundException;
+import com.eleks.placescanner.common.exception.domain.UnexpectedResponseException;
 import com.eleks.placescanner.place.service.KafkaProducer;
-import com.eleks.plecescanner.common.domain.demographic.nominatim.GetPolygonRequest;
-import com.eleks.plecescanner.common.domain.demographic.nominatim.GetPolygonResponse;
+import java.net.URI;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,18 +16,15 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-import java.util.List;
-
 public class NominatimClient {
-    private final String placePolygonURI;
 
+    private final String placePolygonUrl;
     private final RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
-    public NominatimClient(String placePolygonURI, RestTemplate restTemplate) {
-        this.placePolygonURI = placePolygonURI;
+    public NominatimClient(String placePolygonUrl, RestTemplate restTemplate) {
+        this.placePolygonUrl = placePolygonUrl;
         this.restTemplate = restTemplate;
     }
 
@@ -31,7 +32,7 @@ public class NominatimClient {
         try {
 
             var uri = UriComponentsBuilder.fromUriString(
-                    placePolygonURI + "?"
+                    placePolygonUrl + "?"
                             + "q=" + request.placeName() + ", " + request.state() + ", " + "United States" + "&"
                             + "polygon_geojson=1&format=jsonv2"
             ).build().toUri();
@@ -43,12 +44,12 @@ public class NominatimClient {
             if (array != null && array.size() > 0) {
                 return array.get(0);
             } else {
-                throw new IllegalStateException("Polygon not found");
+                throw new ResourceNotFoundException("Polygon not found");
             }
 
         } catch (HttpServerErrorException e) {
             LOGGER.error("Nominatim call exception " + e);
-            throw e;
+            throw new UnexpectedResponseException(e.getMessage());
         }
     }
 

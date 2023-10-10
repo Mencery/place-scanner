@@ -1,0 +1,41 @@
+brokerProperties: '{ "listeners=PLAINTEXT://localhost:9092", "port=9092" }'
+
+server:
+  port: 8090
+
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      database: dev
+      host: localhost
+      password: rootpass
+      port: 27017
+      username: rootuser
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+
+topic:
+  test: embedded-test-topic
+  us-population: us-population-topic
+
+url:
+  api:
+    census:
+      popclock-data: https://www.census.gov/popclock/data/population.php/us
+    iqair: http://api.airvisual.com/v2
+    nominatim:
+      place-polygon: https://nominatim.openstreetmap.org/search.php
+    place-scanner:
+      api: http://localhost:8080
+    precisely:
+      crime-by-location: https://api.precisely.com/risks/v1/crime/bylocation
+      demographic-advance: https://api.precisely.com/demographics-segmentation/v1/advanced/demographics
+      demographic-by-location: https://api.precisely.com/demographics-segmentation/v1/demographics/bylocation
+      oauth-token: https://api.precisely.com/oauth/token
+    promaptools:
+      get-lat-lng-by-zip: https://api.promaptools.com/service/us/zip-lat-lng/get

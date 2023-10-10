@@ -1,21 +1,24 @@
 package com.eleks.placescanner.place.service.precisely;
 
-import com.eleks.plecescanner.common.domain.crime.CrimeRequest;
-import com.eleks.plecescanner.common.domain.crime.CrimeResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicRequest;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.DemographicResponse;
-import com.eleks.plecescanner.common.domain.demographic.precisaly.polygon.Geometry;
+import com.eleks.placescanner.common.domain.crime.CrimeRequest;
+import com.eleks.placescanner.common.domain.crime.CrimeResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicAdvancedRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicRequest;
+import com.eleks.placescanner.common.domain.demographic.precisaly.DemographicResponse;
+import com.eleks.placescanner.common.domain.demographic.precisaly.polygon.Geometry;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PreciselyService {
 
+    private final PreciselyClient preciselyClient;
+
     @Autowired
-    private PreciselyClient preciselyClient;
+    PreciselyService(PreciselyClient preciselyClient) {
+        this.preciselyClient = preciselyClient;
+    }
 
     public DemographicResponse getDemographic(double longitude, double latitude) {
         var request = new DemographicRequest(
@@ -45,5 +48,4 @@ public class PreciselyService {
         );
         return preciselyClient.callCrimeByLocation(request);
     }
-
 }

@@ -1,0 +1,35 @@
+mongock:
+  change-logs-scan-package: com.eleks.placescanner.dao.migration
+
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      database: dev
+      host: localhost
+      password: rootpass
+      port: 27017
+      username: rootuser
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      group-id: baeldung
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+
+topic:
+  test: embedded-test-topic
+  us-population: us-population-topic
+
+url:
+  api:
+    place-scanner:
+      scanner: http://localhost:8090

@@ -1,0 +1,98 @@
+{
+  "themes": [
+    {
+      "crimeIndexTheme": {
+        "source": "default",
+        "boundaryRef": "b1",
+        "indexVariable": [
+          {
+            "name": "overall",
+            "score": "170",
+            "category": "High",
+            "percentile": "75 to 90",
+            "stateScore": "111"
+          },
+          {
+            "name": "violent",
+            "score": "189",
+            "category": "High",
+            "percentile": "75 to 90",
+            "stateScore": "128"
+          },
+          {
+            "name": "murder",
+            "score": "60",
+            "category": "Below Average",
+            "percentile": "25 to 50",
+            "stateScore": "34"
+          },
+          {
+            "name": "rape",
+            "score": "81",
+            "category": "Below Average",
+            "percentile": "25 to 50",
+            "stateScore": "73"
+          },
+          {
+            "name": "robbery",
+            "score": "86",
+            "category": "Below Average",
+            "percentile": "25 to 50",
+            "stateScore": "95"
+          },
+          {
+            "name": "assault",
+            "score": "232",
+            "category": "High",
+            "percentile": "75 to 90",
+            "stateScore": "139"
+          },
+          {
+            "name": "property",
+            "score": "166",
+            "category": "High",
+            "percentile": "75 to 90",
+            "stateScore": "108"
+          },
+          {
+            "name": "burglary",
+            "score": "192",
+            "category": "High",
+            "percentile": "75 to 90",
+            "stateScore": "123"
+          },
+          {
+            "name": "larceny",
+            "score": "164",
+            "category": "High",
+            "percentile": "75 to 90",
+            "stateScore": "102"
+          },
+          {
+            "name": "motorvehicletheft",
+            "score": "144",
+            "category": "Above Average",
+            "percentile": "50 to 75",
+            "stateScore": "123"
+          },
+          {
+            "name": "arson",
+            "score": "172",
+            "category": "High",
+            "percentile": "75 to 90",
+            "stateScore": "153"
+          }
+        ]
+      }
+    }
+  ],
+  "boundaries": {
+    "boundary": [
+      {
+        "id": "450830218061",
+        "type": "USA_BLOCKGROUP",
+        "ref": "b1"
+      }
+    ]
+  }
+}
